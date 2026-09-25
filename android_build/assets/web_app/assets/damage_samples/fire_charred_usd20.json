@@ -1,0 +1,20 @@
+{
+  "sampleId": "SAMPLE-FIRE-USD20",
+  "title": "Thermal Fire Charred $20 Federal Reserve Note",
+  "currency": "USD",
+  "denomination": 20,
+  "incidentCategory": "House Fire / Thermal Exposure",
+  "intactPercentage": 52.1,
+  "statutoryStatus": "PASS_THRESHOLD",
+  "statutoryCitation": "31 CFR § 100.5(a)",
+  "forensicObservations": "Severe thermal charring along perimeter margins. Center portrait of Andrew Jackson and left serial MF 89234812 B intact. Optical area test reveals 52.1% uncarbonized cellulose paper substrate. Qualifies for 100% full face-value counter reimbursement.",
+  "damagePath": [
+    {"x": 0.05, "y": 0.08},
+    {"x": 0.58, "y": 0.06},
+    {"x": 0.54, "y": 0.32},
+    {"x": 0.62, "y": 0.55},
+    {"x": 0.50, "y": 0.78},
+    {"x": 0.53, "y": 0.94},
+    {"x": 0.04, "y": 0.92}
+  ]
+}

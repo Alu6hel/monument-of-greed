@@ -1,0 +1,132 @@
+{
+  "catalogVersion": "2026.4",
+  "authorityRegistry": "Alumungandr Global Currency Laboratory & Bureau of Engraving Standards",
+  "currencies": [
+    {
+      "code": "USD",
+      "name": "United States Dollar",
+      "series": "Series 2013 / 2017A / 2021",
+      "substrate": "75% Cotton, 25% Linen with embedded red and blue synthetic fibers",
+      "standardDimensionsMm": { "width": 156.0, "height": 66.3 },
+      "aspectRatio": 2.353,
+      "tactileFeatures": "Intaglio raised printing on collar of portrait, Federal Reserve text, and denomination numerals.",
+      "securityFeatures": [
+        { "name": "3D Security Ribbon", "description": "Micro-lens bells and 100s that shift orientation when tilted.", "denominations": ["100"] },
+        { "name": "Color-Shifting Bell in the Inkwell", "description": "Shifts from copper to green inside copper inkwell.", "denominations": ["100"] },
+        { "name": "Watermark Portrait", "description": "Faint image visible from both sides under transmitted light.", "denominations": ["5", "10", "20", "50", "100"] },
+        { "name": "Embedded Security Thread", "description": "Polymer ribbon glowing pink (100), yellow (50), green (20), orange (10), blue (5) under 365nm UV.", "denominations": ["5", "10", "20", "50", "100"] }
+      ]
+    },
+    {
+      "code": "EUR",
+      "name": "Euro (Europa Series)",
+      "series": "ES2 Europa Series",
+      "substrate": "100% Pure cotton fiber paper with water-resistant coating",
+      "standardDimensionsMm": { "width": 140.0, "height": 77.0 },
+      "aspectRatio": 1.818,
+      "tactileFeatures": "Series of short raised lines along left and right edges for sight-impaired recognition.",
+      "securityFeatures": [
+        { "name": "Portrait Window Hologram", "description": "Transparent window revealing Europa portrait when held to light.", "denominations": ["20", "50", "100", "200"] },
+        { "name": "Emerald Number", "description": "Shiny numeral displaying light effect moving up and down; color shifts from emerald green to deep blue.", "denominations": ["All"] },
+        { "name": "Europa Watermark", "description": "Visible mythological Europa figure when backlit.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "GBP",
+      "name": "British Pound Sterling",
+      "series": "Bank of England Polymer Series G",
+      "substrate": "Biaxially Oriented Polypropylene (BOPP) Guardian Polymer",
+      "standardDimensionsMm": { "width": 139.0, "height": 73.0 },
+      "aspectRatio": 1.904,
+      "tactileFeatures": "Clusters of raised dots in top left corner for blind and partially sighted people.",
+      "securityFeatures": [
+        { "name": "Large See-Through Window", "description": "Transparent polymer window with metallic foil image (e.g., Margate lighthouse on £20).", "denominations": ["All"] },
+        { "name": "Hologram Image Shifting", "description": "Word shifts between 'Twenty' and 'Pounds' when tilted.", "denominations": ["20", "50"] },
+        { "name": "Silver Foil Patch", "description": "3D image of the coronation crown.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "CAD",
+      "name": "Canadian Dollar",
+      "series": "Frontier Series Polymer",
+      "substrate": "BOPP Synthetic Polymer",
+      "standardDimensionsMm": { "width": 152.4, "height": 70.0 },
+      "aspectRatio": 2.162,
+      "tactileFeatures": "Raised Canadian tactile dots in top corner based on Braille cell system.",
+      "securityFeatures": [
+        { "name": "Large Transparent Window", "description": "Detailed metallic portrait and building with color-shifting foil.", "denominations": ["All"] },
+        { "name": "Frosted Maple Leaf Window", "description": "Small translucent leaf containing hidden circular numeral.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "AUD",
+      "name": "Australian Dollar",
+      "series": "Next Generation Banknotes (NGB)",
+      "substrate": "Innovia Guardian Polymer Substrate",
+      "standardDimensionsMm": { "width": 144.0, "height": 65.0 },
+      "aspectRatio": 2.215,
+      "tactileFeatures": "Raised sensory tactile bumps along long edges of note.",
+      "securityFeatures": [
+        { "name": "Top-to-Bottom Clear Window", "description": "Full vertical clear window with multiple holographic flying bird elements.", "denominations": ["All"] },
+        { "name": "Rolling Color Effect", "description": "Eastern Spinebill bird moves its wings and changes color when tilted.", "denominations": ["5", "10", "20", "50", "100"] },
+        { "name": "Microprint Excerpts", "description": "Legible microtext from historic Australian literature under 10x magnification.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "MXN",
+      "name": "Mexican Peso",
+      "series": "Familia G",
+      "substrate": "Polymer for 20 & 50; 100% Cotton Paper for 100, 200, 500, 1000",
+      "standardDimensionsMm": { "width": 146.0, "height": 65.0 },
+      "aspectRatio": 2.246,
+      "tactileFeatures": "High-relief intaglio text 'BANCO DE MÉXICO' and geometric side-bar bars.",
+      "securityFeatures": [
+        { "name": "Ventana Transparente", "description": "Integrated transparent polymer window with laser engraved numeral.", "denominations": ["20", "50", "100"] },
+        { "name": "Hilo Dinámico", "description": "Interwoven 3D holographic security thread with moving rings.", "denominations": ["200", "500", "1000"] },
+        { "name": "Folio Creciente", "description": "Serial numbers printed with progressively larger font heights.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "INR",
+      "name": "Indian Rupee",
+      "series": "Mahatma Gandhi New Series",
+      "substrate": "100% Cotton Rag Paper",
+      "standardDimensionsMm": { "width": 150.0, "height": 66.0 },
+      "aspectRatio": 2.272,
+      "tactileFeatures": "Bleed lines on left and right borders with angular identification marks (circle, triangle, diamond, square).",
+      "securityFeatures": [
+        { "name": "Color-Changing Windowed Security Thread", "description": "Inscriptions 'भारत' and 'RBI' with green to blue color change on tilt.", "denominations": ["100", "200", "500"] },
+        { "name": "Latent Image", "description": "Denomination numeral visible when note held at 45 degree eye level.", "denominations": ["All"] },
+        { "name": "See-Through Register", "description": "Floral pattern on front and back registers perfectly when held against light.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "JPY",
+      "name": "Japanese Yen",
+      "series": "2024 Reiwa New Series",
+      "substrate": "Mitsumata and Abaca fibers with unique traditional Japanese washi texture",
+      "standardDimensionsMm": { "width": 156.0, "height": 76.0 },
+      "aspectRatio": 2.052,
+      "tactileFeatures": "11 diagonal tactile lines along left and right borders for finger touch distinction.",
+      "securityFeatures": [
+        { "name": "3D Hologram Rotation", "description": "State-of-the-art 3D portraits of Eiichi Shibusawa / Tsuda Umeko that rotate in full 3D as note tilts.", "denominations": ["1000", "5000", "10000"] },
+        { "name": "High-Definition Watermark Bar Patterns", "description": "Multiple vertical light and dark bars embedded in paper core.", "denominations": ["All"] },
+        { "name": "Pearlescent Ink", "description": "Luminescent ink appears pinkish-purple under ambient lighting angles.", "denominations": ["All"] }
+      ]
+    },
+    {
+      "code": "CHF",
+      "name": "Swiss Franc",
+      "series": "9th Banknote Series (The Versatile Switzerland)",
+      "substrate": "Durasafe 3-layer composite (paper-polymer-paper core)",
+      "standardDimensionsMm": { "width": 144.0, "height": 70.0 },
+      "aspectRatio": 2.057,
+      "tactileFeatures": "Embossed hand and globe intaglio print with crisp raised tactile lines along bottom edge.",
+      "securityFeatures": [
+        { "name": "Glittering Globe", "description": "Shimmering holographic globe changing color across gold, emerald, and violet.", "denominations": ["All"] },
+        { "name": "Transparent Swiss Cross", "description": "Perforated micro-cross displaying Swiss flag when held against light.", "denominations": ["All"] },
+        { "name": "Micro-Text Constitution", "description": "Complete text of the Swiss Federal Constitution woven in microscopic letters.", "denominations": ["All"] }
+      ]
+    }
+  ]
+}

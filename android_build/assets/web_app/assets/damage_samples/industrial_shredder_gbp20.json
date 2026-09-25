@@ -1,0 +1,19 @@
+{
+  "sampleId": "SAMPLE-SHRED-GBP20",
+  "title": "Cross-Cut Shredder £20 Polymer Note Fragment",
+  "currency": "GBP",
+  "denomination": 20,
+  "incidentCategory": "Commercial Document Shredder",
+  "intactPercentage": 48.9,
+  "statutoryStatus": "AFFIDAVIT_REQUIRED",
+  "statutoryCitation": "Bank of England Damaged Banknote Protocol",
+  "forensicObservations": "Polymer substrate segmented into longitudinal ribbon strips. Reconstituted primary fragment displays 48.9% area. Requires Sworn Destruction Affidavit certifying waste basket contents were incinerated without duplicate claim.",
+  "damagePath": [
+    {"x": 0.05, "y": 0.05},
+    {"x": 0.49, "y": 0.05},
+    {"x": 0.52, "y": 0.35},
+    {"x": 0.46, "y": 0.65},
+    {"x": 0.50, "y": 0.95},
+    {"x": 0.05, "y": 0.95}
+  ]
+}

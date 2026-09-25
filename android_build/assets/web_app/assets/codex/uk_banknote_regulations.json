@@ -1,0 +1,19 @@
+{
+  "statutoryTitle": "Currency and Bank Notes Act (Damaged Banknote Scheme)",
+  "promulgatingAgency": "Bank of England — Damaged Banknotes Section",
+  "location": "Debden, Loughton, Essex, United Kingdom",
+  "effectiveDate": "2026-01-01",
+  "scope": "Redemption of torn, soiled, washed, or burned Bank of England paper and polymer legal tender.",
+  "rules": {
+    "standardThreshold": {
+      "percentage": 50.0,
+      "payout": "100% Face Value",
+      "conditions": "As a general rule, the Bank of England pays full face value if more than half of a banknote is presented. If 50% or less remains, the claimant must satisfy the Bank that the remaining portion was completely destroyed."
+    },
+    "polymerSubstrateHandling": {
+      "series": "Polymer £5 (Churchill), £10 (Austen), £20 (Turner), £50 (Turing)",
+      "shrinkage": "Polymer banknotes subjected to direct thermal heat shrink without losing mass. The Debden laboratory calculates original area prior to thermal shrinkage using mass ratios."
+    },
+    "commercialBankExchange": "High street retail banks (Barclays, HSBC, Lloyds, NatWest) accept damaged notes with clear >50% surface for direct account deposit."
+  }
+}

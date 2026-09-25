@@ -1,0 +1,20 @@
+{
+  "sampleId": "SAMPLE-PET-MXN500",
+  "title": "Domestic Pet Macerated Mex$500 Series G Note",
+  "currency": "MXN",
+  "denomination": 500,
+  "incidentCategory": "Animal Maceration / Chewing",
+  "intactPercentage": 54.8,
+  "statutoryStatus": "PASS_THRESHOLD",
+  "statutoryCitation": "Banxico Regla 10/2006",
+  "forensicObservations": "Benito Juárez portrait and dynamic color-shifting thread intact. Torn right quadrant missing due to involuntary animal ingestion. Single continuous piece with 54.8% surface area. Qualifies for immediate commercial bank window redemption in Mexico.",
+  "damagePath": [
+    {"x": 0.05, "y": 0.05},
+    {"x": 0.56, "y": 0.05},
+    {"x": 0.52, "y": 0.30},
+    {"x": 0.59, "y": 0.52},
+    {"x": 0.51, "y": 0.75},
+    {"x": 0.55, "y": 0.95},
+    {"x": 0.05, "y": 0.95}
+  ]
+}

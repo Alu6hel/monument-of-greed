@@ -1,0 +1,19 @@
+{
+  "sampleId": "SAMPLE-FLOOD-CAD100",
+  "title": "Severe Basement Flood CA$100 Frontier Note",
+  "currency": "CAD",
+  "denomination": 100,
+  "incidentCategory": "Flood / Silt Contamination",
+  "intactPercentage": 72.3,
+  "statutoryStatus": "PASS_THRESHOLD",
+  "statutoryCitation": "Bank of Canada Act Sec. 25",
+  "forensicObservations": "Frontier polymer substrate intact with partial mud abrasion across portrait. Metallic maple leaf and transparent frosted portrait window completely preserved. Surface area 72.3%. Immediate full face-value reimbursement.",
+  "damagePath": [
+    {"x": 0.05, "y": 0.05},
+    {"x": 0.74, "y": 0.05},
+    {"x": 0.71, "y": 0.38},
+    {"x": 0.76, "y": 0.62},
+    {"x": 0.70, "y": 0.95},
+    {"x": 0.05, "y": 0.95}
+  ]
+}

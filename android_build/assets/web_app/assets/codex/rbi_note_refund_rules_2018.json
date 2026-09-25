@@ -1,0 +1,18 @@
+{
+  "statutoryTitle": "Reserve Bank of India (Note Refund) Rules, 2009 (Amended 2018)",
+  "promulgatingAgency": "Reserve Bank of India (RBI)",
+  "jurisdiction": "Republic of India",
+  "effectiveDate": "2018-09-06",
+  "ruleSummary": {
+    "denominationsUnder50": {
+      "fullValue": "Area of single largest undivided piece is not less than 50% of original banknote area.",
+      "halfValue": "No half value payable on denominations below ₹50."
+    },
+    "denominations50AndAbove": {
+      "fullValue": "Area of single largest undivided piece is not less than 80% (75% for certain new series) of the total area.",
+      "halfValue": "Area of single undivided piece is not less than 40% of the total area.",
+      "zeroValue": "Area is less than 40% of the total area."
+    },
+    "commercialBankObligation": "Under RBI Master Direction, all branches of commercial and cooperative banks are authorized and obligated to adjudicate and pay value for soiled and mutilated notes."
+  }
+}

@@ -9,6 +9,9 @@
   <link rel="icon" type="image/png" href="logos/alu-company-logo-symbol.png">
 </head>
 <body class="theme-clay-peach">
+  <!-- Live Ambient Motion Canvas Layer (Live Moving Atmosphere) -->
+  <canvas id="ambient-motion-canvas" class="ambient-motion-canvas"></canvas>
+
   <!-- Audio Feedback Element (Synthesizer initialized via Web Audio) -->
 
   <!-- App Container -->
@@ -30,6 +33,12 @@
       </div>
 
       <div class="top-bar-actions">
+        <button id="btn-sound-toggle" class="icon-btn" title="Toggle Tactile Audio" aria-label="Toggle Tactile Audio">
+          <span id="sound-icon-symbol">🔊</span>
+        </button>
+        <button id="btn-help-onboarding" class="icon-btn" title="How It Works / Onboarding" aria-label="How It Works">
+          <span class="help-question-symbol">❓</span>
+        </button>
         <button id="btn-theme-quick" class="icon-btn" title="Toggle Live Theme" aria-label="Toggle Live Theme">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
@@ -197,7 +206,6 @@
                   </svg>
                 </button>
                 <span class="trigger-label">Upload Photo</span>
-                <input type="file" id="file-input-upload" accept="image/*" class="visually-hidden">
               </div>
 
               <!-- Trigger 3: Interactive Grid Audit (Tangerine/Mint Circle) -->
@@ -215,13 +223,68 @@
               </div>
 
             </div>
+            <!-- Independent File Input -->
+            <input type="file" id="file-input-upload" accept="image/*" class="visually-hidden">
+          </div>
+        </div>
+
+        <!-- Fintech Revenue & Contrast Framing Card (Inspired by Reference Photo 2 & Price Contrast Principle) -->
+        <div class="fintech-summary-card">
+          <div class="fintech-card-top">
+            <div class="fintech-revenue-group">
+              <div class="fintech-label">Total Verified Salvage Potential</div>
+              <div class="fintech-main-amount">
+                <span class="fintech-currency-symbol">$</span><span id="rolling-salvage-total">5,062.19</span>
+                <span class="fintech-delta-pill positive">↑ 100% Guaranteed Payout</span>
+              </div>
+            </div>
+            <button id="btn-quick-claim-voucher" class="btn-fintech-action" title="Generate Free Instant Bank Voucher">
+              <span>Claim</span>
+            </button>
+          </div>
+
+          <!-- Novice Protection Promo Banner (Inspired by Photo 2: The novice exclusive 10% annual earnings) -->
+          <div class="contrast-anchor-banner">
+            <div class="contrast-facet-shape"></div>
+            <div class="contrast-banner-content">
+              <span class="contrast-badge">MAIN STREET BEARER PROTECTION</span>
+              <h4 class="contrast-headline">100% FACE VALUE STATUTORY REPLACEMENT</h4>
+              <p class="contrast-subtext">Central bank regulations protect everyday consumers: damaged, washed, or torn banknotes retain 100% value once surface area is verified above 50%.</p>
+            </div>
+          </div>
+
+          <!-- Metric Pairs Row (Inspired by Photo 2: 12.0% Expected Rate of Return / T+0 draw) -->
+          <div class="fintech-metrics-grid">
+            <div class="fintech-metric-box">
+              <div class="ft-num text-success">100.0%</div>
+              <div class="ft-lbl">Statutory Face Value Payout</div>
+            </div>
+            <div class="fintech-metric-box">
+              <div class="ft-num text-accent">T+0 Direct</div>
+              <div class="ft-lbl">Immediate Bank Window Exchange</div>
+            </div>
+          </div>
+
+          <!-- The Contrast Effect: Loss vs Recovery Psychological Framing -->
+          <div class="contrast-comparison-bar">
+            <div class="contrast-col loss-anchor">
+              <span class="contrast-col-title">IF DISCARDED AS "RUINED"</span>
+              <span class="contrast-col-val text-danger">-$1,000.00 Total Loss</span>
+              <span class="contrast-col-desc">Money mistakenly thrown in the trash</span>
+            </div>
+            <div class="contrast-col-divider">⚡ VS ⚡</div>
+            <div class="contrast-col recovery-anchor">
+              <span class="contrast-col-title">STATUTORY SALVAGE RECOVERY</span>
+              <span class="contrast-col-val text-success">+$1,000.00 Cash Preserved</span>
+              <span class="contrast-col-desc">100% legal tender replacement at tellers</span>
+            </div>
           </div>
         </div>
 
         <!-- Horizontal Category Pill Filter Bar (InShot Reference Image 2 Style) -->
         <div class="category-pill-container">
           <div class="pill-scroll-track" id="home-category-pills">
-            <button class="filter-pill pill-menu-btn" id="pill-quick-menu" title="Filter Menu">☰</button>
+            <button class="pill-menu-action-btn pill-menu-btn" id="pill-quick-menu" title="Filter Menu">☰</button>
             <button class="filter-pill active" data-category="all">ALL</button>
             <button class="filter-pill" data-category="north-america">NORTH AMERICA</button>
             <button class="filter-pill" data-category="europe">EUROPE</button>
@@ -356,6 +419,9 @@
                 <option value="AUD">AUD — Australian Dollar Polymer (Aspect 2.000:1)</option>
                 <option value="JPY">JPY — Japanese Yen (Aspect 2.000:1)</option>
                 <option value="CHF">CHF — Swiss Franc (Aspect 2.000:1)</option>
+                <option value="MXN">MXN — Mexican Peso (Aspect 2.308:1)</option>
+                <option value="INR">INR — Indian Rupee (Aspect 2.212:1)</option>
+                <option value="CNY">CNY — Chinese Yuan (Aspect 2.088:1)</option>
               </select>
             </div>
 
@@ -369,6 +435,14 @@
                 <option value="5">$5 Note</option>
                 <option value="1">$1 Note</option>
               </select>
+            </div>
+          </div>
+
+          <div class="side-selector-container">
+            <span class="side-lbl">Banknote Face:</span>
+            <div class="side-tabs">
+              <button id="btn-side-front" class="side-tab active" type="button">Front (Obverse)</button>
+              <button id="btn-side-back" class="side-tab" type="button">Back (Reverse)</button>
             </div>
           </div>
 
@@ -399,6 +473,15 @@
             <!-- Real Canvas Processing Layer -->
             <canvas id="scanner-canvas" class="processing-canvas"></canvas>
 
+            <!-- 4-Corner Perspective Warp Overlay -->
+            <div id="perspective-overlay" class="perspective-overlay" style="display:none;">
+              <svg id="perspective-svg" class="perspective-svg"></svg>
+              <div class="corner-pin" id="pin-tl" data-corner="tl"></div>
+              <div class="corner-pin" id="pin-tr" data-corner="tr"></div>
+              <div class="corner-pin" id="pin-br" data-corner="br"></div>
+              <div class="corner-pin" id="pin-bl" data-corner="bl"></div>
+            </div>
+
             <!-- Guide Overlay Frame with Target Aspect Ratio -->
             <div id="aspect-guide-box" class="aspect-guide-box">
               <div class="guide-corner top-left"></div>
@@ -427,9 +510,12 @@
               <input type="range" id="slider-edge-gain" min="0.8" max="2.5" step="0.1" value="1.2" class="styled-slider">
             </div>
             <div class="tuner-mode-row">
-              <button id="btn-toggle-mask" class="chip-toggle active">🟩 Highlight Fragment</button>
-              <button id="btn-toggle-missing" class="chip-toggle active">🟥 Show Missing Area</button>
-              <button id="btn-recalculate" class="btn-sm btn-primary">⚡ Compute Surface Area</button>
+              <button id="btn-auto-otsu" class="btn-sm btn-accent" title="Automatic Bimodal Threshold">⚡ Auto-Tune (Otsu)</button>
+              <button id="btn-toggle-perspective" class="chip-toggle" title="4-Corner Perspective Flattening">📐 Perspective Warp</button>
+              <button id="btn-toggle-polymer" class="chip-toggle" title="Polymer Window Transparency Exclusion">🔬 Polymer Filter</button>
+              <button id="btn-toggle-mask" class="chip-toggle active">🟩 Highlight</button>
+              <button id="btn-toggle-missing" class="chip-toggle active">🟥 Missing</button>
+              <button id="btn-recalculate" class="btn-sm btn-primary">⚡ Compute</button>
             </div>
           </div>
         </div>
@@ -514,6 +600,40 @@
             </div>
           </div>
 
+          <!-- Interactive 3D Holographic Banknote Showcase Stage (3D Physical Substrate Directive) -->
+          <div class="banknote-3d-stage" id="banknote-3d-stage">
+            <div class="stage-header-row">
+              <div class="stage-title-wrap">
+                <span class="stage-title">🔮 3D HOLOGRAPHIC SUBSTRATE INSPECTOR</span>
+                <span class="stage-sub">Interactive 3D Depth & Security Foil Reflection</span>
+              </div>
+              <div class="stage-controls">
+                <button id="btn-flip-3d-card" class="btn-micro" type="button" title="Flip 3D Card">🔄 Flip 180°</button>
+                <button id="btn-shimmer-3d" class="btn-micro" type="button" title="Simulate Specular Holographic Glint">✨ Specular Foil</button>
+              </div>
+            </div>
+            
+            <div class="card-3d-scene" id="card-3d-scene">
+              <div class="card-3d-object" id="card-3d-object">
+                <!-- Obverse (Front) Face -->
+                <div class="card-3d-face card-3d-front" id="card-face-front">
+                  <canvas id="canvas-3d-front" class="card-3d-canvas"></canvas>
+                  <div class="card-3d-holo-sheen" id="holo-sheen-front"></div>
+                  <div class="card-3d-badge">OBVERSE (FRONT)</div>
+                </div>
+                <!-- Reverse (Back) Face -->
+                <div class="card-3d-face card-3d-back" id="card-face-back">
+                  <canvas id="canvas-3d-back" class="card-3d-canvas"></canvas>
+                  <div class="card-3d-holo-sheen" id="holo-sheen-back"></div>
+                  <div class="card-3d-badge">REVERSE (BACK)</div>
+                </div>
+              </div>
+            </div>
+            <div class="stage-footer-hint">
+              <span>🖐️ Drag finger or move cursor to tilt note in 3D perspective and catch holographic foil light</span>
+            </div>
+          </div>
+
           <!-- Quick Action: Export directly to Claim Dossier -->
           <div class="scanner-footer-actions">
             <button id="btn-export-to-dossier" class="btn btn-accent btn-block" disabled>
@@ -536,18 +656,28 @@
 
         <div class="grid-audit-workspace">
           <div class="grid-audit-instructions">
-            <p><strong>Instructions:</strong> Each square below represents exactly <strong>1.0%</strong> of the official banknote surface. Tap or drag across cells to mark intact portions (green) versus destroyed portions (faded red). The calculator computes your legal redemption status in real-time.</p>
+            <p><strong>Instructions:</strong> Each square represents exactly <strong>1.0%</strong> of the banknote surface. Touch or drag across cells to mark intact portions (green) vs destroyed portions (faded red). <span id="grid-aspect-indicator" class="aspect-indicator-chip">USD Ratio (2.35:1)</span></p>
             <div class="grid-tools-row">
               <button id="btn-grid-all" class="btn-sm btn-secondary">Fill 100%</button>
               <button id="btn-grid-clear" class="btn-sm btn-secondary">Clear All</button>
               <button id="btn-grid-51" class="btn-sm btn-accent">Set 51% (Threshold)</button>
               <button id="btn-grid-invert" class="btn-sm btn-secondary">Invert Selection</button>
             </div>
+
+            <!-- Photo Backdrop Projection Control -->
+            <div class="grid-backdrop-control">
+              <div class="backdrop-slider-row">
+                <label for="slider-backdrop-opacity">Photo Backdrop Overlay Opacity: <span id="val-backdrop-opacity">40%</span></label>
+                <input type="range" id="slider-backdrop-opacity" min="0" max="100" value="40" class="styled-slider">
+              </div>
+              <button id="btn-load-photo-to-grid" class="btn-sm btn-secondary" title="Project scanner photo under grid">📷 Project Scan Under Grid</button>
+            </div>
           </div>
 
-          <!-- The 10x10 Interactive Grid -->
+          <!-- The 10x10 Interactive Grid with Photo Backdrop Layer -->
           <div class="grid-100-wrapper">
             <div class="banknote-aspect-container" id="grid-aspect-box">
+              <canvas id="grid-photo-backdrop" class="grid-photo-backdrop"></canvas>
               <div id="grid-100" class="grid-100-cells">
                 <!-- 100 cells generated via JS -->
               </div>
@@ -718,9 +848,15 @@
               </div>
 
               <div class="dossier-btn-group">
-                <button id="btn-update-preview" class="btn btn-secondary">Refresh Dossier Preview</button>
+                <button id="btn-update-preview" class="btn btn-secondary">Refresh Preview</button>
+                <button id="btn-download-pdf" class="btn btn-accent">
+                  <span>📥 Download Vector PDF</span>
+                </button>
                 <button id="btn-print-dossier" class="btn btn-primary">
-                  <span>🖨️ Print / Save Official Dossier</span>
+                  <span>🖨️ Native Print Spooler</span>
+                </button>
+                <button id="btn-open-affidavit-modal" class="btn btn-outline" style="grid-column: 1 / -1;">
+                  <span>📜 Generate Destruction Affidavit (≤50% Claims)</span>
                 </button>
               </div>
             </form>
@@ -802,6 +938,37 @@
 
         </div>
 
+        <!-- Multi-Note Salvage Batch Envelope -->
+        <div class="batch-envelope-card">
+          <div class="batch-envelope-header">
+            <div class="batch-title">💼 Multi-Note Salvage Batch Envelope</div>
+            <div class="batch-stats">
+              <span id="batch-notes-count">0 Notes</span> • <span id="batch-total-value">$0.00 Total Salvage Value</span>
+            </div>
+          </div>
+          <div class="batch-table-wrap">
+            <table class="batch-table" id="batch-notes-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Currency & Note</th>
+                  <th>Denom</th>
+                  <th>Surface %</th>
+                  <th>Legal Verdict</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="batch-notes-tbody">
+                <tr class="empty-batch-row"><td colspan="6">No notes added to envelope yet. Assess a note in the Scanner or Grid, then click below to add.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="batch-actions-row">
+            <button id="btn-add-to-batch" class="btn-sm btn-accent" type="button">➕ Add Current Assessment to Envelope</button>
+            <button id="btn-clear-batch" class="btn-sm btn-secondary" type="button">Clear Envelope</button>
+          </div>
+        </div>
+
       </section>
 
     </main>
@@ -865,6 +1032,121 @@
       </div>
       <div class="modal-footer">
         <button id="btn-dismiss-script" class="btn btn-primary">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sworn Destruction Affidavit Modal (for <=50% claims) -->
+  <div id="modal-affidavit-generator" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h3 class="modal-title">Sworn Affidavit of Total Destruction</h3>
+        <button id="btn-affidavit-close" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-affidavit-content">
+        <div class="affidavit-callout">
+          ⚖️ <strong>Statutory Compliance Requirement:</strong> For banknotes with 50% or less surface area remaining (under US 31 CFR § 100.5, ECB Decision 2013/10, or Bank of England scheme), central banks strictly require a notarized affidavit proving under penalty of perjury that the missing portion was completely destroyed.
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="affidavit-jurisdiction">Applicable Jurisdiction / Authority:</label>
+            <select id="affidavit-jurisdiction" class="styled-select">
+              <option value="US">United States (BEP / 31 CFR Part 100)</option>
+              <option value="EU">Eurozone (ECB Decision 2013/10)</option>
+              <option value="UK">United Kingdom (Bank of England Act)</option>
+              <option value="CA">Canada (Bank of Canada Act)</option>
+              <option value="MX">Mexico (Banco de México Rule 10/2006)</option>
+              <option value="JP">Japan (Bank of Japan Act)</option>
+              <option value="AU">Australia (Reserve Bank of Australia)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="affidavit-incident-date">Date of Incident / Destruction:</label>
+            <input type="date" id="affidavit-incident-date" class="styled-input">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="affidavit-destruction-cause">Specific Cause of Total Destruction:</label>
+          <select id="affidavit-destruction-cause" class="styled-select">
+            <option value="Thermal / House Fire">Thermal / House Fire (Ash residue only, remaining portion incinerated)</option>
+            <option value="Industrial / Cross-Cut Shredder">Industrial / Cross-Cut Shredder (Fragmented beyond physical reconstitution)</option>
+            <option value="Marine / Flood Submersion">Marine / Severe Flood Submersion (Dissolved organic cellulose pulp)</option>
+            <option value="Chemical Acid / Alkaline Reaction">Chemical Reaction (Severe caustic decomposition)</option>
+            <option value="Highway / Transportation Trauma">Transportation / Highway Mechanical Trauma (Torn and lost in transit)</option>
+            <option value="Animal Consumption">Domestic Animal / Livestock Consumption (Involuntary digestion)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="affidavit-location">Incident Physical Location (City, State/Province, Country):</label>
+          <input type="text" id="affidavit-location" class="styled-input" placeholder="e.g. Austin, Texas, USA" value="Austin, Texas, USA">
+        </div>
+        <div class="form-group">
+          <label for="affidavit-generated-text">Legal Affidavit Declaration Preview:</label>
+          <textarea id="affidavit-generated-text" class="styled-textarea" rows="7" readonly></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-copy-affidavit" class="btn btn-secondary">📋 Copy Declaration</button>
+        <button id="btn-attach-affidavit" class="btn btn-accent">Attach to Claim Dossier</button>
+        <button id="btn-dismiss-affidavit" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Friendly Mainstream Onboarding Modal (Soften Experience & Consumer-First Directive) -->
+  <div id="modal-onboarding" class="modal-overlay">
+    <div class="modal-card modal-medium onboarding-modal-card">
+      <div class="modal-header">
+        <div class="onboarding-header-title">
+          <span class="onboarding-emoji">💸</span>
+          <div>
+            <h3 class="modal-title" style="margin:0;">Don't Panic, It's Still Money!</h3>
+            <span class="onboarding-sub">Official Bearer Protection Guide</span>
+          </div>
+        </div>
+        <button id="btn-onboarding-close" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body onboarding-body">
+        <div class="onboarding-hero-banner">
+          <p class="onboarding-lead">
+            Did your money get ripped in a pocket, washed in the laundry, chewed by a pet, or singed in a fire?
+            <strong>Under central bank laws worldwide, genuine currency never loses its value simply because it is damaged.</strong>
+          </p>
+        </div>
+
+        <div class="onboarding-steps-grid">
+          <div class="onboarding-step-card">
+            <div class="step-num-bubble">1</div>
+            <div class="step-icon">📸</div>
+            <h4>Snap or Upload</h4>
+            <p>Take a quick photo of your damaged banknote on a dark, flat table.</p>
+          </div>
+
+          <div class="onboarding-step-card">
+            <div class="step-num-bubble">2</div>
+            <div class="step-icon">⚖️</div>
+            <h4>The 50% Rule</h4>
+            <p>Our offline scanner checks if you have more than half of the original note intact.</p>
+          </div>
+
+          <div class="onboarding-step-card">
+            <div class="step-num-bubble">3</div>
+            <div class="step-icon">💵</div>
+            <h4>100% Cash Back</h4>
+            <p>If >50% remains, any commercial bank will exchange it for crisp fresh cash!</p>
+          </div>
+        </div>
+
+        <div class="onboarding-tip-box">
+          <span class="tip-icon">💡</span>
+          <div class="tip-text">
+            <strong>Golden Rule:</strong> Never use scotch tape or glue directly on torn banknote edges! Keep your pieces safe in a clean envelope or plastic sleeve.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer onboarding-footer">
+        <button id="btn-onboarding-sample" class="btn btn-secondary">🧪 Try Sample Damaged Bill</button>
+        <button id="btn-onboarding-start" class="btn btn-primary">🚀 Start My Free Assessment</button>
       </div>
     </div>
   </div>

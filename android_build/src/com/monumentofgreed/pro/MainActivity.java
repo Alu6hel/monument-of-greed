@@ -1,17 +1,25 @@
 package com.monumentofgreed.pro;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,7 +36,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Immersive full-screen UI setup
+        // Immersive UI setup compatible with freeform and multi-window
         getWindow().getDecorView().setSystemUiVisibility(
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -57,18 +65,38 @@ public class MainActivity extends Activity {
         settings.setSupportZoom(false);
         settings.setBuiltInZoomControls(false);
 
+        // Enable Chrome DevTools inspection
+        WebView.setWebContentsDebuggingEnabled(true);
+
         // Hardware acceleration
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
+        // Native JavaScript Bridge
+        webView.addJavascriptInterface(new AndroidBridge(), "AndroidBridge");
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (request != null && request.getUrl() != null) {
+                    return handleUrl(request.getUrl().toString());
+                }
+                return false;
+            }
+
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith("tel:") || url.startsWith("mailto:") || url.contains("google.com/maps")) {
+                return handleUrl(url);
+            }
+
+            private boolean handleUrl(String url) {
+                if (url == null) return false;
+                if (url.startsWith("tel:") || url.startsWith("mailto:") || url.contains("google.com/maps") || url.startsWith("https://maps.google.com")) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                         return true;
                     } catch (Exception e) {
+                        Log.e(TAG, "Cannot launch external handler for: " + url, e);
                         return false;
                     }
                 }
@@ -94,6 +122,18 @@ public class MainActivity extends Activity {
                 });
             }
 
+            // JavaScript alert dialog that doesn't freeze the WebView
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Monument of Greed")
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> result.confirm())
+                    .setOnCancelListener(dialog -> result.cancel())
+                    .show();
+                return true;
+            }
+
             // File Chooser for gallery / photo upload
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
@@ -116,6 +156,29 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+    }
+
+    public class AndroidBridge {
+        @JavascriptInterface
+        public void printDocument(final String title) {
+            runOnUiThread(() -> {
+                try {
+                    PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+                    if (printManager != null) {
+                        String docName = (title != null && !title.isEmpty()) ? title : "MonumentOfGreed_Dossier";
+                        PrintDocumentAdapter adapter = webView.createPrintDocumentAdapter(docName);
+                        printManager.print(docName, adapter, new PrintAttributes.Builder().build());
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error initiating Android print", e);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public boolean isNativeApp() {
+            return true;
+        }
     }
 
     private void checkAndRequestPermissions() {
@@ -156,6 +219,11 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        if (filePathCallback != null) {
+            filePathCallback.onReceiveValue(null);
+            filePathCallback = null;
+            return;
+        }
         if (webView != null && webView.canGoBack()) {
             webView.goBack();
         } else {

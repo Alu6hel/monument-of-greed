@@ -221,6 +221,17 @@ body {
 /* --------------------------------------------------------------------------
    3. APP CONTAINER & LAYOUT
    -------------------------------------------------------------------------- */
+.ambient-motion-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
 .app-root {
   display: flex;
   flex-direction: column;
@@ -229,6 +240,7 @@ body {
   max-width: 540px;
   margin: 0 auto;
   position: relative;
+  z-index: 1;
   background: transparent;
 }
 
@@ -1019,6 +1031,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: pan-y;
 }
 
 .camera-stream {
@@ -1033,6 +1046,47 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  touch-action: pan-y;
+}
+
+.perspective-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  touch-action: none;
+  z-index: 15;
+}
+
+.perspective-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.corner-pin {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #3b82f6;
+  border: 3px solid #ffffff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+  z-index: 20;
+}
+
+.corner-pin:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.25);
+  background: #2563eb;
 }
 
 /* Aspect Ratio Overlay Frame */
@@ -1375,6 +1429,21 @@ body {
   border-radius: var(--radius-xs);
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 4px;
+  position: relative;
+  touch-action: none;
+}
+
+.grid-photo-backdrop {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  object-fit: fill;
+  pointer-events: none;
+  opacity: 0.4;
+  border-radius: 2px;
+  z-index: 1;
 }
 
 .grid-100-cells {
@@ -1385,6 +1454,9 @@ body {
   width: 100%;
   height: 100%;
   user-select: none;
+  touch-action: none;
+  position: relative;
+  z-index: 2;
 }
 
 .grid-cell {
@@ -1392,6 +1464,7 @@ body {
   border-radius: 2px;
   cursor: pointer;
   transition: transform 0.1s ease, background 0.15s ease;
+  touch-action: none;
 }
 
 .grid-cell:hover {
@@ -2051,3 +2124,738 @@ body.theme-cyber-mint .banner-green {
   border-top: 1px solid var(--border-light);
   background: var(--bg-card-subtle);
 }
+
+/* --------------------------------------------------------------------------
+   19. UPGRADED CONTROLS & NEW FEATURES
+   -------------------------------------------------------------------------- */
+.pill-menu-action-btn {
+  border: none;
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.pill-menu-action-btn:hover {
+  transform: translateY(-1px);
+  background: var(--pill-active-bg);
+  color: var(--pill-active-text);
+}
+
+.side-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.side-lbl {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+.side-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-full);
+  padding: 2px;
+  gap: 2px;
+}
+.side-tab {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.side-tab.active {
+  background: var(--bg-card);
+  color: var(--text-main);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.grid-backdrop-control {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+.backdrop-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.aspect-indicator-chip {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-left: 8px;
+}
+
+/* Multi-Note Batch Envelope */
+.batch-envelope-card {
+  margin-top: 24px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.batch-envelope-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 12px;
+}
+.batch-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.batch-stats {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--border-active);
+}
+.batch-table-wrap {
+  overflow-x: auto;
+}
+.batch-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.batch-table th {
+  text-align: left;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--text-muted);
+  font-weight: 800;
+  border-bottom: 1px solid var(--border-light);
+}
+.batch-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+.empty-batch-row td {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 20px 10px;
+  font-style: italic;
+}
+.batch-actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Large Modal & Affidavit Callouts */
+.modal-large {
+  max-width: 620px;
+}
+.affidavit-callout {
+  background: rgba(245, 158, 11, 0.1);
+  border-left: 4px solid #f59e0b;
+  padding: 10px 14px;
+  border-radius: var(--radius-xs);
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   21. FINTECH REVENUE & CONTRAST FRAMING CARD (Photo 2 & Price Anchoring)
+   ========================================================================== */
+.fintech-summary-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.fintech-summary-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  transform: skewX(-20deg);
+  animation: card-shimmer 7s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes card-shimmer {
+  0%, 80% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.fintech-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.fintech-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.fintech-main-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: clamp(1.8rem, 5vw, 2.3rem);
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.fintech-currency-symbol {
+  font-size: 1.4rem;
+  color: var(--accent-coral);
+  font-weight: 800;
+}
+
+.fintech-delta-pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+}
+
+.fintech-delta-pill.positive {
+  background: rgba(16, 185, 129, 0.14);
+  color: #10b981;
+}
+
+.btn-fintech-action {
+  background: var(--pill-bg);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-fintech-action:hover, .btn-fintech-action:active {
+  background: var(--accent-tangerine);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Novice Exclusive / Bearer Protection Banner (Photo 2 Style) */
+.contrast-anchor-banner {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contrast-facet-shape {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 140px;
+  height: 140px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.contrast-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #fbbf24;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.contrast-headline {
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  color: #f8fafc;
+}
+
+.contrast-subtext {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+/* Metric Pairs Row (Photo 2 Inspired) */
+.fintech-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.fintech-metric-box .ft-num {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+
+.fintech-metric-box .ft-lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Contrast Effect Comparison Bar */
+.contrast-comparison-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  gap: 8px;
+}
+
+.contrast-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.contrast-col-title {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.contrast-col-val {
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.contrast-col-desc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.contrast-col-divider {
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   22. INTERACTIVE 3D HOLOGRAPHIC BANKNOTE SHOWCASE STAGE
+   ========================================================================== */
+.banknote-3d-stage {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+}
+
+.stage-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stage-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-title {
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: var(--text-main);
+}
+
+.stage-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.stage-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-micro {
+  background: var(--pill-bg);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-micro:hover {
+  background: var(--accent-tangerine);
+  color: #ffffff;
+}
+
+.card-3d-scene {
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 8px;
+  min-height: 190px;
+}
+
+.card-3d-object {
+  width: 100%;
+  max-width: 380px;
+  height: 168px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.card-3d-object.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-3d-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: #0f172a;
+}
+
+.card-3d-front {
+  transform: rotateY(0deg);
+}
+
+.card-3d-back {
+  transform: rotateY(180deg);
+}
+
+.card-3d-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.card-3d-holo-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.3) 45%, rgba(254, 240, 138, 0.4) 50%, rgba(147, 197, 253, 0.4) 55%, transparent 75%);
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.card-3d-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #f8fafc;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  backdrop-filter: blur(4px);
+}
+
+.stage-footer-hint {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   23. FRIENDLY CONSUMER ONBOARDING MODAL (Soften Experience Directive)
+   ========================================================================== */
+.onboarding-modal-card {
+  max-width: 520px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.onboarding-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.onboarding-emoji {
+  font-size: 2rem;
+  animation: bounce-subtle 2s infinite ease-in-out;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.onboarding-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.onboarding-hero-banner {
+  background: var(--bg-card-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--accent-coral);
+}
+
+.onboarding-lead {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-main);
+}
+
+.onboarding-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.onboarding-step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 10px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-num-bubble {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  background: var(--accent-coral);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 900;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-icon {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.onboarding-step-card h4 {
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.onboarding-step-card p {
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.onboarding-tip-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.onboarding-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   24. SMALL ANDROID SCREEN RESPONSIVE SNAPPING (320px - 480px Breakpoints)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .app-root {
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  .main-content {
+    padding: 12px 12px 90px 12px;
+  }
+
+  /* Compact Hero Card on Phones */
+  .hero-action-card {
+    padding: 16px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .circle-btn {
+    width: 62px;
+    height: 62px;
+  }
+
+  .circle-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .trigger-label {
+    font-size: 0.72rem;
+  }
+
+  /* Fintech Card on Small Phones */
+  .fintech-summary-card {
+    padding: 14px;
+    border-radius: var(--radius-md);
+    gap: 12px;
+  }
+
+  .fintech-main-amount {
+    font-size: 1.6rem;
+  }
+
+  .fintech-delta-pill {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .onboarding-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card-3d-object {
+    height: 145px;
+  }
+
+  /* Bottom Navigation Ergonomics */
+  .bottom-nav {
+    min-height: 62px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+  }
+
+  .nav-tab-btn {
+    min-width: 44px;
+    padding: 6px 2px;
+  }
+
+  .nav-tab-label {
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .fintech-main-amount {
+    font-size: 1.35rem;
+  }
+
+  .contrast-comparison-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contrast-col-divider {
+    padding: 4px 0;
+  }
+
+  .circular-triggers-row {
+    gap: 8px;
+  }
+
+  .circle-btn {
+    width: 54px;
+    height: 54px;
+  }
+}
+
+

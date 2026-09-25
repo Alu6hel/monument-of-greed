@@ -1,0 +1,43 @@
+{
+  "statutoryTitle": "Title 31, Code of Federal Regulations, Part 100",
+  "subtitle": "Exchange of Mutilated Paper Currency and Coin",
+  "promulgatingAgency": "Department of the Treasury, Bureau of Engraving and Printing",
+  "authority": "31 U.S.C. 5120; 5 U.S.C. 301",
+  "effectiveDate": "2026-01-01",
+  "scope": "Lawful exchange of mutilated and destroyed United States paper currency across commercial banking institutions and the Federal Reserve Cash Office.",
+  "sections": [
+    {
+      "sectionNumber": "§ 100.5",
+      "heading": "Mutilated paper currency; exchange standards",
+      "statutoryText": "(a) Lawful paper currency of the United States which has been mutilated will be exchanged at face amount if clearly more than 50 percent of each note can be identified as being the remainder of an authentic original note, and the remaining portion displays sufficient key security features including at least one intact numerical denomination or serial identifier.\n\n(b) Mutilated paper currency will be exchanged at face amount notwithstanding that 50 percent or less of each note remains if the Director of the Bureau of Engraving and Printing is satisfied that the missing portions have been totally destroyed. The claim must be supported by the affidavit of the bearer and such other evidence as the Director may require, establishing the manner and degree of destruction, and demonstrating that no portion of the missing currency remains in existence to be redeemed at any subsequent time.",
+      "redemptionCriteria": {
+        "overFiftyPercent": {
+          "status": "Automatic Full Face Value Exchange",
+          "requirements": ["Identifiable authentic substrate", "Surface area > 50.0%", "At least one legible serial or treasury marker"],
+          "action": "Immediate cash replacement or account deposit at any commercial bank counter or Federal Reserve Cash Office."
+        },
+        "subFiftyPercent": {
+          "status": "Forensic Bureau Review / Sworn Affidavit Required",
+          "requirements": ["Sworn Affidavit of Total Destruction executed under penalty of perjury", "Statement of casualty detailing thermal, mechanical, chemical, or transit trauma", "Physical packaging in rigid protective containers without adhesive tape"],
+          "action": "Direct postal submission to BEP Mutilated Currency Division, Room 344-A, Washington, DC 20228."
+        }
+      }
+    },
+    {
+      "sectionNumber": "§ 100.6",
+      "heading": "Packaging and submission procedures",
+      "statutoryText": "Mutilated currency must be submitted in the condition in which it was discovered. Do not attempt to separate charred or water-soaked fragments. Do not apply cellulose adhesive tape, glue, or laminates to torn margins. Fragments must be packed in soft tissue or cotton, enclosed in a sealed protective sleeve, and forwarded by registered mail with tracking."
+    },
+    {
+      "sectionNumber": "§ 100.7",
+      "heading": "Forensic examination and adjudication",
+      "statutoryText": "Currency examiners employ high-resolution multispectral optical examination, beta-radiography, paper mass micro-gravimetry, and intaglio ink chromatography to verify authenticity and determine exact surface area percentages."
+    }
+  ],
+  "tellerInstructions": {
+    "step1": "Verify bearer identity and account holder standing.",
+    "step2": "Examine physical fragment using Monument of Greed 100-grid or optical overlay to confirm surface exceeds 50.0%.",
+    "step3": "Check for presence of continuous substrate and authentic intaglio raised ink.",
+    "step4": "Exchange note 1-to-1 or credit depositor account under Federal Reserve Operating Circular No. 2."
+  }
+}

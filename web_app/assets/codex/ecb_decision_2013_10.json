@@ -1,0 +1,31 @@
+{
+  "statutoryTitle": "Decision of the European Central Bank of 19 April 2013 (ECB/2013/10)",
+  "subtitle": "On the denominations, specifications, reproduction, exchange and withdrawal of euro banknotes",
+  "promulgatingAgency": "European Central Bank / Eurosystem",
+  "effectiveDate": "2013-05-15",
+  "legalReference": "OJ L 118, 30.4.2013, p. 37",
+  "articles": [
+    {
+      "articleNumber": "Article 3",
+      "heading": "Exchange of mutilated or damaged euro banknotes",
+      "statutoryText": "1. National Central Banks (NCBs) shall exchange mutilated or damaged genuine legal tender euro banknotes where:\n(a) more than 50% of the banknote surface area is presented; or\n(b) 50% or less of the banknote is presented, if the applicant proves that the missing parts have been destroyed.\n\n2. For the purposes of paragraph 1, NCBs shall charge a fee where euro banknotes have been mutilated or damaged as a result of anti-theft devices, or where an applicant submits 100 or more mutilated or damaged euro banknotes.\n\n3. Where NCBs know or have sufficient reason to believe that a criminal offence has been committed, they shall refuse to exchange the damaged euro banknotes and shall hand them over to the competent authorities.",
+      "redemptionCriteria": {
+        "overFiftyPercent": {
+          "status": "Immediate Replacement at Face Value",
+          "threshold": 50.0,
+          "authority": "All Eurosystem National Central Bank counters (Bundesbank, Banque de France, Banca d'Italia, Banco de España, etc.) and commercial retail banks."
+        },
+        "subFiftyPercent": {
+          "status": "Destruction Affidavit Required",
+          "threshold": 50.0,
+          "authority": "NCB Central Cash Offices upon submission of sworn destruction certificate and forensic inspection."
+        }
+      }
+    }
+  ],
+  "technicalStandards": {
+    "substrate": "Pure 100% cotton fiber with embedded polyvinyl alcohol sizing.",
+    "opticalSecurityFeatures": ["Emerald Number (color shifting)", "Portrait Watermark", "Portrait Hologram Window with Satellite Kinegram", "Security Thread with Microprinting"],
+    "counterProcedures": "Commercial credit institutions are required to accept damaged notes for forwarding or credit under Article 6 of Regulation (EC) No 1338/2001."
+  }
+}

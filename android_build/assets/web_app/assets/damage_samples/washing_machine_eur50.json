@@ -1,0 +1,19 @@
+{
+  "sampleId": "SAMPLE-WASH-EUR50",
+  "title": "Domestic Laundry Macerated €50 Banknote",
+  "currency": "EUR",
+  "denomination": 50,
+  "incidentCategory": "Laundry Maceration / Detergent Bleach",
+  "intactPercentage": 61.4,
+  "statutoryStatus": "PASS_THRESHOLD",
+  "statutoryCitation": "ECB Decision ECB/2013/10 Art. 3",
+  "forensicObservations": "Note suffered high spin cycle trauma with partial tearing across right architectural arch. Hologram foil partially delaminated, but Europa watermark and emerald number are 100% genuine. Optical area: 61.4% intact.",
+  "damagePath": [
+    {"x": 0.08, "y": 0.10},
+    {"x": 0.65, "y": 0.12},
+    {"x": 0.62, "y": 0.40},
+    {"x": 0.68, "y": 0.65},
+    {"x": 0.58, "y": 0.90},
+    {"x": 0.06, "y": 0.88}
+  ]
+}
