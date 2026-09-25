@@ -1,0 +1,39 @@
+{
+  "fieldManualTitle": "Central Bank Mutilated Currency Physical Handling & Stabilization Manual",
+  "version": "4.2.1-RELEASE",
+  "sections": [
+    {
+      "title": "Module 1: Thermal Damage & Charred Fragility Stabilization",
+      "protocol": "Under US 31 CFR 100.5 and ECB Decision 2013/10, fire-damaged currency must never be forcibly unfolded, ironed, or laminated. Burned cotton-linen paper undergoes carbon embrittlement where cellulose fibers fracture upon mechanical pressure. Stabilize by sliding stiff acid-free archival card stock beneath the substrate. If charred notes are fused in a solid mass, submit the block intact to the central bank forensic laboratory—do not attempt physical layer separation.",
+      "precautions": [
+        "Do not apply liquid adhesives or standard scotch tape across charred zones.",
+        "Store in rigid tin, plastic, or hard-walled containers to prevent pulverization during transit.",
+        "Include all loose crumb ash particles in a sealed polyethylene baggie; central bank labs examine ash under spectral microscopy for serial verification."
+      ]
+    },
+    {
+      "title": "Module 2: Water Saturation, Mold Prevention & Freeze-Drying Protocols",
+      "protocol": "Waterlogged paper currency is highly vulnerable to cellulose delamination and rapid Aspergillus mold proliferation within 24 to 48 hours. If drying cannot be completed immediately under controlled dehumidified ambient conditions, the recommended central bank stabilization protocol is flash freezing (-18°C) in sealed airtight bags. Freezing halts microbial decay and stabilizes ink pigments until forensic evaluation or freeze-drying sublimation can take place.",
+      "precautions": [
+        "Never use microwave radiation or high-temperature clothes irons; heated steam causes irreversible cockling and shrinkage.",
+        "Air dry single layers horizontally on unprinted parchment or lint-free blotter paper."
+      ]
+    },
+    {
+      "title": "Module 3: Polymer Substrate Thermal Contraction & Window Verification",
+      "protocol": "Biaxially Oriented Polypropylene (BOPP) polymer banknotes (used in GBP, CAD, AUD, MXN, and JMD) possess extraordinary tear resistance but soften and distort when exposed to temperatures exceeding 120°C (such as domestic clothes dryers or proximity to flame). The clear transparent security window contains diffractive optical elements (DOEs) and micro-embossed features that remain valid even when the outer substrate contracts.",
+      "precautions": [
+        "Do not attempt to stretch or flatten shrunken polymer notes with heat.",
+        "Measure the surviving area relative to the original standard banknote dimensions rather than the distorted contracted perimeter."
+      ]
+    },
+    {
+      "title": "Module 4: Sub-50% Destruction Evidentiary Burden & Affidavits",
+      "protocol": "When less than 50% of a genuine banknote survives, the bearer must satisfy the central bank that the missing portions have been completely destroyed. Acceptable evidence includes official local fire department incident reports, sworn affidavits executed under penalty of perjury, death/disaster declarations, or industrial shredder disposal logs. The Bureau of Engraving and Printing (BEP) reviews over 20,000 sub-50% claims annually with an average redemption rate of 85% when properly supported by destruction affidavits.",
+      "precautions": [
+        "Document date, exact geographical location, and specific cause of destruction.",
+        "Correlate serial fragments with surrounding consecutive note remnants if multiple notes were destroyed."
+      ]
+    }
+  ]
+}

@@ -2858,4 +2858,560 @@ body.theme-cyber-mint .banner-green {
   }
 }
 
+/* ==========================================================================
+   24. RECIPROCITY PRINCIPLE: UNLOCKED BEARER GIFT CARD
+   ========================================================================== */
+.reciprocity-gift-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.05) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reciprocity-gift-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.12);
+}
+
+.reciprocity-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.reciprocity-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.reciprocity-info {
+  flex: 1;
+}
+
+.reciprocity-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.reciprocity-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.reciprocity-action-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-reciprocity-claim {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  transition: transform 0.15s ease, filter 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-reciprocity-claim:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+.btn-reciprocity-dismiss {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-xs);
+  transition: color 0.15s ease;
+}
+
+.btn-reciprocity-dismiss:hover {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   25. TACTILE INTERACTIVE FINANCIAL RECOVERY CHART
+   ========================================================================== */
+.tactile-chart-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tactile-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.tactile-chart-title-group {
+  flex: 1;
+}
+
+.tactile-chart-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--accent-primary);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  margin-bottom: 4px;
+}
+
+.tactile-chart-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: var(--text-main);
+}
+
+.tactile-chart-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tactile-chart-hud {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+  min-width: 100px;
+  transition: all 0.15s ease-out;
+}
+
+.hud-item-num {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.hud-symbol-denom {
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.hud-salvage-val {
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.tactile-chart-container {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  background: var(--bg-card-subtle);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tactile-chart-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tactile-chart-glow-cursor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 12px 3px rgba(16, 185, 129, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, left 0.08s ease-out;
+}
+
+.tactile-chart-container:hover .tactile-chart-glow-cursor,
+.tactile-chart-container.touching .tactile-chart-glow-cursor {
+  opacity: 1;
+}
+
+.tactile-chart-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.chart-legend-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-light);
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.chart-legend-pill.active {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   26. PACKAGE MANIFEST & TACTILE ITEM INFO SHEET
+   ========================================================================== */
+.package-manifest-envelope {
+  margin-top: 20px;
+}
+
+.package-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.package-badge-tag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--accent-primary);
+  background: rgba(16, 185, 129, 0.12);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.package-id-code {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.package-manifest-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 16px 0;
+}
+
+.package-items-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.package-item-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.package-item-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.1);
+  transform: translateY(-1px);
+}
+
+.package-item-card.expanded {
+  border-color: var(--accent-primary);
+  background: var(--bg-card);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.item-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.item-num-pill {
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-primary);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.item-symbol-badge {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.item-damage-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.item-payout-badge {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--accent-primary);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.item-card-details-drawer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  display: none;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.package-item-card.expanded .item-card-details-drawer {
+  display: block;
+}
+
+.item-forensic-desc {
+  font-size: 0.78rem;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.item-stat-table {
+  width: 100%;
+  font-size: 0.72rem;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.item-stat-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.item-stat-table td:first-child {
+  color: var(--text-muted);
+  width: 38%;
+  font-weight: 600;
+}
+
+.item-stat-table td:last-child {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.tactile-meter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.tactile-meter-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.tactile-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  border-radius: 999px;
+  transition: width 0.4s ease-out;
+}
+
+.tactile-meter-val {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  min-width: 44px;
+}
+
+/* ==========================================================================
+   27. RECIPROCITY MODAL
+   ========================================================================== */
+.gift-welcome-alert {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.gift-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.gift-card-box {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gift-card-badge {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #f59e0b;
+  margin-bottom: 4px;
+}
+
+.gift-card-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+
+.gift-card-text {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.statutory-quote-box {
+  background: var(--bg-card);
+  border-left: 3px solid #f59e0b;
+  padding: 8px 10px;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 10px;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+}
+
+.mailer-address-preview {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-light);
+  padding: 8px 10px;
+  font-size: 0.72rem;
+  font-family: monospace;
+  color: var(--text-main);
+  line-height: 1.35;
+  margin-bottom: 10px;
+  border-radius: var(--radius-xs);
+}
+
+.gift-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+/* Small Screens Responsive Enhancements (Snap to 360px & 320px) */
+@media (max-width: 480px) {
+  .reciprocity-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reciprocity-action-row {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .tactile-chart-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tactile-chart-hud {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .gift-sections-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 

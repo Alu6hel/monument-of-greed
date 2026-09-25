@@ -63,6 +63,25 @@
       }
     }
 
+    playHarmonicTone(freq = 440, duration = 0.08) {
+      this.vibrate(10);
+      if (this.muted) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.07, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + duration);
+      } catch (e) {}
+    }
+
     tap() {
       this.vibrate(12);
       if (this.muted) return;
@@ -655,6 +674,8 @@
     initNavigation();
     initSoundToggle();
     initFintechSummary();
+    initReciprocity();
+    initTactileChart();
     initOnboarding();
     initOpticalScanner();
     init3DBanknoteInspector();
@@ -663,7 +684,7 @@
     initDatabaseView();
     initLocatorView();
     initDossierView();
-    initBatchEnvelope();
+    initPackageManifest();
     initAffidavitGenerator();
     initModals();
     renderFeedCards('all');
@@ -2184,15 +2205,131 @@
   }
 
   // =========================================================================
-  // 10. MULTI-NOTE SALVAGE BATCH ENVELOPE
+  // 10. MULTI-ITEM PACKAGE MANIFEST & TACTILE INFO SHEET
   // =========================================================================
-  function initBatchEnvelope() {
+  const DEFAULT_PACKAGE_ITEMS = [
+    {
+      id: 101,
+      itemNumber: 1,
+      currency: 'USD',
+      symbol: '$',
+      currencyName: 'US Dollar',
+      denom: '100',
+      faceValue: 100.00,
+      damageIcon: '🔥',
+      damageType: 'Thermal Char & Perimeter Carbonization',
+      percent: 74.2,
+      verdict: 'Full 100% Payout Guaranteed',
+      statusClass: 'status-guaranteed',
+      serialNumber: 'LB 48921044 D',
+      substrate: '75% Cotton, 25% Linen with 3D Security Ribbon',
+      centralBankArticle: '31 CFR § 100.5(a): Clearly more than 50% intact.',
+      forensicDescription: 'Note exposed to safe box fire. Franklin portrait and 3D ribbon intact. Right border carbonized up to 25.8% perimeter loss. Serial numbers legible.',
+      handlingAdvice: 'Do not attempt to separate curled charred edges. Place between acid-free sheets in a rigid mailer.'
+    },
+    {
+      id: 102,
+      itemNumber: 2,
+      currency: 'USD',
+      symbol: '$',
+      currencyName: 'US Dollar',
+      denom: '100',
+      faceValue: 100.00,
+      damageIcon: '💧',
+      damageType: 'Hydraulic Waterlogging & Pulp Saturation',
+      percent: 88.5,
+      verdict: 'Full 100% Payout Guaranteed',
+      statusClass: 'status-guaranteed',
+      serialNumber: 'JL 71029381 A',
+      substrate: '75% Cotton, 25% Linen with Polymer Security Strip',
+      centralBankArticle: '31 CFR § 100.5(a): Full face value payable without affidavit.',
+      forensicDescription: 'Recovered from flooded basement. 88.5% surface completely intact. Microprinting intact under 10x magnification.',
+      handlingAdvice: 'Allow to dry naturally at room temperature. Do not microwave or iron.'
+    },
+    {
+      id: 103,
+      itemNumber: 3,
+      currency: 'EUR',
+      symbol: '€',
+      currencyName: 'Euro',
+      denom: '50',
+      faceValue: 55.00,
+      damageIcon: '✂️',
+      damageType: 'Mechanical Cross-Cut Shred & Tearing',
+      percent: 61.4,
+      verdict: 'Full 100% Face Value Replacement',
+      statusClass: 'status-guaranteed',
+      serialNumber: 'VA 4829104812',
+      substrate: '100% Pure Cotton Fiber with Europa Hologram Window',
+      centralBankArticle: 'ECB Decision ECB/2013/10 Art 3: Exceeds 50% threshold.',
+      forensicDescription: 'Accidentally fed through shredder. Three surviving interlocking pieces assembled on clear grid. Total area equals 61.4% of standard surface.',
+      handlingAdvice: 'Fix assembled fragments in place with clear archival mounting tape on reverse side only.'
+    },
+    {
+      id: 104,
+      itemNumber: 4,
+      currency: 'GBP',
+      symbol: '£',
+      currencyName: 'British Pound',
+      denom: '20',
+      faceValue: 26.00,
+      damageIcon: '🐾',
+      damageType: 'Domestic Animal Attack & Tumble Dry',
+      percent: 68.9,
+      verdict: 'Full 100% BoE Reimbursement',
+      statusClass: 'status-guaranteed',
+      serialNumber: 'BL28 991823',
+      substrate: 'BOPP Polymer (J.M.W. Turner)',
+      centralBankArticle: 'Bank of England Damaged Banknote Policy: Clear serial number and >50% polymer body intact.',
+      forensicDescription: 'Polymer note partially chewed by family retriever and run through high-heat dryer. Translucent window and holographic foil intact.',
+      handlingAdvice: 'Enclose inside rigid submission sleeve without stretching polymer film.'
+    },
+    {
+      id: 105,
+      itemNumber: 5,
+      currency: 'CAD',
+      symbol: 'CA$',
+      currencyName: 'Canadian Dollar',
+      denom: '100',
+      faceValue: 75.00,
+      damageIcon: '⚡',
+      damageType: 'Industrial Solvent Bleach & Leaching',
+      percent: 79.1,
+      verdict: 'Full 100% Bank of Canada Redemption',
+      statusClass: 'status-guaranteed',
+      serialNumber: 'EKP 8192033',
+      substrate: 'Frontier Series Synthetic Polypropylene Substrate',
+      centralBankArticle: 'Bank of Canada Act, Sec 25: Authentic substrate confirmed; redemption claim accepted.',
+      forensicDescription: 'Substrate exposed to industrial degreaser in maintenance workshop. Inks partly washed, but transparent maple leaf window intact.',
+      handlingAdvice: 'Store in well-ventilated dry pouch. Do not apply chemical neutralizers.'
+    }
+  ];
+
+  function initPackageManifest() {
     const btnAdd = document.getElementById('btn-add-to-batch');
     const btnClear = document.getElementById('btn-clear-batch');
+    const btnLoadSample = document.getElementById('btn-load-sample-package');
+    const btnPrintManifest = document.getElementById('btn-print-manifest');
+
+    // Default to the 5 authentic consignment items
+    if (!state.batchNotes || state.batchNotes.length === 0) {
+      state.batchNotes = JSON.parse(JSON.stringify(DEFAULT_PACKAGE_ITEMS));
+    }
+
+    if (btnLoadSample) {
+      btnLoadSample.addEventListener('click', () => {
+        state.batchNotes = JSON.parse(JSON.stringify(DEFAULT_PACKAGE_ITEMS));
+        renderPackageManifest();
+        if (typeof updateTactileChartData === 'function') {
+          updateTactileChartData();
+        }
+        audio.successChord();
+      });
+    }
 
     if (btnAdd) {
       btnAdd.addEventListener('click', () => {
-        addCurrentToBatch();
+        addCurrentToPackage();
         audio.successChord();
       });
     }
@@ -2200,82 +2337,236 @@
     if (btnClear) {
       btnClear.addEventListener('click', () => {
         if (state.batchNotes.length === 0) return;
-        if (confirm('Clear all notes from this salvage envelope?')) {
+        if (confirm('Clear all items from this package manifest?')) {
           state.batchNotes = [];
-          renderBatchTable();
+          renderPackageManifest();
+          if (typeof updateTactileChartData === 'function') {
+            updateTactileChartData();
+          }
           audio.tap();
         }
       });
     }
 
-    renderBatchTable();
+    if (btnPrintManifest) {
+      btnPrintManifest.addEventListener('click', () => {
+        spoolPackageManifestPrint();
+        audio.shutter();
+      });
+    }
+
+    renderPackageManifest();
   }
 
-  function addCurrentToBatch() {
+  function addCurrentToPackage() {
     const reg = CURRENCY_REGISTRY.find(c => c.code === state.scanner.currencyCode) || CURRENCY_REGISTRY[0];
     const denom = state.scanner.denomination || '20';
     const percent = state.scanner.measuredPercent || 58.4;
     const passed = percent >= 50.5;
 
+    const itemNumber = (state.batchNotes.length + 1);
     const noteItem = {
       id: Date.now(),
+      itemNumber: itemNumber,
       currency: reg.code,
       currencyName: reg.name,
       symbol: reg.symbol || '$',
       denom: denom,
       faceValue: parseFloat(denom) || 0,
+      damageIcon: percent < 50 ? '🔥' : '💧',
+      damageType: percent < 50 ? 'Severe Pyrolysis & Carbonized Ash' : 'Optical Water Damage & Creasing',
       percent: percent,
       verdict: passed ? 'Eligible (100%)' : 'Affidavit Required (≤50%)',
+      statusClass: passed ? 'status-guaranteed' : 'status-affidavit',
+      serialNumber: 'AUTOSCAN-' + Math.floor(Math.random() * 899999 + 100000),
+      substrate: reg.code === 'USD' ? '75% Cotton, 25% Linen' : 'Polymer / Specialty Paper',
+      centralBankArticle: reg.statutoryCode || 'Central Bank Redemption Regulations',
+      forensicDescription: `Assessed via pure client-side optical computer vision. Bilinear perspective warp and Otsu bimodal segmentation confirmed ${percent.toFixed(1)}% surviving surface mass.`,
+      handlingAdvice: 'Place inside protective mylar sleeve. Do not apply scotch tape.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
     state.batchNotes.push(noteItem);
-    renderBatchTable();
+    renderPackageManifest();
+    if (typeof updateTactileChartData === 'function') {
+      updateTactileChartData();
+    }
   }
 
-  function renderBatchTable() {
+  function renderPackageManifest() {
     const tbody = document.getElementById('batch-notes-tbody');
     const countBadge = document.getElementById('batch-notes-count');
     const totalBadge = document.getElementById('batch-total-value');
+    const cardsContainer = document.getElementById('package-items-cards-container');
     if (!tbody) return;
 
     if (state.batchNotes.length === 0) {
-      tbody.innerHTML = '<tr class="empty-batch-row"><td colspan="6">No notes added to envelope yet. Assess a note in the Scanner or Grid, then click below to add.</td></tr>';
-      if (countBadge) countBadge.textContent = '0 Notes';
+      tbody.innerHTML = '<tr class="empty-batch-row"><td colspan="7">No items in package yet. Click "Load Authentic 5-Item Vault Consignment" or add an optical assessment.</td></tr>';
+      if (countBadge) countBadge.textContent = '0 Items';
       if (totalBadge) totalBadge.textContent = '$0.00 Total Salvage Value';
+      if (cardsContainer) cardsContainer.innerHTML = '';
       return;
     }
 
     tbody.innerHTML = '';
+    if (cardsContainer) cardsContainer.innerHTML = '';
+
     let totalVal = 0;
     const firstSymbol = state.batchNotes[0]?.symbol || '$';
 
-    state.batchNotes.forEach((note, idx) => {
-      totalVal += note.faceValue;
+    state.batchNotes.forEach((item, idx) => {
+      totalVal += item.faceValue;
+      const itemNum = item.itemNumber || (idx + 1);
+
+      // 1. Table Row with Item # and Symbol
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><strong>#${idx + 1}</strong></td>
-        <td>${note.currency} — ${note.currencyName}</td>
-        <td><strong>${note.symbol}${note.denom}</strong></td>
-        <td><span class="badge ${note.percent >= 50.5 ? 'badge-success' : 'badge-danger'}">${note.percent.toFixed(1)}%</span></td>
-        <td>${note.verdict}</td>
-        <td><button class="btn-batch-del" data-id="${note.id}" title="Remove note">&times;</button></td>
+        <td><span class="item-num-pill">Item #${itemNum}</span></td>
+        <td><span class="item-symbol-badge">${item.symbol || '$'}</span></td>
+        <td><strong>${item.symbol || ''}${item.denom}</strong> <span class="text-muted">(${item.currency})</span></td>
+        <td><span class="item-damage-tag">${item.damageIcon || '🔥'} ${item.damageType ? item.damageType.split('&')[0] : 'Damage'}</span></td>
+        <td>
+          <div class="tactile-meter-wrap">
+            <div class="tactile-meter-bar">
+              <div class="tactile-meter-fill" style="width: ${Math.min(item.percent, 100)}%;"></div>
+            </div>
+            <span class="tactile-meter-val">${item.percent.toFixed(1)}%</span>
+          </div>
+        </td>
+        <td><span class="badge ${item.percent >= 50.5 ? 'badge-success' : 'badge-warning'}">${item.verdict}</span></td>
+        <td>
+          <button class="btn-sm btn-secondary btn-inspect-item" data-id="${item.id}" type="button" title="Inspect Full Forensic Info">Inspect</button>
+        </td>
       `;
 
-      const delBtn = tr.querySelector('.btn-batch-del');
-      if (delBtn) {
-        delBtn.addEventListener('click', () => {
-          state.batchNotes = state.batchNotes.filter(n => n.id !== note.id);
-          renderBatchTable();
-          audio.tap();
+      const inspectBtn = tr.querySelector('.btn-inspect-item');
+      if (inspectBtn) {
+        inspectBtn.addEventListener('click', () => {
+          toggleItemCardDrawer(item.id);
         });
       }
-
       tbody.appendChild(tr);
+
+      // 2. Expandable Deep Forensic Info Card
+      if (cardsContainer) {
+        const card = document.createElement('div');
+        card.className = 'package-item-card';
+        card.id = `item-card-${item.id}`;
+        card.innerHTML = `
+          <div class="item-card-header">
+            <div class="item-card-title-group">
+              <span class="item-num-pill">Item #${itemNum}</span>
+              <span class="item-symbol-badge">${item.symbol}${item.denom} ${item.currency}</span>
+              <span class="item-damage-tag">${item.damageIcon || '🔥'} ${item.damageType}</span>
+            </div>
+            <div class="item-payout-badge">${item.symbol}${item.faceValue.toFixed(2)} Payout</div>
+          </div>
+          <div class="item-card-details-drawer">
+            <p class="item-forensic-desc">${item.forensicDescription || 'Banknote assessed under statutory currency salvage guidelines.'}</p>
+            <table class="item-stat-table">
+              <tr>
+                <td>Serial Number:</td>
+                <td><strong>${item.serialNumber || 'Verified Legible'}</strong></td>
+              </tr>
+              <tr>
+                <td>Substrate Material:</td>
+                <td>${item.substrate || 'Central Bank Cotton-Linen / Polymer'}</td>
+              </tr>
+              <tr>
+                <td>Surviving Surface:</td>
+                <td><strong>${item.percent.toFixed(1)}% of original geometry</strong></td>
+              </tr>
+              <tr>
+                <td>Central Bank Citation:</td>
+                <td><span class="text-accent">${item.centralBankArticle || '31 CFR § 100'}</span></td>
+              </tr>
+              <tr>
+                <td>Physical Handling Advice:</td>
+                <td>${item.handlingAdvice || 'Handle with tweezers, store in rigid sleeve.'}</td>
+              </tr>
+            </table>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          toggleItemCardDrawer(item.id);
+        });
+
+        cardsContainer.appendChild(card);
+      }
     });
 
-    if (countBadge) countBadge.textContent = `${state.batchNotes.length} Note${state.batchNotes.length === 1 ? '' : 's'}`;
+    if (countBadge) countBadge.textContent = `${state.batchNotes.length} Items`;
     if (totalBadge) totalBadge.textContent = `${firstSymbol}${totalVal.toFixed(2)} Total Salvage Value`;
+  }
+
+  function toggleItemCardDrawer(itemId) {
+    const card = document.getElementById(`item-card-${itemId}`);
+    if (!card) return;
+    const isExpanded = card.classList.contains('expanded');
+    card.classList.toggle('expanded');
+    audio.tap();
+  }
+
+  function spoolPackageManifestPrint() {
+    const title = 'Official Consignment Package Manifest — PKG-2026-USBEP-8842';
+    let itemsHtml = state.batchNotes.map((it, idx) => `
+      <tr>
+        <td style="padding:6px;border:1px solid #ccc;font-weight:bold;">#${it.itemNumber || (idx + 1)}</td>
+        <td style="padding:6px;border:1px solid #ccc;">${it.symbol}${it.denom} ${it.currency}</td>
+        <td style="padding:6px;border:1px solid #ccc;">${it.damageType}</td>
+        <td style="padding:6px;border:1px solid #ccc;">${it.serialNumber || 'N/A'}</td>
+        <td style="padding:6px;border:1px solid #ccc;text-align:right;">${it.percent.toFixed(1)}%</td>
+        <td style="padding:6px;border:1px solid #ccc;text-align:right;font-weight:bold;">${it.symbol}${it.faceValue.toFixed(2)}</td>
+      </tr>
+    `).join('');
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>${title}</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 24px; color: #111; }
+          h2 { margin-bottom: 4px; }
+          .meta { font-size: 12px; color: #555; margin-bottom: 16px; }
+          table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+          th { background: #f0f0f0; padding: 8px; border: 1px solid #ccc; text-align: left; }
+        </style>
+      </head>
+      <body>
+        <h2>Consignment Package Items Manifest & Statutory Info Sheet</h2>
+        <div class="meta">Consignment Code: PKG-2026-USBEP-8842 • Central Bank Mutilated Currency Division • Date: ${new Date().toLocaleDateString()}</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Item #</th>
+              <th>Denomination</th>
+              <th>Damage Type</th>
+              <th>Serial Number</th>
+              <th>Surviving Area</th>
+              <th>Statutory Payout</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsHtml}
+          </tbody>
+        </table>
+        <p style="margin-top:24px;font-size:12px;color:#666;">Certified under 31 CFR § 100 and ECB Decision 2013/10. Generated via Monument of Greed Utility.</p>
+      </body>
+      </html>
+    `;
+
+    if (window.AndroidBridge && typeof window.AndroidBridge.printDocument === 'function') {
+      window.AndroidBridge.printDocument(title, html);
+    } else {
+      const pWin = window.open('', '_blank');
+      if (pWin) {
+        pWin.document.write(html);
+        pWin.document.close();
+        pWin.print();
+      }
+    }
   }
 
   // =========================================================================
@@ -3627,4 +3918,304 @@ ${xrefOffset}
     }
   }
 
+  // =========================================================================
+  // 22. TACTILE INTERACTIVE FINANCIAL RECOVERY CHART
+  // =========================================================================
+  let activeChartItemIdx = 0;
+
+  function initTactileChart() {
+    const container = document.getElementById('tactile-chart-container');
+    const svg = document.getElementById('tactile-chart-svg');
+    const glowCursor = document.getElementById('tactile-glow-cursor');
+    const legend = document.getElementById('tactile-chart-legend');
+    if (!container || !svg) return;
+
+    renderTactileChartSvg();
+
+    // Touch / Pointer scrubbing for tactile data exploration
+    let isInteracting = false;
+
+    function handlePointer(e) {
+      const rect = container.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left);
+      const relX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+      const pct = relX / rect.width;
+
+      if (glowCursor) {
+        glowCursor.style.left = `${relX}px`;
+      }
+
+      const items = (state.batchNotes && state.batchNotes.length > 0) ? state.batchNotes : DEFAULT_PACKAGE_ITEMS;
+      const count = items.length;
+      if (count === 0) return;
+
+      const idx = Math.min(Math.floor(pct * count), count - 1);
+      if (idx !== activeChartItemIdx) {
+        activeChartItemIdx = idx;
+        const freqs = [329.63, 392.00, 440.00, 523.25, 659.25, 783.99]; // E4, G4, A4, C5, E5, G5
+        const f = freqs[idx % freqs.length];
+        audio.playHarmonicTone(f, 0.07);
+        highlightChartBar(idx);
+      }
+    }
+
+    container.addEventListener('pointerdown', (e) => {
+      isInteracting = true;
+      container.classList.add('touching');
+      handlePointer(e);
+      try { container.setPointerCapture(e.pointerId); } catch(err) {}
+    });
+
+    container.addEventListener('pointermove', (e) => {
+      if (!isInteracting && e.pointerType === 'touch') return;
+      handlePointer(e);
+    });
+
+    const endInteraction = (e) => {
+      isInteracting = false;
+      container.classList.remove('touching');
+      try { container.releasePointerCapture(e.pointerId); } catch(err) {}
+    };
+
+    container.addEventListener('pointerup', endInteraction);
+    container.addEventListener('pointercancel', endInteraction);
+
+    // Initial highlight on first item
+    highlightChartBar(0);
+  }
+
+  function renderTactileChartSvg() {
+    const svg = document.getElementById('tactile-chart-svg');
+    const legend = document.getElementById('tactile-chart-legend');
+    if (!svg) return;
+
+    const items = (state.batchNotes && state.batchNotes.length > 0) ? state.batchNotes : DEFAULT_PACKAGE_ITEMS;
+    const count = items.length;
+    if (count === 0) {
+      svg.innerHTML = '<text x="250" y="70" text-anchor="middle" fill="#64748b" font-size="14">No package items recorded</text>';
+      return;
+    }
+
+    const svgW = 500;
+    const svgH = 140;
+    const paddingX = 20;
+    const availW = svgW - paddingX * 2;
+    const barWidth = Math.max(28, (availW / count) - 16);
+    const stepX = availW / count;
+
+    let barsSvg = `
+      <defs>
+        <linearGradient id="chart-grad-normal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#10b981" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#047857" stop-opacity="0.25"/>
+        </linearGradient>
+        <linearGradient id="chart-grad-active" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#d97706" stop-opacity="0.5"/>
+        </linearGradient>
+        <filter id="neon-glow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- Base Axis Line -->
+      <line x1="${paddingX}" y1="${svgH - 20}" x2="${svgW - paddingX}" y2="${svgH - 20}" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+    `;
+
+    // Maximum face value normalization
+    const maxVal = Math.max(...items.map(it => it.faceValue || 20), 100);
+
+    items.forEach((item, idx) => {
+      const x = paddingX + idx * stepX + (stepX - barWidth) / 2;
+      const barH = Math.max(16, ((item.faceValue || 20) / maxVal) * (svgH - 45));
+      const y = (svgH - 20) - barH;
+
+      barsSvg += `
+        <g class="chart-bar-group" id="chart-bar-group-${idx}" data-index="${idx}">
+          <rect class="chart-bar-rect" id="chart-bar-${idx}" x="${x}" y="${y}" width="${barWidth}" height="${barH}" rx="5" ry="5" fill="url(#chart-grad-normal)" style="transition: all 0.2s ease-out;"/>
+          <text x="${x + barWidth / 2}" y="${svgH - 6}" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="700">#${item.itemNumber || (idx + 1)}</text>
+          <text x="${x + barWidth / 2}" y="${y - 6}" text-anchor="middle" fill="#10b981" font-size="10" font-weight="800" id="chart-bar-val-${idx}">${item.symbol || '$'}${item.faceValue || item.denom}</text>
+        </g>
+      `;
+    });
+
+    svg.innerHTML = barsSvg;
+
+    // Populate legend pills
+    if (legend) {
+      legend.innerHTML = items.map((it, idx) => `
+        <button class="chart-legend-pill ${idx === activeChartItemIdx ? 'active' : ''}" id="legend-pill-${idx}" data-index="${idx}" type="button">
+          <span>${it.damageIcon || '🔥'}</span>
+          <span>Item #${it.itemNumber || (idx + 1)}</span>
+          <span class="text-accent">${it.symbol || '$'}${it.denom}</span>
+        </button>
+      `).join('');
+
+      legend.querySelectorAll('.chart-legend-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.index, 10);
+          highlightChartBar(idx);
+          const freqs = [329.63, 392.00, 440.00, 523.25, 659.25, 783.99];
+          audio.playHarmonicTone(freqs[idx % freqs.length], 0.1);
+        });
+      });
+    }
+  }
+
+  function highlightChartBar(idx) {
+    const items = (state.batchNotes && state.batchNotes.length > 0) ? state.batchNotes : DEFAULT_PACKAGE_ITEMS;
+    const item = items[idx];
+    if (!item) return;
+
+    // Update HUD
+    const hudNum = document.getElementById('hud-item-num');
+    const hudSymbol = document.getElementById('hud-symbol-denom');
+    const hudVal = document.getElementById('hud-salvage-val');
+
+    if (hudNum) hudNum.textContent = `Item #${item.itemNumber || (idx + 1)} • ${item.damageIcon || '🔥'} ${item.damageType ? item.damageType.split('&')[0] : ''}`;
+    if (hudSymbol) hudSymbol.textContent = `${item.symbol || '$'}${item.denom} ${item.currency} (${item.percent.toFixed(1)}% Intact)`;
+    if (hudVal) hudVal.textContent = `${item.symbol || '$'}${item.faceValue.toFixed(2)} Payout (${item.verdict})`;
+
+    // Update SVG Bars
+    items.forEach((_, i) => {
+      const rect = document.getElementById(`chart-bar-${i}`);
+      const valText = document.getElementById(`chart-bar-val-${i}`);
+      const legendPill = document.getElementById(`legend-pill-${i}`);
+
+      if (rect) {
+        if (i === idx) {
+          rect.setAttribute('fill', 'url(#chart-grad-active)');
+          rect.setAttribute('filter', 'url(#neon-glow)');
+          rect.style.transform = 'scaleY(1.04)';
+          rect.style.transformOrigin = 'bottom';
+        } else {
+          rect.setAttribute('fill', 'url(#chart-grad-normal)');
+          rect.removeAttribute('filter');
+          rect.style.transform = '';
+        }
+      }
+      if (valText) {
+        valText.setAttribute('fill', i === idx ? '#fbbf24' : '#10b981');
+      }
+      if (legendPill) {
+        legendPill.classList.toggle('active', i === idx);
+      }
+    });
+  }
+
+  function updateTactileChartData() {
+    renderTactileChartSvg();
+    highlightChartBar(0);
+  }
+
+  // =========================================================================
+  // 23. RECIPROCITY PRINCIPLE: UNLOCKED BEARER GIFT CONTROLLER
+  // =========================================================================
+  function initReciprocity() {
+    const card = document.getElementById('reciprocity-gift-card');
+    const btnClaim = document.getElementById('btn-claim-free-packet');
+    const btnDismiss = document.getElementById('btn-dismiss-gift');
+    const modal = document.getElementById('modal-reciprocity-gift');
+    const btnClose = document.getElementById('btn-close-gift-modal');
+    const btnCloseX = document.getElementById('btn-close-gift-modal-x');
+    const btnCopyCitation = document.getElementById('btn-copy-teller-card');
+    const btnPrintEnvelope = document.getElementById('btn-print-gift-envelope');
+
+    function openModal() {
+      if (modal) {
+        modal.classList.add('active');
+        audio.successChord();
+      }
+    }
+
+    function closeModal() {
+      if (modal) {
+        modal.classList.remove('active');
+        audio.tap();
+      }
+    }
+
+    if (btnClaim) btnClaim.addEventListener('click', openModal);
+    if (btnClose) btnClose.addEventListener('click', closeModal);
+    if (btnCloseX) btnCloseX.addEventListener('click', closeModal);
+
+    if (btnDismiss && card) {
+      btnDismiss.addEventListener('click', () => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(-8px)';
+        setTimeout(() => { card.style.display = 'none'; }, 200);
+        audio.tap();
+      });
+    }
+
+    if (btnCopyCitation) {
+      btnCopyCitation.addEventListener('click', () => {
+        const quote = `Notice to Financial Institution: Pursuant to 31 CFR § 100.5 and Federal Reserve Circular No. 2, genuine United States currency with more than 50% of the original note intact qualifies for 100% legal tender reimbursement. The presenting bearer is entitled to immediate par value deposit or exchange.`;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(quote);
+        }
+        btnCopyCitation.textContent = '✅ Copied to Clipboard!';
+        audio.successChord();
+        setTimeout(() => {
+          btnCopyCitation.textContent = '📋 Copy Citation Card';
+        }, 2000);
+      });
+    }
+
+    if (btnPrintEnvelope) {
+      btnPrintEnvelope.addEventListener('click', () => {
+        const title = 'Treasury Mutilated Currency Submission Envelope Template';
+        const html = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>${title}</title>
+            <style>
+              body { font-family: monospace; padding: 36px; border: 3px dashed #111; margin: 20px; }
+              .stamp-box { float: right; border: 2px solid #111; padding: 12px 20px; text-align: center; }
+              .return-addr { margin-bottom: 50px; font-size: 14px; }
+              .recipient-addr { margin: 60px 0 60px 80px; font-size: 18px; font-weight: bold; line-height: 1.5; }
+              .barcode { font-size: 24px; letter-spacing: 4px; margin-top: 40px; text-align: center; }
+            </style>
+          </head>
+          <body>
+            <div class="stamp-box">AFFIX FIRST CLASS<br>OR CERTIFIED MAIL<br>POSTAGE HERE</div>
+            <div class="return-addr">
+              FROM (BEARER / CLAIMANT):<br>
+              ________________________________________<br>
+              ________________________________________<br>
+              ________________________________________
+            </div>
+            <div class="recipient-addr">
+              OFFICIAL TREASURY SUBMISSION:<br><br>
+              BUREAU OF ENGRAVING AND PRINTING<br>
+              MCD / OFM, ROOM E-151<br>
+              14TH AND C STREETS SW<br>
+              WASHINGTON, DC 20228-0001<br>
+              UNITED STATES OF AMERICA
+            </div>
+            <div class="barcode">||| | ||||| || |||||| | |||| ||| |||||</div>
+            <p style="text-align:center;font-size:11px;color:#555;">Certified under 31 CFR § 100.5 • Free Official Bearer Envelope</p>
+          </body>
+          </html>
+        `;
+        if (window.AndroidBridge && typeof window.AndroidBridge.printDocument === 'function') {
+          window.AndroidBridge.printDocument(title, html);
+        } else {
+          const pWin = window.open('', '_blank');
+          if (pWin) {
+            pWin.document.write(html);
+            pWin.document.close();
+            pWin.print();
+          }
+        }
+        audio.shutter();
+      });
+    }
+  }
+
 })();
+

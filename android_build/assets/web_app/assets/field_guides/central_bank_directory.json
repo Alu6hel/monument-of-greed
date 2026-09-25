@@ -1,0 +1,53 @@
+{
+  "centralBankDirectory": [
+    {
+      "country": "United States",
+      "authority": "Bureau of Engraving and Printing (BEP) — Mutilated Currency Division",
+      "mailingAddress": "Bureau of Engraving and Printing, MCD/OFM, Room E-151, 14th and C Streets SW, Washington, DC 20228, USA",
+      "courierAddress": "Bureau of Engraving and Printing, MCD/OFM, Room E-151, 14th and C Streets SW, Washington, DC 20228, USA",
+      "hotline": "+1 (866) 575-2361 / +1 (202) 874-2141",
+      "email": "mutilatedcurrency@bep.gov",
+      "turnaround": "Free of charge service; processing time varies from 6 weeks to 6 months depending on forensic complexity."
+    },
+    {
+      "country": "European Union / Germany",
+      "authority": "Deutsche Bundesbank — National Analysis Centre",
+      "mailingAddress": "Deutsche Bundesbank, Filiale Mainz, Hegelstraße 65, 55122 Mainz, Germany",
+      "hotline": "+49 (0)69 9566 3512",
+      "email": "bargeld-rek@bundesbank.de",
+      "turnaround": "Reimbursement is free of charge for genuine euro notes meeting statutory criteria."
+    },
+    {
+      "country": "United Kingdom",
+      "authority": "Bank of England — Damaged Banknote Section",
+      "mailingAddress": "Department DBM, Bank of England, Langston Road, Loughton, Essex IG10 3TN, United Kingdom",
+      "hotline": "+44 (0)20 3461 4878",
+      "email": "damagedbanknotes@bankofengland.co.uk",
+      "turnaround": "Direct BACS electronic bank transfer upon completion of forensic inspection."
+    },
+    {
+      "country": "Canada",
+      "authority": "Bank of Canada — Bank Note Redemption Service",
+      "mailingAddress": "Bank of Canada, Bank Note Redemption Service, 234 Wellington Street, Ottawa, ON K1A 0G9, Canada",
+      "hotline": "+1 (800) 303-1282",
+      "email": "info@bankofcanada.ca",
+      "turnaround": "Cheque or direct bank deposit issued upon claim approval."
+    },
+    {
+      "country": "Mexico",
+      "authority": "Banco de México — Dirección General de Emisión",
+      "mailingAddress": "Banco de México, Av. 5 de Mayo No. 2, Centro, Cuauhtémoc, C.P. 06059, Ciudad de México, CDMX, Mexico",
+      "hotline": "+52 800-BANXICO (226-9426)",
+      "email": "dinero@banxico.org.mx",
+      "turnaround": "Immediate teller exchange across participating commercial retail branches for notes with >50% surface."
+    },
+    {
+      "country": "India",
+      "authority": "Reserve Bank of India — Issue Department",
+      "mailingAddress": "Reserve Bank of India, Issue Department, 6 Sansad Marg, New Delhi 110001, India",
+      "hotline": "+91 11 2371 0538",
+      "email": "helpissue@rbi.org.in",
+      "turnaround": "Immediate counter exchange up to 20 notes under Reserve Bank of India (Note Refund) Rules 2018."
+    }
+  ]
+}

@@ -228,6 +228,23 @@
           </div>
         </div>
 
+        <!-- The Principle of Reciprocity: High-Value Gift Provided First (Free Mutilated Currency Submission Kit) -->
+        <div class="reciprocity-gift-card" id="reciprocity-gift-card">
+          <div class="reciprocity-badge">🎁 UNLOCKED BEARER GIFT • $49 VALUE FREE</div>
+          <div class="reciprocity-body">
+            <div class="reciprocity-info">
+              <h4 class="reciprocity-title">Complimentary Mutilated Banknote Recovery Kit</h4>
+              <p class="reciprocity-desc">We give value first before you file. Your free central bank submission mailer, statutory legal citation card, and teller talk-track are already unlocked.</p>
+            </div>
+            <div class="reciprocity-action-row">
+              <button class="btn-reciprocity-claim" id="btn-claim-free-packet" type="button">
+                <span>⚡ Access Free Recovery Packet</span>
+              </button>
+              <button class="btn-reciprocity-dismiss" id="btn-dismiss-gift" type="button" title="Dismiss">✕</button>
+            </div>
+          </div>
+        </div>
+
         <!-- Fintech Revenue & Contrast Framing Card (Inspired by Reference Photo 2 & Price Contrast Principle) -->
         <div class="fintech-summary-card">
           <div class="fintech-card-top">
@@ -265,19 +282,48 @@
             </div>
           </div>
 
-          <!-- The Contrast Effect: Loss vs Recovery Psychological Framing -->
+          <!-- The Contrast Effect: 3-Tier Price & Value Psychological Framing -->
           <div class="contrast-comparison-bar">
             <div class="contrast-col loss-anchor">
-              <span class="contrast-col-title">IF DISCARDED AS "RUINED"</span>
-              <span class="contrast-col-val text-danger">-$1,000.00 Total Loss</span>
-              <span class="contrast-col-desc">Money mistakenly thrown in the trash</span>
+              <span class="contrast-col-title">TRASH DISCARD</span>
+              <span class="contrast-col-val text-danger">-$2,500.00 Loss</span>
+              <span class="contrast-col-desc">Assumed ruined; 100% loss</span>
             </div>
-            <div class="contrast-col-divider">⚡ VS ⚡</div>
+            <div class="contrast-col fee-anchor">
+              <span class="contrast-col-title">COMMERCIAL BROKER</span>
+              <span class="contrast-col-val text-warning">-$150.00 Fee</span>
+              <span class="contrast-col-desc">Third-party assessor cut</span>
+            </div>
             <div class="contrast-col recovery-anchor">
-              <span class="contrast-col-title">STATUTORY SALVAGE RECOVERY</span>
-              <span class="contrast-col-val text-success">+$1,000.00 Cash Preserved</span>
-              <span class="contrast-col-desc">100% legal tender replacement at tellers</span>
+              <span class="contrast-col-title">MONUMENT DIRECT</span>
+              <span class="contrast-col-val text-success">$0.00 Free Claim</span>
+              <span class="contrast-col-desc">100% par value direct to you</span>
             </div>
+          </div>
+        </div>
+
+        <!-- Tactile Interactive Financial Recovery Chart (Data Responds to Touch with Soft Glows, Fluid Motion & Haptics) -->
+        <div class="tactile-chart-card">
+          <div class="tactile-chart-header">
+            <div class="tactile-chart-title-group">
+              <span class="tactile-chart-badge">TACTILE DATA ENGINE</span>
+              <h3 class="tactile-chart-title">Salvage Yield by Package Item</h3>
+              <p class="tactile-chart-subtitle">Touch, drag, or hover across bars for fluid feedback, harmonic tones, and valuation breakdown</p>
+            </div>
+            <div class="tactile-chart-hud" id="tactile-chart-hud">
+              <span class="hud-item-num" id="hud-item-num">Item #1</span>
+              <span class="hud-symbol-denom" id="hud-symbol-denom">$100 USD</span>
+              <span class="hud-salvage-val text-success" id="hud-salvage-val">100% Salvage</span>
+            </div>
+          </div>
+          <div class="tactile-chart-container" id="tactile-chart-container">
+            <svg class="tactile-chart-svg" id="tactile-chart-svg" viewBox="0 0 500 140" preserveAspectRatio="none">
+              <!-- Rendered dynamically by TactileChartManager -->
+            </svg>
+            <div class="tactile-chart-glow-cursor" id="tactile-glow-cursor"></div>
+          </div>
+          <div class="tactile-chart-legend" id="tactile-chart-legend">
+            <!-- Dynamic Item Symbols & Numbers -->
           </div>
         </div>
 
@@ -938,34 +984,56 @@
 
         </div>
 
-        <!-- Multi-Note Salvage Batch Envelope -->
-        <div class="batch-envelope-card">
+        <!-- Multi-Item Package Manifest & Tactile Info Sheet -->
+        <div class="batch-envelope-card" id="package-manifest-envelope">
           <div class="batch-envelope-header">
-            <div class="batch-title">💼 Multi-Note Salvage Batch Envelope</div>
+            <div class="package-header-left">
+              <span class="package-badge-tag">OFFICIAL PACKAGE MANIFEST</span>
+              <div class="batch-title">📦 Consignment Info Sheet & Items Registry</div>
+              <div class="package-id-code" id="package-id-display">PKG-2026-USBEP-8842</div>
+            </div>
             <div class="batch-stats">
-              <span id="batch-notes-count">0 Notes</span> • <span id="batch-total-value">$0.00 Total Salvage Value</span>
+              <span id="batch-notes-count">5 Items</span> • <span id="batch-total-value" class="text-success">$470.00 Total Salvage Value</span>
             </div>
           </div>
+
+          <!-- Manifest Controls & Package Loader -->
+          <div class="package-manifest-toolbar">
+            <button id="btn-load-sample-package" class="btn-sm btn-accent" type="button">
+              <span>⚡ Load Authentic 5-Item Vault Consignment</span>
+            </button>
+            <button id="btn-add-to-batch" class="btn-sm btn-secondary" type="button">
+              <span>➕ Add Scanner Note to Package</span>
+            </button>
+            <button id="btn-print-manifest" class="btn-sm btn-secondary" type="button">
+              <span>🖨️ Spool Manifest</span>
+            </button>
+            <button id="btn-clear-batch" class="btn-sm btn-outline-danger" type="button">Clear</button>
+          </div>
+
+          <!-- Info Sheet Items Overview Table with Numbers & Symbols -->
           <div class="batch-table-wrap">
             <table class="batch-table" id="batch-notes-table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Currency & Note</th>
-                  <th>Denom</th>
-                  <th>Surface %</th>
-                  <th>Legal Verdict</th>
+                  <th>Item #</th>
+                  <th>Symbol</th>
+                  <th>Currency & Denom</th>
+                  <th>Damage Type & Icon</th>
+                  <th>Surviving Area</th>
+                  <th>Statutory Verdict</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody id="batch-notes-tbody">
-                <tr class="empty-batch-row"><td colspan="6">No notes added to envelope yet. Assess a note in the Scanner or Grid, then click below to add.</td></tr>
+                <!-- Dynamically populated with numbers, symbols, and item rows -->
               </tbody>
             </table>
           </div>
-          <div class="batch-actions-row">
-            <button id="btn-add-to-batch" class="btn-sm btn-accent" type="button">➕ Add Current Assessment to Envelope</button>
-            <button id="btn-clear-batch" class="btn-sm btn-secondary" type="button">Clear Envelope</button>
+
+          <!-- Detailed Item Info Cards (Interactive Accordion Drawer with deep forensic info for each item) -->
+          <div class="package-items-cards-container" id="package-items-cards-container">
+            <!-- Dynamic interactive info cards for each item in the package -->
           </div>
         </div>
 
@@ -1145,8 +1213,72 @@
         </div>
       </div>
       <div class="modal-footer onboarding-footer">
-        <button id="btn-onboarding-sample" class="btn btn-secondary">🧪 Try Sample Damaged Bill</button>
-        <button id="btn-onboarding-start" class="btn btn-primary">🚀 Start My Free Assessment</button>
+        <button id="btn-onboarding-sample" class="btn btn-secondary" type="button">🧪 Try Sample Damaged Bill</button>
+        <button id="btn-onboarding-start" class="btn btn-primary" type="button">🚀 Start My Free Assessment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complimentary Recovery Kit Modal (Reciprocity Principle: Value First) -->
+  <div id="modal-reciprocity-gift" class="modal-overlay">
+    <div class="modal-card modal-large reciprocity-modal-card">
+      <div class="modal-header">
+        <div class="onboarding-header-title">
+          <span class="onboarding-emoji">🎁</span>
+          <div>
+            <h3 class="modal-title" style="margin:0;">Complimentary Mutilated Banknote Recovery Kit</h3>
+            <span class="onboarding-sub">$49 Statutory Tool Unlocked Free of Charge</span>
+          </div>
+        </div>
+        <button id="btn-close-gift-modal-x" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="gift-welcome-alert">
+          <strong>Bearer Protection Guarantee:</strong> Under 31 CFR § 100 and ECB Decision 2013/10, central banks are legally mandated to replace damaged notes. Use this free packet at any commercial bank counter or mail it directly to the Treasury forensic lab.
+        </div>
+
+        <div class="gift-sections-grid">
+          <!-- Item 1: Statutory Teller Citation Card -->
+          <div class="gift-card-box">
+            <div class="gift-card-badge">CARD 1 OF 3</div>
+            <h4 class="gift-card-title">📜 Statutory Teller Citation Card</h4>
+            <p class="gift-card-text">Show this card to the bank teller if they hesitate or mistakenly tell you that damaged cash is unexchangeable:</p>
+            <div class="statutory-quote-box">
+              "Notice to Financial Institution: Pursuant to 31 CFR § 100.5 and Federal Reserve Circular No. 2, genuine United States currency with more than 50% of the original note intact qualifies for 100% legal tender reimbursement. The presenting bearer is entitled to immediate par value deposit or exchange."
+            </div>
+            <button id="btn-copy-teller-card" class="btn btn-sm btn-secondary" type="button">📋 Copy Citation Card</button>
+          </div>
+
+          <!-- Item 2: Pre-Addressed Submission Envelope -->
+          <div class="gift-card-box">
+            <div class="gift-card-badge">CARD 2 OF 3</div>
+            <h4 class="gift-card-title">✉️ Official Forensic Laboratory Mailer</h4>
+            <p class="gift-card-text">Pre-formatted direct submission envelope template addressed directly to central bank forensic examiners:</p>
+            <div class="mailer-address-preview">
+              <strong>DELIVER TO:</strong><br>
+              Bureau of Engraving and Printing<br>
+              MCD/OFM, Room E-151<br>
+              14th and C Streets SW<br>
+              Washington, DC 20228, United States
+            </div>
+            <button id="btn-print-gift-envelope" class="btn btn-sm btn-accent" type="button">🖨️ Print Submission Mailer</button>
+          </div>
+
+          <!-- Item 3: 5-Point Stabilization Checklist -->
+          <div class="gift-card-box">
+            <div class="gift-card-badge">CARD 3 OF 3</div>
+            <h4 class="gift-card-title">🛡️ Forensic Handling Checklist</h4>
+            <ul class="gift-checklist">
+              <li>✅ <strong>Do NOT tape edges</strong>: Cellulose tape adhesive chemically contaminates banknote fibers.</li>
+              <li>✅ <strong>Keep charred fragments intact</strong>: Do not unfold brittle ash; sandwich between cardstock.</li>
+              <li>✅ <strong>Freeze wet notes</strong>: If damp, seal in an airtight bag and freeze to halt fungal mold.</li>
+              <li>✅ <strong>Gather all fragments</strong>: Even 1mm flakes can push your verified surface over 50.0%.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-close-gift-modal" class="btn btn-primary" type="button">Got It, Thanks!</button>
       </div>
     </div>
   </div>
