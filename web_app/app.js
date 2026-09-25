@@ -144,6 +144,10 @@
       } catch (e) {}
     }
 
+    successChime() {
+      this.successChord();
+    }
+
     warningBuzz() {
       this.vibrate([40, 20, 40]);
       if (this.muted) return;
@@ -607,6 +611,8 @@
   const state = {
     activeTab: 'tab-home',
     currentTheme: 'theme-clay-peach',
+    activeCurrency: 'USD',
+    recognizedCurrency: null,
     scanner: {
       stream: null,
       facingMode: 'environment',
@@ -672,6 +678,7 @@
     initTheme();
     initAmbientMotion();
     initNavigation();
+    initCurrencyWorkflow();
     initSoundToggle();
     initFintechSummary();
     initReciprocity();
@@ -1325,6 +1332,58 @@
       tearRatio: 0.546,
       serial: 'U 9481029 B',
       status: 'Domestic Animal Serrated Tear'
+    },
+    {
+      id: 'monsoon_water_inr500',
+      currency: 'INR',
+      denom: '500',
+      name: 'Monsoon-Degraded RBI ₹500',
+      tag: '🌧️ RBI Note Refund Rules (India)',
+      paperColorStart: '#f1f5f9',
+      paperColorEnd: '#cbd5e1',
+      cutType: 'maceration',
+      tearRatio: 0.612,
+      serial: '4AB 829104',
+      status: 'Monsoon Humidity & Water Maceration'
+    },
+    {
+      id: 'torn_pboc_cny100',
+      currency: 'CNY',
+      denom: '100',
+      name: 'Torn People\'s Bank ¥100',
+      tag: '🏛️ PBOC Order 7 (China)',
+      paperColorStart: '#ffe4e6',
+      paperColorEnd: '#fca5a5',
+      cutType: 'fire',
+      tearRatio: 0.575,
+      serial: 'G7J 9012847',
+      status: 'Thermal & Edge Tear'
+    },
+    {
+      id: 'weathered_boj_jmd1000',
+      currency: 'JMD',
+      denom: '1000',
+      name: 'Weathered Bank of Jamaica $1000',
+      tag: '🌴 Bank of Jamaica Act (Jamaica)',
+      paperColorStart: '#dbeafe',
+      paperColorEnd: '#93c5fd',
+      cutType: 'pet',
+      tearRatio: 0.655,
+      serial: 'AA 482019',
+      status: 'Polymer Heat Distortion & Tear'
+    },
+    {
+      id: 'surf_macerated_aud50',
+      currency: 'AUD',
+      denom: '50',
+      name: 'Ocean-Macerated Reserve Bank A$50',
+      tag: '🌊 RBA Damaged Banknotes Policy',
+      paperColorStart: '#fef08a',
+      paperColorEnd: '#facc15',
+      cutType: 'maceration',
+      tearRatio: 0.720,
+      serial: 'BA 18 948102',
+      status: 'Saltwater Erosion & Fold Shear'
     }
   ];
   let activeScenarioIndex = 0;
@@ -1335,7 +1394,12 @@
    */
   function loadSampleDamagedBill() {
     stopCameraStream();
-    const sc = DAMAGE_SCENARIOS[activeScenarioIndex % DAMAGE_SCENARIOS.length];
+    let sc = null;
+    if (activeScenarioIndex === 0) {
+      sc = DAMAGE_SCENARIOS.find(s => s.currency === state.activeCurrency) || DAMAGE_SCENARIOS[0];
+    } else {
+      sc = DAMAGE_SCENARIOS[activeScenarioIndex % DAMAGE_SCENARIOS.length];
+    }
     activeScenarioIndex++;
 
     state.scanner.currencyCode = sc.currency;
@@ -1844,6 +1908,9 @@
         ctx.drawImage(maskCanvas, targetX, targetY);
       }
     }
+
+    // Camera real-time currency feature recognition
+    updateCameraCurrencyRecognition(targetW, targetH, data);
 
     // Update gauge & verdict
     updateGaugeAndVerdict(percent, fragmentPixelCount, targetAreaPixels, reg);
@@ -3809,6 +3876,389 @@ ${xrefOffset}
     ctxB.fillText('★ MONUMENT OF GREED STATUTORY REVERSE • VERIFIED 100% BEARER VALUE ★', targetW / 2, targetH * 0.72 + 10);
 
     ctxB.restore();
+  }
+
+  // =========================================================================
+  // 18B. CURRENCY-FIRST WORKFLOW & REAL-TIME RECOGNITION ENGINE
+  // =========================================================================
+  const CURRENCY_SALVAGE_DEFAULTS = {
+    USD: { total: '5,062.19', symbol: '$', denom: '20', discardLoss: '-$2,500.00 Loss', brokerFee: '-$150.00 Fee', freeClaim: '$0.00 Free Claim' },
+    EUR: { total: '4,820.00', symbol: '€', denom: '50', discardLoss: '-€2,200.00 Loss', brokerFee: '-€130.00 Fee', freeClaim: '€0.00 Free Claim' },
+    GBP: { total: '3,950.00', symbol: '£', denom: '20', discardLoss: '-£1,800.00 Loss', brokerFee: '-£110.00 Fee', freeClaim: '£0.00 Free Claim' },
+    CAD: { total: '6,200.00', symbol: 'CA$', denom: '100', discardLoss: '-CA$2,800.00 Loss', brokerFee: '-CA$170.00 Fee', freeClaim: 'CA$0.00 Free Claim' },
+    MXN: { total: '85,000.00', symbol: 'Mex$', denom: '500', discardLoss: '-Mex$40,000.00 Loss', brokerFee: '-Mex$2,500.00 Fee', freeClaim: 'Mex$0.00 Free Claim' },
+    INR: { total: '350,000.00', symbol: '₹', denom: '500', discardLoss: '-₹160,000.00 Loss', brokerFee: '-₹9,500.00 Fee', freeClaim: '₹0.00 Free Claim' },
+    CNY: { total: '32,000.00', symbol: '¥', denom: '100', discardLoss: '-¥15,000.00 Loss', brokerFee: '-¥900.00 Fee', freeClaim: '¥0.00 Free Claim' },
+    JMD: { total: '650,000.00', symbol: 'J$', denom: '1000', discardLoss: '-J$300,000.00 Loss', brokerFee: '-J$18,000.00 Fee', freeClaim: 'J$0.00 Free Claim' },
+    AUD: { total: '7,100.00', symbol: 'A$', denom: '50', discardLoss: '-A$3,200.00 Loss', brokerFee: '-A$190.00 Fee', freeClaim: 'A$0.00 Free Claim' }
+  };
+
+  function initCurrencyWorkflow() {
+    const headerCurrBtn = document.getElementById('btn-currency-selector');
+    const workflowSwitchBtn = document.getElementById('btn-workflow-switch-curr');
+    const railCurrBtn = document.getElementById('rail-btn-currency');
+    const modalCurrency = document.getElementById('modal-currency-selector');
+    const btnCloseModalX = document.getElementById('btn-close-currency-modal-x');
+    const btnCloseModal = document.getElementById('btn-close-currency-modal');
+
+    function openCurrencyModal() {
+      if (modalCurrency) {
+        modalCurrency.classList.add('active');
+        audio.tap();
+      }
+    }
+
+    function closeCurrencyModal() {
+      if (modalCurrency) {
+        modalCurrency.classList.remove('active');
+      }
+    }
+
+    if (headerCurrBtn) headerCurrBtn.addEventListener('click', openCurrencyModal);
+    if (workflowSwitchBtn) workflowSwitchBtn.addEventListener('click', openCurrencyModal);
+    if (railCurrBtn) railCurrBtn.addEventListener('click', openCurrencyModal);
+    if (btnCloseModalX) btnCloseModalX.addEventListener('click', closeCurrencyModal);
+    if (btnCloseModal) btnCloseModal.addEventListener('click', closeCurrencyModal);
+
+    if (modalCurrency) {
+      modalCurrency.addEventListener('click', (e) => {
+        if (e.target === modalCurrency) closeCurrencyModal();
+      });
+    }
+
+    const tiles = document.querySelectorAll('.curr-select-tile');
+    tiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const code = tile.dataset.code;
+        if (code) {
+          setActiveCurrency(code, true);
+          closeCurrencyModal();
+        }
+      });
+    });
+
+    const railScanBtn = document.getElementById('rail-btn-scan');
+    const railTellerBtn = document.getElementById('rail-btn-teller');
+    const railDossierBtn = document.getElementById('rail-btn-dossier');
+    const railHelpBtn = document.getElementById('rail-btn-help');
+
+    if (railScanBtn) {
+      railScanBtn.addEventListener('click', () => {
+        switchTab('tab-scanner');
+        audio.tap();
+      });
+    }
+
+    if (railTellerBtn) {
+      railTellerBtn.addEventListener('click', () => {
+        showTellerScript(state.activeCurrency);
+        audio.tap();
+      });
+    }
+
+    if (railDossierBtn) {
+      railDossierBtn.addEventListener('click', () => {
+        switchTab('tab-dossier');
+        audio.tap();
+      });
+    }
+
+    if (railHelpBtn) {
+      railHelpBtn.addEventListener('click', () => {
+        const onboardingModal = document.getElementById('modal-onboarding');
+        if (onboardingModal) onboardingModal.classList.add('active');
+        audio.tap();
+      });
+    }
+
+    const btnTeller = document.getElementById('btn-workflow-teller-script');
+    const btnMailer = document.getElementById('btn-workflow-mailer');
+    const btnScan = document.getElementById('btn-workflow-scan-now');
+
+    if (btnTeller) {
+      btnTeller.addEventListener('click', () => {
+        showTellerScript(state.activeCurrency);
+        audio.tap();
+      });
+    }
+
+    if (btnMailer) {
+      btnMailer.addEventListener('click', () => {
+        printCentralBankMailer(state.activeCurrency);
+        audio.tap();
+      });
+    }
+
+    if (btnScan) {
+      btnScan.addEventListener('click', () => {
+        switchTab('tab-scanner');
+        audio.tap();
+      });
+    }
+
+    const savedCurrency = localStorage.getItem('monument_active_currency');
+    if (!savedCurrency) {
+      setTimeout(() => {
+        openCurrencyModal();
+      }, 400);
+      setActiveCurrency('USD', false);
+    } else {
+      setActiveCurrency(savedCurrency, false);
+    }
+  }
+
+  function setActiveCurrency(code, playFeedback = true) {
+    const reg = CURRENCY_REGISTRY.find(c => c.code === code) || CURRENCY_REGISTRY[0];
+    state.activeCurrency = reg.code;
+    state.scanner.currencyCode = reg.code;
+    localStorage.setItem('monument_active_currency', reg.code);
+
+    const flagEl = document.getElementById('active-currency-flag');
+    const codeEl = document.getElementById('active-currency-code');
+    const symEl = document.getElementById('active-currency-symbol');
+    if (flagEl) flagEl.textContent = reg.flag;
+    if (codeEl) codeEl.textContent = reg.code;
+    if (symEl) symEl.textContent = `(${reg.symbol})`;
+
+    const railSym = document.querySelector('.rail-sym-badge');
+    if (railSym) railSym.textContent = reg.symbol;
+
+    const tiles = document.querySelectorAll('.curr-select-tile');
+    tiles.forEach(t => {
+      t.classList.toggle('active', t.dataset.code === reg.code);
+    });
+
+    const wfFlag = document.getElementById('workflow-currency-flag');
+    const wfName = document.getElementById('workflow-currency-name');
+    const wfRule = document.getElementById('workflow-simple-rule');
+    const wfAuth = document.getElementById('workflow-authority-name');
+    const wfStatute = document.getElementById('workflow-statute-code');
+    const wfStatuteRule = document.getElementById('workflow-statute-rule');
+    const wfAddr = document.getElementById('workflow-submission-address');
+
+    if (wfFlag) wfFlag.textContent = reg.flag;
+    if (wfName) wfName.textContent = `${reg.country} — ${reg.name} (${reg.symbol} ${reg.code})`;
+    if (wfRule) wfRule.textContent = `If more than half (50%) of your ${reg.name} note survives, ${reg.authority} is legally required to replace it for 100% full cash value.`;
+    if (wfAuth) wfAuth.textContent = reg.authority;
+    if (wfStatute) wfStatute.textContent = reg.statutoryCode;
+    if (wfStatuteRule) wfStatuteRule.textContent = reg.thresholdRule;
+    if (wfAddr) wfAddr.textContent = reg.submissionAddress;
+
+    const dishToken1 = document.getElementById('dish-token-1');
+    if (dishToken1) dishToken1.textContent = reg.symbol;
+
+    const def = CURRENCY_SALVAGE_DEFAULTS[reg.code] || CURRENCY_SALVAGE_DEFAULTS['USD'];
+    const totalEl = document.getElementById('rolling-salvage-total');
+    const mainSymEl = document.querySelector('.fintech-currency-symbol');
+    if (totalEl) totalEl.textContent = def.total;
+    if (mainSymEl) mainSymEl.textContent = def.symbol;
+
+    const lossVal = document.querySelector('.loss-anchor .contrast-col-val');
+    const feeVal = document.querySelector('.fee-anchor .contrast-col-val');
+    const freeVal = document.querySelector('.recovery-anchor .contrast-col-val');
+    if (lossVal) lossVal.textContent = def.discardLoss;
+    if (feeVal) feeVal.textContent = def.brokerFee;
+    if (freeVal) freeVal.textContent = def.freeClaim;
+
+    const giftTitle = document.querySelector('.reciprocity-title');
+    if (giftTitle) giftTitle.textContent = `Free ${reg.name} Recovery Kit`;
+    const quoteBox = document.querySelector('.statutory-quote-box');
+    if (quoteBox) quoteBox.textContent = `"${reg.talkTrack}"`;
+    const mailerPreview = document.querySelector('.mailer-address-preview');
+    if (mailerPreview) {
+      mailerPreview.innerHTML = `<strong>DELIVER TO:</strong><br>${reg.authority}<br>${reg.submissionAddress}`;
+    }
+
+    const selectScannerCurr = document.getElementById('select-scanner-currency');
+    if (selectScannerCurr) selectScannerCurr.value = reg.code;
+    updateScannerAspectGuide();
+    updateGridAspectBox();
+
+    renderFeedCards('all');
+
+    if (playFeedback) {
+      audio.successChime();
+      audio.vibrate([15, 30, 20]);
+    }
+  }
+
+  function printCentralBankMailer(currencyCode) {
+    const reg = CURRENCY_REGISTRY.find(c => c.code === currencyCode) || CURRENCY_REGISTRY[0];
+    const mailerContent = `
+================================================================================
+OFFICIAL DAMAGED CURRENCY SUBMISSION MAILER
+================================================================================
+Authority: ${reg.authority}
+Statutory Reference: ${reg.statutoryCode}
+Standard: ${reg.thresholdRule}
+
+DELIVER SHIPMENT TO:
+${reg.submissionAddress}
+
+FROM (CLAIMANT):
+[Your Name / Business]
+[Mailing Address]
+[Phone & Email]
+
+SHIPMENT INVENTORY:
+Item 1: Genuine ${reg.name} Damaged Specimen (Surviving surface verified >50%)
+Method: Registered Insured Mail / Direct Central Bank Window
+
+NOTICE: Under ${reg.statutoryCode}, damaged banknotes with more than 50%
+physical surface intact qualify for 100% legal face-value reimbursement.
+================================================================================
+    `;
+
+    if (window.AndroidBridge && window.AndroidBridge.printDocument) {
+      window.AndroidBridge.printDocument(`${reg.code}_Submission_Mailer.txt`, mailerContent);
+    } else {
+      const blob = new Blob([mailerContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${reg.code}_Central_Bank_Mailer.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+    audio.successChime();
+  }
+
+  /**
+   * Client-Side Real-Time Currency Feature Recognition Engine
+   * Operates purely offline via color histograms, aspect ratio matching, and substrate detection
+   */
+  function recognizeBanknoteCurrency(width, height, data) {
+    if (!data || data.length === 0 || width === 0 || height === 0) return null;
+
+    const aspect = width / height;
+
+    let sumR = 0, sumG = 0, sumB = 0, count = 0;
+    const step = 8;
+    for (let i = 0; i < data.length; i += 4 * step) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+      if (lum > 40) {
+        sumR += r;
+        sumG += g;
+        sumB += b;
+        count++;
+      }
+    }
+
+    if (count < 50) return null;
+
+    const avgR = sumR / count;
+    const avgG = sumG / count;
+    const avgB = sumB / count;
+
+    const rNorm = avgR / 255;
+    const gNorm = avgG / 255;
+    const bNorm = avgB / 255;
+    const max = Math.max(rNorm, gNorm, bNorm);
+    const min = Math.min(rNorm, gNorm, bNorm);
+    let h = 0, s = 0, l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+        case gNorm: h = (bNorm - rNorm) / d + 2; break;
+        case bNorm: h = (rNorm - gNorm) / d + 4; break;
+      }
+      h /= 6;
+    }
+    const hueDeg = Math.round(h * 360);
+
+    const PROFILES = [
+      { code: 'USD', denom: '20', name: 'US Dollar ($20 Bill)', flag: '🇺🇸', targetAspect: 2.353, minHue: 85, maxHue: 155, minSat: 0.05, maxSat: 0.35 },
+      { code: 'EUR', denom: '50', name: 'Euro (€50 Note)', flag: '🇪🇺', targetAspect: 1.818, minHue: 15, maxHue: 50, minSat: 0.25, maxSat: 0.85 },
+      { code: 'EUR', denom: '20', name: 'Euro (€20 Note)', flag: '🇪🇺', targetAspect: 1.847, minHue: 190, maxHue: 235, minSat: 0.20, maxSat: 0.85 },
+      { code: 'GBP', denom: '20', name: 'British Pound (£20 Polymer)', flag: '🇬🇧', targetAspect: 1.904, minHue: 250, maxHue: 320, minSat: 0.12, maxSat: 0.85 },
+      { code: 'CAD', denom: '100', name: 'Canadian Dollar (CA$100)', flag: '🇨🇦', targetAspect: 2.162, minHue: 30, maxHue: 60, minSat: 0.18, maxSat: 0.85 },
+      { code: 'MXN', denom: '500', name: 'Mexican Peso (Mex$500)', flag: '🇲🇽', targetAspect: 2.308, minHue: 170, maxHue: 240, minSat: 0.15, maxSat: 0.85 },
+      { code: 'INR', denom: '500', name: 'Indian Rupee (₹500)', flag: '🇮🇳', targetAspect: 2.273, minHue: 180, maxHue: 240, minSat: 0.01, maxSat: 0.14 },
+      { code: 'CNY', denom: '100', name: 'Chinese Yuan (¥100)', flag: '🇨🇳', targetAspect: 2.013, minHue: 340, maxHue: 380, minSat: 0.20, maxSat: 0.85 },
+      { code: 'JMD', denom: '1000', name: 'Jamaican Dollar (J$1000)', flag: '🇯🇲', targetAspect: 2.132, minHue: 200, maxHue: 245, minSat: 0.20, maxSat: 0.85 },
+      { code: 'AUD', denom: '50', name: 'Australian Dollar (A$50)', flag: '🇦🇺', targetAspect: 2.323, minHue: 42, maxHue: 68, minSat: 0.35, maxSat: 0.95 }
+    ];
+
+    let bestMatch = null;
+    let highestScore = -1;
+
+    for (const p of PROFILES) {
+      const aspectDiff = Math.abs(aspect - p.targetAspect);
+      let aspectScore = Math.max(0, 1 - (aspectDiff / 0.5));
+
+      let hueScore = 0.5;
+      const normalizedHue = (hueDeg < 15 && p.maxHue > 360) ? hueDeg + 360 : hueDeg;
+      if (normalizedHue >= p.minHue && normalizedHue <= p.maxHue) {
+        hueScore = 1.0;
+      } else {
+        const dist = Math.min(Math.abs(normalizedHue - p.minHue), Math.abs(normalizedHue - p.maxHue));
+        hueScore = Math.max(0, 1 - (dist / 60));
+      }
+
+      let satScore = 1.0;
+      if (p.minSat !== undefined && s < p.minSat) {
+        satScore = Math.max(0.2, 1 - ((p.minSat - s) / 0.2));
+      }
+      if (p.maxSat !== undefined && s > p.maxSat) {
+        satScore = Math.max(0.2, 1 - ((s - p.maxSat) / 0.2));
+      }
+
+      const activeBonus = (p.code === state.activeCurrency) ? 0.04 : 0;
+      const totalScore = (aspectScore * 0.40) + (hueScore * 0.40) + (satScore * 0.16) + activeBonus;
+
+      if (totalScore > highestScore) {
+        highestScore = totalScore;
+        bestMatch = p;
+      }
+    }
+
+    const confidence = Math.min(99, Math.max(68, Math.round(highestScore * 100)));
+    return {
+      match: bestMatch,
+      confidence: confidence
+    };
+  }
+
+  function updateCameraCurrencyRecognition(width, height, data) {
+    const recogHud = document.getElementById('scanner-currency-recognition-hud');
+    const recogTitle = document.getElementById('recog-banknote-title');
+    const recogBadge = document.getElementById('recog-confidence-badge');
+    const recogSwitchPrompt = document.getElementById('recog-switch-prompt');
+    const recogSwitchText = document.getElementById('recog-switch-text');
+    const btnRecogSwitch = document.getElementById('btn-recog-switch-curr');
+
+    if (!recogHud || !data || data.length === 0) return;
+
+    const result = recognizeBanknoteCurrency(width, height, data);
+    if (result && result.match && result.confidence >= 65) {
+      recogHud.style.display = 'flex';
+      if (recogTitle) recogTitle.textContent = `${result.match.flag} ${result.match.name}`;
+      if (recogBadge) recogBadge.textContent = `${result.confidence}% Match`;
+
+      if (result.match.code !== state.activeCurrency) {
+        if (recogSwitchPrompt) recogSwitchPrompt.style.display = 'flex';
+        if (recogSwitchText) recogSwitchText.textContent = `Detected ${result.match.flag} ${result.match.code}.`;
+        if (btnRecogSwitch) {
+          btnRecogSwitch.textContent = `Switch App to ${result.match.code} ›`;
+          btnRecogSwitch.onclick = () => {
+            setActiveCurrency(result.match.code);
+            if (recogSwitchPrompt) recogSwitchPrompt.style.display = 'none';
+          };
+        }
+      } else {
+        if (recogSwitchPrompt) recogSwitchPrompt.style.display = 'none';
+      }
+    } else {
+      if (recogHud) recogHud.style.display = 'none';
+    }
   }
 
   // =========================================================================

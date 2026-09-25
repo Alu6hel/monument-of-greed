@@ -29,7 +29,12 @@
 
       <div class="brand-title-wrap" id="brand-header-link">
         <span class="brand-title">Monument of Greed</span>
-        <span class="brand-badge">PRO</span>
+        <button id="btn-currency-selector" class="currency-selector-pill" aria-label="Select Country and Currency" title="Select Country & Currency">
+          <span id="active-currency-flag" class="curr-flag">🇺🇸</span>
+          <span id="active-currency-code" class="curr-code">USD</span>
+          <span id="active-currency-symbol" class="curr-sym">($)</span>
+          <span class="curr-arrow">▾</span>
+        </button>
       </div>
 
       <div class="top-bar-actions">
@@ -165,6 +170,34 @@
       </div>
     </aside>
 
+    <!-- Tactile Amber Rail & Quick Action Strip (Inspired by Reference Design) -->
+    <nav id="tactile-quick-strip" class="tactile-quick-strip" aria-label="Tactile Quick Rail">
+      <div class="tactile-rail-groove"></div>
+      <button id="rail-btn-scan" class="rail-icon-btn" title="Quick Camera Scan" aria-label="Camera Scan">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+          <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+      </button>
+      <button id="rail-btn-currency" class="rail-icon-btn" title="Choose Country / Currency" aria-label="Select Currency">
+        <span class="rail-sym-badge">$</span>
+      </button>
+      <button id="rail-btn-teller" class="rail-icon-btn" title="Bank Teller Talk Script" aria-label="Teller Script">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </button>
+      <button id="rail-btn-dossier" class="rail-icon-btn" title="Claim Dossier & PDF" aria-label="Claim Dossier">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+      </button>
+      <button id="rail-btn-help" class="rail-icon-btn" title="Consumer Guide / Onboarding" aria-label="Help Guide">
+        <span class="rail-help-sym">❓</span>
+      </button>
+    </nav>
+
     <!-- Main Content Area -->
     <main class="main-content">
 
@@ -226,6 +259,82 @@
             <!-- Independent File Input -->
             <input type="file" id="file-input-upload" accept="image/*" class="visually-hidden">
           </div>
+        </div>
+
+        <!-- Active Selected Currency Workflow Card: Consumer-First, Neater, Real Legality -->
+        <div class="active-currency-card" id="active-currency-workflow-card">
+          <div class="curr-card-header">
+            <div class="curr-card-brand">
+              <span class="curr-card-flag" id="workflow-currency-flag">🇺🇸</span>
+              <div class="curr-card-titles">
+                <span class="curr-card-eyebrow">ACTIVE CURRENCY WORKFLOW</span>
+                <h3 class="curr-card-name" id="workflow-currency-name">United States Dollar ($ USD)</h3>
+              </div>
+            </div>
+            <button id="btn-workflow-switch-curr" class="btn-sm btn-outline curr-switch-btn" type="button" title="Switch Country / Currency">
+              <span>Change ▾</span>
+            </button>
+          </div>
+
+          <!-- Tactile Dish Element (Inspired by Reference Image Tray Element) -->
+          <div class="tactile-salvage-tray">
+            <div class="tactile-tray-dish" id="tactile-tray-dish" title="Tactile Currency Substrate Vault">
+              <div class="floating-token token-1" id="dish-token-1">$</div>
+              <div class="floating-token token-2" id="dish-token-2">€</div>
+              <div class="floating-token token-3" id="dish-token-3">£</div>
+              <div class="floating-token token-4" id="dish-token-4">CA$</div>
+              <div class="floating-token token-5" id="dish-token-5">Mex$</div>
+              <div class="tray-dish-inner-label">
+                <span class="tray-status-dot"></span>
+                <span id="workflow-status-guarantee">100% PAR VALUE PROTECTED</span>
+              </div>
+            </div>
+            <div class="tactile-tray-content">
+              <div class="simple-consumer-rule">
+                <strong>Consumer Rule:</strong> <span id="workflow-simple-rule">If more than half (50%) of your banknote survives, central banks are legally required to exchange it for 100% full cash value.</span>
+              </div>
+              <div class="curr-quick-actions-row">
+                <button class="btn-curr-action" id="btn-workflow-teller-script" type="button" title="View Bank Teller Script">
+                  <span class="curr-action-icon">💬</span>
+                  <span>Teller Script</span>
+                </button>
+                <button class="btn-curr-action" id="btn-workflow-mailer" type="button" title="Print Free Submission Mailer">
+                  <span class="curr-action-icon">📮</span>
+                  <span>Claim Mailer</span>
+                </button>
+                <button class="btn-curr-action primary" id="btn-workflow-scan-now" type="button" title="Scan Banknote with Camera">
+                  <span class="curr-action-icon">📷</span>
+                  <span>Scan Bill</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expandable Real Statutory Code (Mainstream simplicity upfront, authentic legality on demand) -->
+          <details class="statutory-details-accordion" id="workflow-statutory-accordion">
+            <summary class="accordion-summary">
+              <span>Official Central Bank Law & Authority</span>
+              <span class="accordion-chevron">▾</span>
+            </summary>
+            <div class="accordion-body">
+              <div class="statute-item">
+                <span class="statute-label">Central Authority:</span>
+                <span class="statute-val" id="workflow-authority-name">Bureau of Engraving and Printing (BEP) / Federal Reserve</span>
+              </div>
+              <div class="statute-item">
+                <span class="statute-label">Statutory Code:</span>
+                <span class="statute-val" id="workflow-statute-code">31 CFR Part 100 (Exchange of Mutilated Paper Currency)</span>
+              </div>
+              <div class="statute-item">
+                <span class="statute-label">Statutory Criterion:</span>
+                <span class="statute-val" id="workflow-statute-rule">> 50.0% surface area required for 100% face-value reimbursement. If ≤ 50% remains, requires sworn affidavit proving missing portion was completely destroyed.</span>
+              </div>
+              <div class="statute-item">
+                <span class="statute-label">Official Mailing Desk:</span>
+                <span class="statute-val" id="workflow-submission-address">Bureau of Engraving and Printing, Mutilated Currency Branch, Washington, DC 20228</span>
+              </div>
+            </div>
+          </details>
         </div>
 
         <!-- The Principle of Reciprocity: High-Value Gift Provided First (Free Mutilated Currency Submission Kit) -->
@@ -526,6 +635,19 @@
               <div class="corner-pin" id="pin-tr" data-corner="tr"></div>
               <div class="corner-pin" id="pin-br" data-corner="br"></div>
               <div class="corner-pin" id="pin-bl" data-corner="bl"></div>
+            </div>
+
+            <!-- Camera Real-Time Currency Recognition HUD Badge -->
+            <div id="scanner-currency-recognition-hud" class="currency-recognition-hud" style="display:none;">
+              <div class="recog-pill">
+                <span class="recog-sparkle">✨</span>
+                <span id="recog-banknote-title">US Dollar ($20 Bill)</span>
+                <span id="recog-confidence-badge" class="recog-confidence-badge">96% Match</span>
+              </div>
+              <div id="recog-switch-prompt" class="recog-switch-banner" style="display:none;">
+                <span id="recog-switch-text">Detected Euro (€50).</span>
+                <button id="btn-recog-switch-curr" class="btn-recog-switch" type="button">Switch App to Euro (€) ›</button>
+              </div>
             </div>
 
             <!-- Guide Overlay Frame with Target Aspect Ratio -->
@@ -1279,6 +1401,149 @@
       </div>
       <div class="modal-footer">
         <button id="btn-close-gift-modal" class="btn btn-primary" type="button">Got It, Thanks!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Country & Currency Selection Modal (First-Step Consumer Workflow) -->
+  <div id="modal-currency-selector" class="modal-overlay">
+    <div class="modal-card modal-large currency-selector-modal-card">
+      <div class="modal-header">
+        <div class="onboarding-header-title">
+          <span class="onboarding-emoji">🌍</span>
+          <div>
+            <h3 class="modal-title" style="margin:0;">Select Your Country / Currency</h3>
+            <span class="onboarding-sub">We tailor all central bank statutes, scanner templates, and claim forms to your country</span>
+          </div>
+        </div>
+        <button id="btn-close-currency-modal-x" class="icon-btn modal-close-btn" aria-label="Close Currency Picker">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="currency-welcome-callout">
+          <strong>Consumer Protection:</strong> Central banks across the world guarantee 100% face-value replacement for genuine damaged cash if more than 50% survives. Select your local currency to begin:
+        </div>
+        <div class="currency-picker-grid" id="currency-picker-grid">
+          <!-- Populated dynamically and initialized with primary global currencies -->
+          <div class="curr-select-tile active" data-code="USD">
+            <div class="curr-tile-flag">🇺🇸</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">United States</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">USD • Dollar ($)</div>
+              <div class="curr-tile-law">31 CFR § 100 • Bureau of Engraving & Printing</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="EUR">
+            <div class="curr-tile-flag">🇪🇺</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">Eurozone (EU)</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">EUR • Euro (€)</div>
+              <div class="curr-tile-law">ECB Decision 2013/10 • European Central Bank</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="GBP">
+            <div class="curr-tile-flag">🇬🇧</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">United Kingdom</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">GBP • Pound Sterling (£)</div>
+              <div class="curr-tile-law">Bank of England Mutilated Notes Scheme</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="CAD">
+            <div class="curr-tile-flag">🇨🇦</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">Canada</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">CAD • Canadian Dollar (CA$)</div>
+              <div class="curr-tile-law">Bank of Canada Act • Note Redemption Service</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="MXN">
+            <div class="curr-tile-flag">🇲🇽</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">Mexico</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">MXN • Mexican Peso (Mex$)</div>
+              <div class="curr-tile-law">Banco de México Regla 10/2006 • Canje de Billetes</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="INR">
+            <div class="curr-tile-flag">🇮🇳</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">India</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">INR • Indian Rupee (₹)</div>
+              <div class="curr-tile-law">Reserve Bank of India (Note Refund) Rules 2018</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="CNY">
+            <div class="curr-tile-flag">🇨🇳</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">China</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">CNY • Chinese Yuan (¥)</div>
+              <div class="curr-tile-law">People's Bank of China Damaged Renminbi Order</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="JMD">
+            <div class="curr-tile-flag">🇯🇲</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">Jamaica</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">JMD • Jamaican Dollar (J$)</div>
+              <div class="curr-tile-law">Bank of Jamaica Act, Section 28</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+
+          <div class="curr-select-tile" data-code="AUD">
+            <div class="curr-tile-flag">🇦🇺</div>
+            <div class="curr-tile-info">
+              <div class="curr-tile-top">
+                <span class="curr-tile-name">Australia</span>
+                <span class="curr-tile-badge">100% Payout</span>
+              </div>
+              <div class="curr-tile-code">AUD • Australian Dollar (A$)</div>
+              <div class="curr-tile-law">Reserve Bank of Australia Damaged Banknotes Policy</div>
+            </div>
+            <div class="curr-tile-check">✓</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-close-currency-modal" class="btn btn-secondary" type="button">Close</button>
       </div>
     </div>
   </div>
