@@ -16,6 +16,7 @@ import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
+import android.webkit.JsPromptResult;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -23,6 +24,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -41,6 +43,12 @@ public class MainActivity extends Activity {
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         );
+
+        // Relax file URI exposure check for easy internal PDF sharing across Android versions
+        try {
+            java.lang.reflect.Method m = android.os.StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+            m.invoke(null);
+        } catch (Exception ignored) {}
 
         webView = new WebView(this);
         setContentView(webView);
@@ -134,6 +142,36 @@ public class MainActivity extends Activity {
                 return true;
             }
 
+            @Override
+            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Monument of Greed")
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> result.confirm())
+                    .setNegativeButton(android.R.string.cancel, (dialog, which) -> result.cancel())
+                    .setOnCancelListener(dialog -> result.cancel())
+                    .show();
+                return true;
+            }
+
+            @Override
+            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+                final EditText input = new EditText(MainActivity.this);
+                if (defaultValue != null) {
+                    input.setText(defaultValue);
+                    input.setSelection(defaultValue.length());
+                }
+                new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Monument of Greed")
+                    .setMessage(message)
+                    .setView(input)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> result.confirm(input.getText().toString()))
+                    .setNegativeButton(android.R.string.cancel, (dialog, which) -> result.cancel())
+                    .setOnCancelListener(dialog -> result.cancel())
+                    .show();
+                return true;
+            }
+
             // File Chooser for gallery / photo upload
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
@@ -172,6 +210,92 @@ public class MainActivity extends Activity {
                 } catch (Exception e) {
                     Log.e(TAG, "Error initiating Android print", e);
                 }
+            });
+        }
+
+        @JavascriptInterface
+        public boolean savePdfToStorage(final String base64Data, final String filename) {
+            try {
+                byte[] pdfBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT);
+                String safeName = (filename != null && !filename.isEmpty()) ? filename : "Monument_Claim_Package.pdf";
+                java.io.File pdfFile = null;
+
+                try {
+                    java.io.File downloadDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS);
+                    if (!downloadDir.exists()) downloadDir.mkdirs();
+                    pdfFile = new java.io.File(downloadDir, safeName);
+                    java.io.FileOutputStream fos = new java.io.FileOutputStream(pdfFile);
+                    fos.write(pdfBytes);
+                    fos.flush();
+                    fos.close();
+                } catch (Exception permEx) {
+                    Log.w(TAG, "Public download write restricted, falling back to app external files", permEx);
+                    java.io.File appDownloadDir = getExternalFilesDir(android.os.Environment.DIRECTORY_DOWNLOADS);
+                    if (appDownloadDir == null) appDownloadDir = getFilesDir();
+                    if (!appDownloadDir.exists()) appDownloadDir.mkdirs();
+                    pdfFile = new java.io.File(appDownloadDir, safeName);
+                    java.io.FileOutputStream fos = new java.io.FileOutputStream(pdfFile);
+                    fos.write(pdfBytes);
+                    fos.flush();
+                    fos.close();
+                }
+
+                final java.io.File savedFile = pdfFile;
+                runOnUiThread(() -> {
+                    Toast.makeText(MainActivity.this, "📄 Courtroom PDF Dossier Saved: " + savedFile.getName(), Toast.LENGTH_LONG).show();
+                });
+                Log.d(TAG, "PDF successfully saved to: " + savedFile.getAbsolutePath());
+                return true;
+            } catch (Exception e) {
+                Log.e(TAG, "Error saving PDF to storage", e);
+                return false;
+            }
+        }
+
+        @JavascriptInterface
+        public boolean sharePdf(final String base64Data, final String filename) {
+            try {
+                byte[] pdfBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT);
+                java.io.File cacheFile = new java.io.File(getCacheDir(), filename != null && !filename.isEmpty() ? filename : "Monument_Claim.pdf");
+                java.io.FileOutputStream fos = new java.io.FileOutputStream(cacheFile);
+                fos.write(pdfBytes);
+                fos.flush();
+                fos.close();
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("application/pdf");
+                Uri fileUri = Uri.fromFile(cacheFile);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Mutilated Currency Forensic Claim Package");
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(Intent.createChooser(shareIntent, "Share Claim Dossier PDF"));
+                return true;
+            } catch (Exception e) {
+                Log.e(TAG, "Error sharing PDF", e);
+                return false;
+            }
+        }
+
+        @JavascriptInterface
+        public void copyToClipboard(final String text) {
+            runOnUiThread(() -> {
+                try {
+                    android.content.ClipboardManager cm = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (cm != null) {
+                        android.content.ClipData clip = android.content.ClipData.newPlainText("Monument of Greed", text);
+                        cm.setPrimaryClip(clip);
+                        Toast.makeText(MainActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error copying to clipboard", e);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void showToast(final String msg) {
+            runOnUiThread(() -> {
+                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
             });
         }
 

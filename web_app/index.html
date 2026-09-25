@@ -116,6 +116,12 @@
               <span>Claim Dossier Generator</span>
             </a>
           </li>
+          <li>
+            <a href="#vault" class="drawer-nav-link" data-tab="tab-vault">
+              <span class="drawer-nav-icon">💼</span>
+              <span>My Salvage Vault</span>
+            </a>
+          </li>
         </ul>
 
         <div class="drawer-section-title">SELECT LIVE THEME</div>
@@ -171,31 +177,37 @@
     </aside>
 
     <!-- Tactile Amber Rail & Quick Action Strip (Inspired by Reference Design) -->
+    <!-- Tactile Amber Rail & Quick Action Strip (Retractable on Mobile) -->
     <nav id="tactile-quick-strip" class="tactile-quick-strip" aria-label="Tactile Quick Rail">
       <div class="tactile-rail-groove"></div>
-      <button id="rail-btn-scan" class="rail-icon-btn" title="Quick Camera Scan" aria-label="Camera Scan">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-          <circle cx="12" cy="13" r="4"></circle>
-        </svg>
+      <button id="rail-toggle-tab" class="rail-toggle-tab" title="Toggle Quick Rail" aria-label="Toggle Quick Rail">
+        <span class="rail-toggle-icon">▶</span>
       </button>
-      <button id="rail-btn-currency" class="rail-icon-btn" title="Choose Country / Currency" aria-label="Select Currency">
-        <span class="rail-sym-badge">$</span>
-      </button>
-      <button id="rail-btn-teller" class="rail-icon-btn" title="Bank Teller Talk Script" aria-label="Teller Script">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
-      </button>
-      <button id="rail-btn-dossier" class="rail-icon-btn" title="Claim Dossier & PDF" aria-label="Claim Dossier">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-        </svg>
-      </button>
-      <button id="rail-btn-help" class="rail-icon-btn" title="Consumer Guide / Onboarding" aria-label="Help Guide">
-        <span class="rail-help-sym">❓</span>
-      </button>
+      <div class="rail-buttons-column">
+        <button id="rail-btn-scan" class="rail-icon-btn" title="Quick Camera Scan" aria-label="Camera Scan">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </button>
+        <button id="rail-btn-currency" class="rail-icon-btn" title="Choose Country / Currency" aria-label="Select Currency">
+          <span class="rail-sym-badge">$</span>
+        </button>
+        <button id="rail-btn-teller" class="rail-icon-btn" title="Bank Teller Talk Script" aria-label="Teller Script">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </button>
+        <button id="rail-btn-dossier" class="rail-icon-btn" title="Claim Dossier & PDF" aria-label="Claim Dossier">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+        </button>
+        <button id="rail-btn-help" class="rail-icon-btn" title="Consumer Guide / Onboarding" aria-label="Help Guide">
+          <span class="rail-help-sym">❓</span>
+        </button>
+      </div>
     </nav>
 
     <!-- Main Content Area -->
@@ -278,16 +290,24 @@
 
           <!-- Tactile Dish Element (Inspired by Reference Image Tray Element) -->
           <div class="tactile-salvage-tray">
-            <div class="tactile-tray-dish" id="tactile-tray-dish" title="Tactile Currency Substrate Vault">
-              <div class="floating-token token-1" id="dish-token-1">$</div>
-              <div class="floating-token token-2" id="dish-token-2">€</div>
-              <div class="floating-token token-3" id="dish-token-3">£</div>
-              <div class="floating-token token-4" id="dish-token-4">CA$</div>
-              <div class="floating-token token-5" id="dish-token-5">Mex$</div>
+            <div class="tactile-tray-dish" id="tactile-tray-dish" title="Tap or swirl to bounce currency tokens crazily!" role="button" tabindex="0" aria-label="Interactive 100% Par Value Vault">
+              <div class="dish-glow-rim"></div>
+              <div class="dish-physics-tokens" id="dish-physics-tokens">
+                <span class="phys-token" data-idx="0" style="color:#fbbf24;">$</span>
+                <span class="phys-token" data-idx="1" style="color:#38bdf8;">€</span>
+                <span class="phys-token" data-idx="2" style="color:#f59e0b;">£</span>
+                <span class="phys-token" data-idx="3" style="color:#34d399;">CA$</span>
+                <span class="phys-token" data-idx="4" style="color:#f87171;">Mex$</span>
+                <span class="phys-token" data-idx="5" style="color:#fb923c;">₹</span>
+                <span class="phys-token" data-idx="6" style="color:#eab308;">A$</span>
+                <span class="phys-token" data-idx="7" style="color:#a78bfa;">¥</span>
+                <span class="phys-token" data-idx="8" style="color:#4ade80;">J$</span>
+              </div>
               <div class="tray-dish-inner-label">
                 <span class="tray-status-dot"></span>
                 <span id="workflow-status-guarantee">100% PAR VALUE PROTECTED</span>
               </div>
+              <div class="dish-tap-wave" id="dish-tap-wave"></div>
             </div>
             <div class="tactile-tray-content">
               <div class="simple-consumer-rule">
@@ -616,6 +636,9 @@
             <button id="btn-load-sample" class="btn btn-secondary" title="Test with sample damaged bill">
               <span>🧪 Sample Bill</span>
             </button>
+            <button id="btn-auto-snap" class="btn btn-secondary" title="Auto-detect corners and snap perspective">
+              <span>📐 Auto-Snap</span>
+            </button>
           </div>
         </div>
 
@@ -635,6 +658,27 @@
               <div class="corner-pin" id="pin-tr" data-corner="tr"></div>
               <div class="corner-pin" id="pin-br" data-corner="br"></div>
               <div class="corner-pin" id="pin-bl" data-corner="bl"></div>
+            </div>
+
+            <!-- Standby: No Banknote Detected Banner -->
+            <div id="viewfinder-no-note-banner" class="viewfinder-standby-banner" style="display:none;">
+              <div class="standby-icon">⚠️</div>
+              <div class="standby-text-wrap">
+                <div class="standby-title">NO BANKNOTE DETECTED</div>
+                <div class="standby-desc">Place bill flat on a dark, non-reflective background inside the frame</div>
+              </div>
+            </div>
+
+            <!-- Glare Warning Chip -->
+            <div id="viewfinder-glare-chip" class="viewfinder-alert-chip alert-glare" style="display:none;">
+              <span class="chip-icon">⚡</span>
+              <span>Glare Detected — Tilt bill slightly</span>
+            </div>
+
+            <!-- Low-Light Warning Chip -->
+            <div id="viewfinder-light-chip" class="viewfinder-alert-chip alert-lowlight" style="display:none;">
+              <span class="chip-icon">💡</span>
+              <span>Low Light — Increase illumination</span>
             </div>
 
             <!-- Camera Real-Time Currency Recognition HUD Badge -->
@@ -986,14 +1030,22 @@
                 </div>
               </div>
 
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 6px;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">BANKNOTE SERIAL IDENTIFIERS</span>
+                <button id="btn-ocr-extract-serial" class="btn-sm btn-outline" type="button" title="Extract Serial Numbers from Scanned Banknote via OCR">
+                  <span>🔍 Auto-Scan Serial (OCR)</span>
+                </button>
+              </div>
               <div class="form-row-2">
                 <div class="form-group">
                   <label for="dossier-serial-left">Left Serial Number:</label>
                   <input type="text" id="dossier-serial-left" class="styled-input" placeholder="e.g. MF 89234812 B" value="MF 89234812 B">
+                  <div id="val-badge-serial-l" class="serial-val-badge"></div>
                 </div>
                 <div class="form-group">
                   <label for="dossier-serial-right">Right Serial Number:</label>
                   <input type="text" id="dossier-serial-right" class="styled-input" placeholder="e.g. MF 89234812 B (or Partial)" value="MF 89234812 B">
+                  <div id="val-badge-serial-r" class="serial-val-badge"></div>
                 </div>
               </div>
 
@@ -1017,11 +1069,17 @@
 
               <div class="dossier-btn-group">
                 <button id="btn-update-preview" class="btn btn-secondary">Refresh Preview</button>
-                <button id="btn-download-pdf" class="btn btn-accent">
-                  <span>📥 Download Vector PDF</span>
+                <button id="btn-download-pdf" class="btn btn-accent" title="Generate Courtroom-Grade 3-Page Filing PDF">
+                  <span>⚖️ Courtroom PDF Dossier</span>
                 </button>
-                <button id="btn-print-dossier" class="btn btn-primary">
-                  <span>🖨️ Native Print Spooler</span>
+                <button id="btn-share-pdf" class="btn btn-primary" title="Share Claim Package PDF">
+                  <span>📤 Share Dossier</span>
+                </button>
+                <button id="btn-save-dossier-vault" class="btn btn-secondary" title="Save claim to local Salvage Vault">
+                  <span>💼 Save to My Vault</span>
+                </button>
+                <button id="btn-print-dossier" class="btn btn-secondary">
+                  <span>🖨️ Print Spooler</span>
                 </button>
                 <button id="btn-open-affidavit-modal" class="btn btn-outline" style="grid-column: 1 / -1;">
                   <span>📜 Generate Destruction Affidavit (≤50% Claims)</span>
@@ -1161,6 +1219,77 @@
 
       </section>
 
+      <!-- ================================================================= -->
+      <!-- TAB 7: MY SALVAGE VAULT (PERSISTENT CLAIM HISTORY & LEDGER)       -->
+      <!-- ================================================================= -->
+      <section id="tab-vault" class="tab-pane">
+        <div class="view-header">
+          <div class="header-icon-badge">💼</div>
+          <div class="header-text-group">
+            <h2 class="view-title">My Salvage Vault</h2>
+            <p class="view-subtitle">Permanent local ledger tracking currency claims from forensic audit through postal dispatch to central bank reimbursement.</p>
+          </div>
+        </div>
+
+        <!-- Ledger Financial Summary Hero -->
+        <div class="vault-hero-card">
+          <div class="vault-hero-bg-glow"></div>
+          <div class="vault-hero-content">
+            <div class="vault-metric-block main">
+              <span class="vault-metric-label">LIFETIME RECOVERED VALUE</span>
+              <div class="vault-metric-num gold" id="vault-lifetime-recovered">$0.00</div>
+              <span class="vault-metric-sub">Paid out by central bank treasuries</span>
+            </div>
+            <div class="vault-metrics-row">
+              <div class="vault-metric-block">
+                <span class="vault-metric-label">IN-FLIGHT CLAIMS</span>
+                <div class="vault-metric-num" id="vault-inflight-amount">$0.00</div>
+                <span class="vault-metric-sub" id="vault-inflight-count">0 packages mailed</span>
+              </div>
+              <div class="vault-metric-block">
+                <span class="vault-metric-label">AUDITED / READY</span>
+                <div class="vault-metric-num" id="vault-audited-amount">$0.00</div>
+                <span class="vault-metric-sub" id="vault-audited-count">0 notes waiting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vault Filter Bar & Actions -->
+        <div class="vault-toolbar">
+          <div class="vault-filter-pills">
+            <button class="vault-filter-pill active" data-filter="all">All Claims (<span id="vault-count-all">0</span>)</button>
+            <button class="vault-filter-pill" data-filter="audited">Audited</button>
+            <button class="vault-filter-pill" data-filter="mailed">Mailed / In-Flight</button>
+            <button class="vault-filter-pill" data-filter="reimbursed">Reimbursed</button>
+          </div>
+          <div class="vault-actions">
+            <button id="btn-vault-new-claim" class="btn btn-sm btn-primary">
+              <span>➕ Add Current Dossier</span>
+            </button>
+            <button id="btn-vault-export-json" class="btn btn-sm btn-secondary" title="Export encrypted vault backup">
+              <span>📥 Export JSON</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Vault Claims List -->
+        <div class="vault-claims-container" id="vault-claims-container">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Empty State View -->
+        <div class="vault-empty-state" id="vault-empty-state" style="display:none;">
+          <div class="empty-icon">🏦</div>
+          <div class="empty-title">Your Salvage Vault is Empty</div>
+          <div class="empty-desc">Scan a mutilated banknote with the camera or grid audit, then click "Save to My Vault" in the Claim Dossier to track your redemption here.</div>
+          <button id="btn-vault-seed-samples" class="btn btn-accent">
+            <span>⚡ Load Realistic Demo Claims</span>
+          </button>
+        </div>
+
+      </section>
+
     </main>
 
     <!-- Bottom Navigation Dock -->
@@ -1188,6 +1317,10 @@
       <button class="nav-tab-btn" data-tab="tab-dossier">
         <span class="nav-icon">📑</span>
         <span class="nav-label">Dossier</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-vault">
+        <span class="nav-icon">💼</span>
+        <span class="nav-label">Vault</span>
       </button>
     </nav>
 
@@ -1544,6 +1677,26 @@
       </div>
       <div class="modal-footer">
         <button id="btn-close-currency-modal" class="btn btn-secondary" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vault Input & Confirmation Modal (In-App Non-Blocking) -->
+  <div id="modal-vault-input" class="modal-overlay">
+    <div class="modal-card modal-small" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 id="modal-vault-input-title" class="modal-title">Update Claim</h3>
+        <button id="btn-vault-input-close" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 16px 20px;">
+        <p id="modal-vault-input-desc" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;"></p>
+        <div class="form-group" style="margin-bottom: 0;">
+          <input type="text" id="modal-vault-input-field" class="form-input" style="width: 100%; font-family: var(--font-mono); font-size: 0.95rem; font-weight: 600;" />
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button id="btn-vault-input-cancel" class="btn btn-secondary" type="button">Cancel</button>
+        <button id="btn-vault-input-confirm" class="btn btn-primary" type="button">Confirm</button>
       </div>
     </div>
   </div>

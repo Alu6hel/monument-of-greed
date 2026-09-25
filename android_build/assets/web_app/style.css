@@ -2023,23 +2023,32 @@ body.theme-cyber-mint .banner-green {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 3px;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 4px 2px;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
 }
 
 .nav-icon {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  line-height: 1;
   transition: transform var(--transition-fast);
 }
 
 .nav-label {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .nav-tab-btn.active {
@@ -3474,7 +3483,45 @@ body.theme-cyber-mint .banner-green {
   padding: 12px 0;
   gap: 12px;
   z-index: 90;
-  overflow: hidden;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.rail-toggle-tab {
+  display: none;
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 46px;
+  background: #f59e0b;
+  border-radius: 0 12px 12px 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-left: none;
+  color: #1e293b;
+  font-size: 0.65rem;
+  font-weight: 900;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.25);
+  z-index: 95;
+  transition: all 0.2s ease;
+}
+.rail-toggle-tab:hover {
+  background: #fbbf24;
+  color: #0f172a;
+}
+.rail-toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.rail-buttons-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
 }
 .tactile-rail-groove {
   position: absolute;
@@ -3579,38 +3626,83 @@ body.theme-cyber-mint .banner-green {
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .tactile-tray-dish {
-  width: 90px;
-  height: 90px;
-  min-width: 90px;
+  width: 96px;
+  height: 96px;
+  min-width: 96px;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #2a303c, #121519);
-  box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.7), inset 0 -2px 6px rgba(255, 255, 255, 0.1), 0 6px 16px rgba(0, 0, 0, 0.4);
+  background: radial-gradient(circle at 40% 40%, #28303d, #0f1318);
+  box-shadow: inset 0 8px 18px rgba(0, 0, 0, 0.8), inset 0 -2px 6px rgba(255, 255, 255, 0.1), 0 8px 20px rgba(0, 0, 0, 0.45);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(245, 158, 11, 0.3);
+  border: 2px solid rgba(245, 158, 11, 0.4);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.floating-token {
+.tactile-tray-dish:hover {
+  border-color: rgba(245, 158, 11, 0.85);
+  box-shadow: inset 0 8px 18px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.45);
+}
+.tactile-tray-dish:active, .tactile-tray-dish.pressed {
+  transform: scale(0.92);
+}
+.dish-glow-rim {
   position: absolute;
-  font-weight: 900;
-  font-size: 0.85rem;
-  color: #fbbf24;
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
-  opacity: 0.85;
-  animation: floatToken 6s ease-in-out infinite alternate;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  pointer-events: none;
 }
-.floating-token.token-1 { top: 16%; left: 28%; animation-delay: 0s; font-size: 1.1rem; }
-.floating-token.token-2 { top: 32%; right: 22%; animation-delay: 1.2s; }
-.floating-token.token-3 { bottom: 22%; left: 24%; animation-delay: 2.4s; }
-.floating-token.token-4 { bottom: 28%; right: 26%; animation-delay: 3.6s; font-size: 0.75rem; }
-.floating-token.token-5 { top: 52%; left: 42%; animation-delay: 4.8s; font-size: 0.7rem; }
-
-@keyframes floatToken {
-  0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-4px) rotate(8deg); }
-  100% { transform: translateY(3px) rotate(-8deg); }
+.dish-physics-tokens {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.phys-token {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 8px currentColor, 0 2px 4px rgba(0, 0, 0, 0.8);
+  will-change: transform;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  transform: translate3d(48px, 48px, 0) translate(-50%, -50%);
+}
+.dish-tap-wave {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.85);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+}
+.dish-tap-wave.active {
+  animation: dishWavePulse 0.55s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+@keyframes dishWavePulse {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(5.2); }
+}
+.dish-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fef08a;
+  box-shadow: 0 0 8px #f59e0b;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .tray-dish-inner-label {
@@ -3910,14 +4002,25 @@ body.theme-cyber-mint .banner-green {
 /* Responsive adjustments for tactile rail and workflow cards on mobile / tablet */
 @media (max-width: 768px) {
   .tactile-quick-strip {
-    left: 4px;
-    width: 38px;
-    padding: 8px 0;
-    gap: 8px;
+    left: 0;
+    transform: translateY(-50%) translateX(calc(-100% + 14px));
+    width: 44px;
+    padding: 10px 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.35);
+  }
+  .tactile-quick-strip.expanded {
+    transform: translateY(-50%) translateX(0);
+    box-shadow: 6px 0 24px rgba(217, 119, 6, 0.45), 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+  .rail-toggle-tab {
+    display: flex;
+  }
+  .tactile-quick-strip.expanded .rail-toggle-icon {
+    transform: rotate(180deg);
   }
   .rail-icon-btn {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
   }
   .tactile-salvage-tray {
     flex-direction: column;
@@ -3938,4 +4041,450 @@ body.theme-cyber-mint .banner-green {
     font-size: 0.72rem;
   }
 }
+
+/* ==========================================================================
+   26. REAL-TIME FORENSIC CAMERA UPGRADES (Edge Detection & Standby States)
+   ========================================================================== */
+.viewfinder-standby-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 86%;
+  max-width: 360px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  backdrop-filter: blur(10px);
+  z-index: 25;
+  pointer-events: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.viewfinder-standby-banner .standby-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  animation: pulseAmber 2s infinite ease-in-out;
+}
+
+@keyframes pulseAmber {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.4)); }
+  50% { transform: scale(1.12); filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.9)); }
+}
+
+.viewfinder-standby-banner .standby-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fbbf24;
+  margin-bottom: 3px;
+}
+
+.viewfinder-standby-banner .standby-desc {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+}
+
+/* Viewfinder Alert Chips (Glare & Low-Light) */
+.viewfinder-alert-chip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  backdrop-filter: blur(8px);
+  color: #fef08a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 24;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.viewfinder-alert-chip.alert-lowlight {
+  top: 48px;
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #bae6fd;
+}
+
+/* Serial Number Validation Badges */
+.serial-val-badge {
+  font-size: 0.72rem;
+  margin-top: 5px;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  display: none;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.serial-val-badge.valid {
+  display: flex;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.serial-val-badge.invalid {
+  display: flex;
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ==========================================================================
+   27. MY SALVAGE VAULT (Persistent History & Financial Ledger)
+   ========================================================================== */
+.vault-hero-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.vault-hero-bg-glow {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(20px);
+}
+
+.vault-hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vault-metric-block.main {
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vault-metric-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.vault-metric-num {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 4px 0;
+}
+
+.vault-metric-num.gold {
+  font-size: 2.2rem;
+  color: #fbbf24;
+  text-shadow: 0 2px 14px rgba(251, 191, 36, 0.3);
+}
+
+.vault-metric-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.vault-metrics-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  text-align: center;
+}
+
+/* Vault Toolbar */
+.vault-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.vault-filter-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.vault-filter-pill {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.vault-filter-pill:hover,
+.vault-filter-pill.active {
+  background: var(--accent-coral);
+  color: #ffffff;
+  border-color: var(--accent-coral);
+}
+
+.vault-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Vault Claims List */
+.vault-claims-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vault-claim-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+
+.vault-claim-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-coral);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.vault-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.vault-card-id-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vault-card-ref {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.vault-card-flag {
+  font-size: 1.1rem;
+}
+
+.vault-status-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.vault-status-badge.status-audited {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.vault-status-badge.status-mailed {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.vault-status-badge.status-review {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.vault-status-badge.status-reimbursed {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.vault-card-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: var(--radius-xs);
+}
+
+.vault-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.vault-stat-lbl {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.vault-stat-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.vault-stat-val.highlight {
+  color: #10b981;
+}
+
+/* Status Progression Steps */
+.vault-step-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0 16px 0;
+  position: relative;
+}
+
+.vault-step-track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.vault-step-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.vault-step-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.vault-step-node.completed .vault-step-dot {
+  background: #10b981;
+  border-color: #10b981;
+  color: #ffffff;
+}
+
+.vault-step-node.active .vault-step-dot {
+  background: var(--accent-coral);
+  border-color: var(--accent-coral);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(224, 86, 36, 0.6);
+}
+
+.vault-step-lbl {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.vault-step-node.completed .vault-step-lbl,
+.vault-step-node.active .vault-step-lbl {
+  color: var(--text-primary);
+}
+
+/* Vault Card Actions */
+.vault-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 12px;
+}
+
+.vault-action-left,
+.vault-action-right {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Empty State */
+.vault-empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--bg-card);
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius-lg);
+  margin-top: 10px;
+}
+
+.vault-empty-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+.vault-empty-state .empty-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.vault-empty-state .empty-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  max-width: 440px;
+  margin: 0 auto 20px auto;
+  line-height: 1.45;
+}
+
 
