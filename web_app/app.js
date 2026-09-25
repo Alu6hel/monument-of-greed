@@ -3370,6 +3370,33 @@ Claimant Signature: ___________________________________   Date: ________________
       }
     }, 500);
 
+    // Dynamic Cause of Damage Narrative Generator
+    const causeSelect = document.getElementById('dossier-cause-damage');
+    const narrativeArea = document.getElementById('dossier-narrative');
+    if (causeSelect && narrativeArea) {
+      const causeNarratives = {
+        'Accidentally torn during pocket extraction': 'The presented banknote was damaged accidentally during extraction from garments. More than 50% of the genuine original note remains physically intact with legible serial identifiers. No portion of this banknote has been previously redeemed or tendered for duplicate value.',
+        'Laundered accidentally in residential washing machine': 'The presented note was inadvertently subjected to a domestic washing machine wash and dry cycle within clothing pockets. More than 50% of the genuine substrate remains structurally sound with verifiable security features.',
+        'Mutilated by household pet / animal chewing': 'The presented legal tender was chewed or partially fragmented by a domestic animal. The remaining contiguous piece exceeds 50% of original surface area with clear denomination markers.',
+        'Surface charring or heat exposure from fire': 'The banknote sustained non-intentional superficial charring from accidental exposure to heat/combustion. Forensic optical inspection confirms >50% intact unburned legal tender substrate.',
+        'Partial water saturation or moisture decomposition': 'The banknote was partially degraded through water immersion under flooding or plumbing failure. Intact portion exceeds 50% statutory threshold.',
+        'Industrial equipment or paper shredder accident': 'Banknote was accidentally caught in machinery/shredder. Contiguous surviving fragment exceeds statutory 50% requirement.',
+        'Other accidental physical trauma': 'The presented banknote was damaged accidentally under ordinary domestic circumstances. More than 50% of the genuine original note remains physically intact.'
+      };
+      causeSelect.addEventListener('change', () => {
+        if (causeNarratives[causeSelect.value]) {
+          narrativeArea.value = causeNarratives[causeSelect.value];
+          updateDossierSheet();
+        }
+      });
+    }
+
+    // Real-time input synchronization for all dossier fields
+    ['dossier-claimant-name', 'dossier-phone', 'dossier-currency', 'dossier-surface-area', 'dossier-serial-left', 'dossier-serial-right', 'dossier-narrative'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateDossierSheet);
+    });
+
     updateDossierSheet();
   }
 
@@ -7020,6 +7047,7 @@ physical surface intact qualify for 100% legal face-value reimbursement.
 
     function toggleTorch() {
       isTorchOn = !isTorchOn;
+      state.scanner.torchOn = isTorchOn;
 
       // 1. Android Native Torch
       if (window.AndroidBridge && typeof window.AndroidBridge.toggleTorch === 'function') {
@@ -7049,6 +7077,7 @@ physical surface intact qualify for 100% legal face-value reimbursement.
     if (btnScannerUv) {
       btnScannerUv.addEventListener('click', () => {
         isUvMode = !isUvMode;
+        state.scanner.uvFilter = isUvMode;
         btnScannerUv.classList.toggle('active', isUvMode);
         if (state.scanner.canvasEl) state.scanner.canvasEl.classList.toggle('uv-mode', isUvMode);
         if (state.scanner.videoEl) state.scanner.videoEl.classList.toggle('uv-mode', isUvMode);
@@ -7364,6 +7393,7 @@ physical surface intact qualify for 100% legal face-value reimbursement.
 
     btnVoice.addEventListener('click', () => {
       voiceActive = !voiceActive;
+      state.scanner.voiceGuidance = voiceActive;
       btnVoice.classList.toggle('active', voiceActive);
       const spanText = document.getElementById('voice-btn-label') || btnVoice.querySelector('span');
       if (spanText) spanText.textContent = voiceActive ? '🔊 Voice: ON' : '🔊 Voice: OFF';
