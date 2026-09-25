@@ -314,13 +314,21 @@
                 <strong>Consumer Rule:</strong> <span id="workflow-simple-rule">If more than half (50%) of your banknote survives, central banks are legally required to exchange it for 100% full cash value.</span>
               </div>
               <div class="curr-quick-actions-row">
+                <button class="btn-curr-action accent" id="btn-workflow-counter-shield" type="button" title="Present Teller Defense Mode">
+                  <span class="curr-action-icon">🛡️</span>
+                  <span>Counter Shield</span>
+                </button>
+                <button class="btn-curr-action" id="btn-workflow-jigsaw" type="button" title="Ripped Note Jigsaw Assembler">
+                  <span class="curr-action-icon">🧩</span>
+                  <span>Jigsaw</span>
+                </button>
                 <button class="btn-curr-action" id="btn-workflow-teller-script" type="button" title="View Bank Teller Script">
                   <span class="curr-action-icon">💬</span>
                   <span>Teller Script</span>
                 </button>
                 <button class="btn-curr-action" id="btn-workflow-mailer" type="button" title="Print Free Submission Mailer">
                   <span class="curr-action-icon">📮</span>
-                  <span>Claim Mailer</span>
+                  <span>Mailer</span>
                 </button>
                 <button class="btn-curr-action primary" id="btn-workflow-scan-now" type="button" title="Scan Banknote with Camera">
                   <span class="curr-action-icon">📷</span>
@@ -355,6 +363,63 @@
               </div>
             </div>
           </details>
+        </div>
+
+        <!-- Modern Consumer Quick-Action Tool Tiles (Inspired by Clean Product Grid) -->
+        <div class="consumer-tools-section">
+          <div class="section-label-row">
+            <span class="section-label">FORENSIC SALVAGE TOOLS</span>
+            <span class="section-sub-label">BANK-GRADE UTILITIES</span>
+          </div>
+          <div class="consumer-tools-grid">
+            <!-- Tool 1: Counter Shield -->
+            <div class="tool-tile" id="tile-counter-shield" role="button" tabindex="0">
+              <div class="tool-tile-icon-wrap bg-shield">
+                <span class="tool-icon">🛡️</span>
+              </div>
+              <div class="tool-tile-info">
+                <h4 class="tool-tile-title">Teller Counter Shield</h4>
+                <p class="tool-tile-desc">Full-screen defense mode with offline central bank statute QR code</p>
+              </div>
+              <span class="tool-chevron">›</span>
+            </div>
+
+            <!-- Tool 2: Multi-Fragment Jigsaw -->
+            <div class="tool-tile" id="tile-jigsaw-assembler" role="button" tabindex="0">
+              <div class="tool-tile-icon-wrap bg-jigsaw">
+                <span class="tool-icon">🧩</span>
+              </div>
+              <div class="tool-tile-info">
+                <h4 class="tool-tile-title">Ripped Note Jigsaw</h4>
+                <p class="tool-tile-desc">Align 2 or 3 torn pieces with serial verification and union area</p>
+              </div>
+              <span class="tool-chevron">›</span>
+            </div>
+
+            <!-- Tool 3: Disaster Recovery Batch -->
+            <div class="tool-tile" id="tile-disaster-batch" role="button" tabindex="0">
+              <div class="tool-tile-icon-wrap bg-batch">
+                <span class="tool-icon">🌊</span>
+              </div>
+              <div class="tool-tile-info">
+                <h4 class="tool-tile-title">Disaster Recovery Batch</h4>
+                <p class="tool-tile-desc">Inventory stacks of cash damaged by fire, flood, or safe trauma</p>
+              </div>
+              <span class="tool-chevron">›</span>
+            </div>
+
+            <!-- Tool 4: Watermark & UV Lightbox -->
+            <div class="tool-tile" id="tile-watermark-lightbox" role="button" tabindex="0">
+              <div class="tool-tile-icon-wrap bg-lightbox">
+                <span class="tool-icon">🔬</span>
+              </div>
+              <div class="tool-tile-info">
+                <h4 class="tool-tile-title">Watermark & UV Lab</h4>
+                <p class="tool-tile-desc">Substrate backlight illumination & 365nm spectral security filter</p>
+              </div>
+              <span class="tool-chevron">›</span>
+            </div>
+          </div>
         </div>
 
         <!-- The Principle of Reciprocity: High-Value Gift Provided First (Free Mutilated Currency Submission Kit) -->
@@ -639,6 +704,18 @@
             <button id="btn-auto-snap" class="btn btn-secondary" title="Auto-detect corners and snap perspective">
               <span>📐 Auto-Snap</span>
             </button>
+            <button id="btn-scanner-torch" class="btn btn-secondary" title="Toggle Hardware Flashlight Torch">
+              <span>🔦 Torch</span>
+            </button>
+            <button id="btn-scanner-uv" class="btn btn-secondary" title="Toggle 365nm Forensic UV Spectral Filter">
+              <span id="uv-btn-label">🟣 UV Filter</span>
+            </button>
+            <button id="btn-scanner-voice" class="btn btn-secondary" title="Toggle Speech Guidance for Accessibility">
+              <span id="voice-btn-label">🔊 Voice: OFF</span>
+            </button>
+            <button id="btn-scanner-shield" class="btn btn-accent" title="Present Teller Defense Counter Shield">
+              <span>🛡️ Teller Shield</span>
+            </button>
           </div>
         </div>
 
@@ -658,6 +735,15 @@
               <div class="corner-pin" id="pin-tr" data-corner="tr"></div>
               <div class="corner-pin" id="pin-br" data-corner="br"></div>
               <div class="corner-pin" id="pin-bl" data-corner="bl"></div>
+            </div>
+
+            <!-- Numismatic Collector Rarity Warning Banner -->
+            <div id="viewfinder-numismatic-banner" class="viewfinder-numismatic-banner" style="display:none;">
+              <span class="numis-icon">⚠️</span>
+              <div class="numis-text">
+                <strong id="numis-title">RARE NUMISMATIC SPECIMEN DETECTED</strong>
+                <p id="numis-desc">This vintage note carries significant collector premium. Appraise before central bank surrender!</p>
+              </div>
             </div>
 
             <!-- Standby: No Banknote Detected Banner -->
@@ -1697,6 +1783,274 @@
       <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 8px;">
         <button id="btn-vault-input-cancel" class="btn btn-secondary" type="button">Cancel</button>
         <button id="btn-vault-input-confirm" class="btn btn-primary" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 1: Counter Shield (Teller Defense Presentation Mode) -->
+  <div id="modal-counter-shield" class="modal-overlay counter-shield-overlay">
+    <div class="counter-shield-container">
+      <div class="counter-shield-top-bar">
+        <div class="shield-badge-tag">
+          <span class="shield-pulse-dot"></span>
+          <span>BANK-GRADE STATUTORY COUNTER SHIELD</span>
+        </div>
+        <div class="shield-controls-row">
+          <button id="btn-shield-rotate" class="btn btn-sm btn-outline" title="Rotate 180° for Teller View across the counter">
+            <span>🔄 Rotate View</span>
+          </button>
+          <button id="btn-shield-max-bright" class="btn btn-sm btn-outline" title="Boost Screen Brightness">
+            <span>☀️ Max Contrast</span>
+          </button>
+          <button id="btn-close-counter-shield" class="btn btn-sm btn-secondary" title="Exit Shield">
+            <span>✕ Close</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="counter-shield-content" id="counter-shield-card">
+        <div class="shield-header-block">
+          <span class="shield-alert-eyebrow">OFFICIAL BEARER LEGAL NOTICE</span>
+          <h2 class="shield-main-title">NOTICE TO FINANCIAL INSTITUTION & CASHIER</h2>
+          <div class="shield-par-badge">100% PAR VALUE REIMBURSEMENT MANDATED</div>
+        </div>
+
+        <div class="shield-statement-box">
+          <p class="shield-statute-statement" id="shield-statute-text">
+            Under <strong>31 CFR § 100.5</strong> and Federal Reserve Circular No. 2, genuine United States currency with more than 50% of the original note intact qualifies for <strong>100% legal tender reimbursement</strong>. The presenting bearer is entitled to immediate par value deposit or exchange.
+          </p>
+        </div>
+
+        <div class="shield-evidence-grid">
+          <div class="shield-metric-cell">
+            <span class="s-lbl">PRESENTED CURRENCY</span>
+            <span class="s-val" id="shield-curr-name">USD $20 Federal Reserve Note</span>
+          </div>
+          <div class="shield-metric-cell">
+            <span class="s-lbl">SURFACE AREA VERIFIED</span>
+            <span class="s-val text-success" id="shield-area-percent">58.4% (Threshold Satisfied)</span>
+          </div>
+          <div class="shield-metric-cell">
+            <span class="s-lbl">SERIAL IDENTIFIERS</span>
+            <span class="s-val font-mono" id="shield-serial-val">MF 89234812 B</span>
+          </div>
+          <div class="shield-metric-cell">
+            <span class="s-lbl">STATUTORY JURISDICTION</span>
+            <span class="s-val" id="shield-authority-name">BEP / Federal Reserve System</span>
+          </div>
+        </div>
+
+        <div class="shield-qr-section">
+          <div class="shield-qr-box" id="shield-qr-container">
+            <!-- Dynamic SVG QR Code generated offline -->
+          </div>
+          <div class="shield-qr-info">
+            <span class="qr-heading">📱 TELLER INSTANT VERIFICATION QR</span>
+            <p class="qr-sub">Scan with branch terminal or mobile camera to open the official government regulation page:</p>
+            <a id="shield-statute-url-link" href="https://www.bep.gov/services/mutilated-currency" target="_blank" class="shield-url-chip">
+              <span id="shield-statute-url-text">https://www.bep.gov/services/mutilated-currency</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Multi-Fragment Jigsaw Assembler -->
+  <div id="modal-jigsaw-assembler" class="modal-overlay">
+    <div class="modal-card modal-large jigsaw-modal-card">
+      <div class="modal-header">
+        <div class="modal-header-brand">
+          <span class="modal-badge-tag">FORENSIC RECONSTRUCTION</span>
+          <h3 class="modal-title">🧩 Multi-Fragment Banknote Jigsaw</h3>
+        </div>
+        <button id="btn-close-jigsaw" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body jigsaw-body">
+        <p class="jigsaw-intro-text">Reconstruct notes torn into 2 or 3 separate pieces (pet chewing, machine shredding, accidental tearing). Align pieces along torn edges to calculate true non-overlapping surface area.</p>
+
+        <div class="jigsaw-toolbar">
+          <button id="btn-jigsaw-sample" class="btn btn-sm btn-secondary">🧪 Load Torn Specimen</button>
+          <button id="btn-jigsaw-snap-a" class="btn btn-sm btn-outline">📷 Fragment A</button>
+          <button id="btn-jigsaw-snap-b" class="btn btn-sm btn-outline">📷 Fragment B</button>
+          <button id="btn-jigsaw-auto-align" class="btn btn-sm btn-accent">⚡ Auto-Align Tear</button>
+          <button id="btn-jigsaw-reset" class="btn btn-sm btn-secondary">🔄 Reset</button>
+        </div>
+
+        <div class="jigsaw-canvas-wrapper">
+          <canvas id="jigsaw-canvas" width="560" height="260"></canvas>
+          <div class="jigsaw-hint-pill">Touch & drag fragments to align • Slider controls rotation</div>
+        </div>
+
+        <div class="jigsaw-sliders-row">
+          <div class="frag-slider-group">
+            <label>Fragment A Rotation: <span id="val-rot-a">0°</span></label>
+            <input type="range" id="slider-rot-a" min="-90" max="90" value="0" class="styled-slider">
+          </div>
+          <div class="frag-slider-group">
+            <label>Fragment B Rotation: <span id="val-rot-b">0°</span></label>
+            <input type="range" id="slider-rot-b" min="-90" max="90" value="0" class="styled-slider">
+          </div>
+        </div>
+
+        <div class="jigsaw-metrics-summary">
+          <div class="jigsaw-metric-box">
+            <span class="jm-lbl">Fragment A</span>
+            <span class="jm-val" id="jigsaw-val-a">34.2%</span>
+          </div>
+          <div class="jigsaw-metric-box">
+            <span class="jm-lbl">Fragment B</span>
+            <span class="jm-val" id="jigsaw-val-b">28.6%</span>
+          </div>
+          <div class="jigsaw-metric-box">
+            <span class="jm-lbl">Overlap Detected</span>
+            <span class="jm-val text-warning" id="jigsaw-val-overlap">0.0%</span>
+          </div>
+          <div class="jigsaw-metric-box highlight">
+            <span class="jm-lbl">Combined Surface</span>
+            <span class="jm-val text-success" id="jigsaw-val-total">62.8%</span>
+          </div>
+        </div>
+
+        <div id="jigsaw-serial-match-card" class="jigsaw-match-card">
+          <span class="match-icon">✓</span>
+          <div class="match-info">
+            <strong>Serial Continuity Verified:</strong>
+            <span id="jigsaw-match-desc">Piece A left prefix and Piece B right suffix match identical genuine note series.</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-export-jigsaw-dossier" class="btn btn-primary">
+          <span>📋 Export Composite Scan to Dossier</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Watermark Lightbox & Screen Backlight -->
+  <div id="modal-watermark-lightbox" class="modal-overlay lightbox-overlay">
+    <div class="lightbox-fullscreen" id="lightbox-fullscreen">
+      <div class="lightbox-screen-surface">
+        <div class="lightbox-calibration-guide">
+          <div class="lightbox-outline-bill">
+            <span class="lightbox-hint-tag">PLACE DAMAGED NOTE FLAT OVER LIGHTBOX</span>
+            <div class="lightbox-crosshair"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lightbox-control-bar">
+        <div class="lightbox-status-text">
+          💡 <strong>Watermark Substrate Backlight:</strong> In a dark room, hold physical note flat against this screen to reveal embedded watermarks, metallic threads, and micro-perforations.
+        </div>
+        <div class="lightbox-actions">
+          <button id="btn-lightbox-invert-tint" class="btn btn-sm btn-secondary">🎨 Invert Tint</button>
+          <button id="btn-lightbox-torch" class="btn btn-sm btn-accent">🔦 Hardware Torch</button>
+          <button id="btn-close-lightbox" class="btn btn-sm btn-primary">✕ Exit Lightbox</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Disaster Recovery & Mass Salvage Batch Claim Manifest -->
+  <div id="modal-batch-manifest" class="modal-overlay">
+    <div class="modal-card modal-large batch-modal-card">
+      <div class="modal-header">
+        <div class="modal-header-brand">
+          <span class="modal-badge-tag">DISASTER RECOVERY</span>
+          <h3 class="modal-title">🌊 Mass Salvage Batch Claim Manifest</h3>
+        </div>
+        <button id="btn-close-batch-modal" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body batch-modal-body">
+        <div class="batch-incident-strip">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="batch-incident-type">Incident / Casualty Event:</label>
+              <select id="batch-incident-type" class="styled-select">
+                <option value="Residential House Fire (Charred Cash)">Residential House Fire (Charred Cash)</option>
+                <option value="Plumbing Leak / Basement Flood (Water Saturation)">Plumbing Leak / Basement Flood (Water Saturation)</option>
+                <option value="Hurricane / Storm Surge Flooding">Hurricane / Storm Surge Flooding</option>
+                <option value="Commercial Safe Trauma / Chemical Exposure">Commercial Safe Trauma / Chemical Exposure</option>
+                <option value="Domestic Pet Mutilation">Domestic Pet Mutilation</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="batch-claimant-carrier">Insurance Carrier / Claim # (Optional):</label>
+              <input type="text" id="batch-claimant-carrier" class="styled-input" placeholder="e.g. State Farm Claim #892-019">
+            </div>
+          </div>
+        </div>
+
+        <div class="batch-tally-grid">
+          <div class="batch-tally-card">
+            <span class="tally-val" id="batch-total-notes">0</span>
+            <span class="tally-lbl">Notes Logged</span>
+          </div>
+          <div class="batch-tally-card">
+            <span class="tally-val" id="batch-face-val">$0.00</span>
+            <span class="tally-lbl">Total Face Value</span>
+          </div>
+          <div class="batch-tally-card highlight-green">
+            <span class="tally-val text-success" id="batch-recoverable-val">$0.00</span>
+            <span class="tally-lbl">Recoverable Par Value</span>
+          </div>
+          <div class="batch-tally-card">
+            <span class="tally-val" id="batch-counter-eligible">0</span>
+            <span class="tally-lbl">>50% Counter Exchange</span>
+          </div>
+        </div>
+
+        <div class="batch-add-row">
+          <div class="form-group" style="flex:1;">
+            <label>Denom:</label>
+            <input type="number" id="batch-add-denom" class="styled-input" value="20">
+          </div>
+          <div class="form-group" style="flex:1.2;">
+            <label>Surviving %:</label>
+            <input type="number" id="batch-add-pct" class="styled-input" value="65" min="1" max="100">
+          </div>
+          <div class="form-group" style="flex:2;">
+            <label>Serial / Marker:</label>
+            <input type="text" id="batch-add-serial" class="styled-input" value="BEP-9812">
+          </div>
+          <div class="form-group" style="flex:1.5;">
+            <label>Condition:</label>
+            <select id="batch-add-cond" class="styled-select">
+              <option value="Charred / Heat">Charred / Heat</option>
+              <option value="Waterlogged">Waterlogged</option>
+              <option value="Torn / Shredded">Torn / Shredded</option>
+              <option value="Chemical / Soiled">Chemical / Soiled</option>
+            </select>
+          </div>
+          <button id="btn-batch-add-note" class="btn btn-accent" type="button" style="align-self:flex-end;">+ Add Note</button>
+        </div>
+
+        <div class="batch-table-container">
+          <table class="batch-manifest-table" id="batch-manifest-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Denom</th>
+                <th>Serial / ID</th>
+                <th>Condition</th>
+                <th>Intact %</th>
+                <th>Payout Value</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="batch-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-batch-sample-stack" class="btn btn-secondary">🧪 Load Sample 10-Note Bundle</button>
+        <button id="btn-batch-export-csv" class="btn btn-secondary">📊 Export CSV</button>
+        <button id="btn-batch-export-pdf" class="btn btn-accent">📄 Generate Loss Schedule PDF</button>
+        <button id="btn-batch-save-vault" class="btn btn-primary">💼 Save Batch to Vault</button>
       </div>
     </div>
   </div>

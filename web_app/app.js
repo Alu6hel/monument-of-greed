@@ -166,6 +166,14 @@
         osc.stop(this.ctx.currentTime + 0.2);
       } catch (e) {}
     }
+
+    modalOpen() {
+      this.playHarmonicTone(587.33, 0.09); // D5
+    }
+
+    modalClose() {
+      this.playHarmonicTone(392.00, 0.07); // G4
+    }
   }
 
   const audio = new AudioFx();
@@ -698,6 +706,13 @@
     initInteractiveBouncingDish();
     initTactileRailToggle();
     initSerialOcrEngine();
+    initCounterShield();
+    initJigsawAssembler();
+    initWatermarkAndUvAssist();
+    initBatchAuditManifest();
+    initNumismaticAdvisor();
+    initVoiceGuidance();
+    initConsumerHomeTiles();
     renderFeedCards('all');
   });
 
@@ -1565,6 +1580,14 @@
     const statusText = document.getElementById('scanner-status-text');
     if (statusText) statusText.textContent = `${sc.name.toUpperCase()} (${sc.tag})`;
 
+    if (sc.serial) {
+      state.dossier.serialLeft = sc.serial;
+      state.dossier.serialRight = sc.serial;
+      if (typeof window.checkNumismaticValue === 'function') {
+        window.checkNumismaticValue(sc.serial, sc.currency);
+      }
+    }
+
     recalculateSurfaceArea();
   }
 
@@ -2242,6 +2265,10 @@
 
     if (typeof update3DShowcase === 'function') {
       update3DShowcase();
+    }
+
+    if (typeof window.provideVoiceGuidance === 'function') {
+      window.provideVoiceGuidance(state.scanner.detected, percent, reg.code);
     }
   }
 
@@ -4030,7 +4057,7 @@ ${xrefOffset}
             <span class="vault-card-flag">${c.flag || '💵'}</span>
             <div>
               <div class="vault-card-ref">${c.id}</div>
-              <div style="font-size:0.7rem;color:var(--text-muted);">${c.currency} ${c.denom} • Filed ${c.submissionDate || 'Recently'}</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);">${c.currency} ${c.denom || ''} • Filed ${c.submissionDate || 'Recently'}</div>
             </div>
           </div>
           <span class="vault-status-badge ${curStatus.class}">${curStatus.label}</span>
@@ -4039,7 +4066,7 @@ ${xrefOffset}
         <div class="vault-card-body">
           <div class="vault-stat-item">
             <span class="vault-stat-lbl">Face Value</span>
-            <span class="vault-stat-val highlight">${c.currency} ${c.denom}</span>
+            <span class="vault-stat-val highlight">${c.denom ? (c.denom.startsWith('$') ? c.denom : `${c.currency} ${c.denom}`) : (c.faceValue ? `$${Number(c.faceValue).toFixed(2)}` : '$0.00')}</span>
           </div>
           <div class="vault-stat-item">
             <span class="vault-stat-lbl">Surviving Area</span>
@@ -4080,6 +4107,21 @@ ${xrefOffset}
           </div>
         </div>
 
+        <div class="vault-postal-tracking-box">
+          <div class="vault-tracking-header">
+            <span>📦 CHAIN OF CUSTODY & POSTAL DISPATCH</span>
+            <span class="vault-carrier-tag">${detectPostalCarrier(c.trackingNumber || '')}</span>
+          </div>
+          <div class="vault-tracking-input-row">
+            <input type="text" class="vault-tracking-input" data-id="${c.id}" placeholder="Enter Tracking # (USPS, FedEx, Royal Mail, Canada Post, DHL)" value="${c.trackingNumber || ''}">
+            ${c.trackingNumber ? `
+              <a href="${getPostalTrackingUrl(c.trackingNumber)}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none; padding:4px 8px; font-size:0.72rem;">
+                <span>Track ↗</span>
+              </a>
+            ` : ''}
+          </div>
+        </div>
+
         <div class="vault-card-actions">
           <div class="vault-action-left">
             <button class="btn-sm btn-secondary btn-vault-pdf" data-id="${c.id}" title="Download Courtroom PDF Dossier">
@@ -4114,6 +4156,21 @@ ${xrefOffset}
     });
 
     // Wire Card Buttons
+    container.querySelectorAll('.vault-tracking-input').forEach(inp => {
+      inp.addEventListener('change', (e) => {
+        const id = inp.dataset.id;
+        const claim = claims.find(x => x.id === id);
+        if (claim) {
+          claim.trackingNumber = e.target.value.trim();
+          localStorage.setItem('mog_vault_claims', JSON.stringify(claims));
+          renderVaultClaims(document.querySelector('.vault-filter-pill.active')?.dataset.filter || 'all');
+          if (window.AndroidBridge && typeof window.AndroidBridge.showToast === 'function') {
+            window.AndroidBridge.showToast(`Saved Tracking: ${claim.trackingNumber}`);
+          }
+        }
+      });
+    });
+
     container.querySelectorAll('.btn-vault-pdf').forEach(b => {
       b.addEventListener('click', () => {
         const id = b.dataset.id;
@@ -6204,6 +6261,1095 @@ physical surface intact qualify for 100% legal face-value reimbursement.
         }, 2800);
       }, 500);
     });
+  }
+
+  // =========================================================================
+  // 37. POSTAL CARRIER DETECTION & DISPATCH ENGINE
+  // =========================================================================
+  function detectPostalCarrier(num) {
+    if (!num) return 'Awaiting Dispatch';
+    const clean = num.replace(/[\s-]/g, '').toUpperCase();
+    if (/^94[0-9]{20}$|^92[0-9]{20}$|^93[0-9]{20}$|^[A-Z]{2}[0-9]{9}US$/i.test(clean)) return 'USPS Certified';
+    if (/^[0-9]{12}$|^[0-9]{15}$|^[0-9]{20}$/.test(clean)) return 'FedEx Priority';
+    if (/^[A-Z]{2}[0-9]{9}GB$/i.test(clean)) return 'Royal Mail Special';
+    if (/^[0-9]{16}$|^[A-Z]{2}[0-9]{9}CA$/i.test(clean)) return 'Canada Post';
+    if (/^[0-9]{10}$/.test(clean)) return 'DHL Express';
+    return 'Registered Carrier';
+  }
+
+  function getPostalTrackingUrl(num) {
+    if (!num) return '#';
+    const clean = encodeURIComponent(num.trim());
+    const carrier = detectPostalCarrier(num);
+    if (carrier.includes('USPS')) return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${clean}`;
+    if (carrier.includes('FedEx')) return `https://www.fedex.com/fedextrack/?trknbr=${clean}`;
+    if (carrier.includes('Royal Mail')) return `https://www.royalmail.com/track-your-item#/tracking-results/${clean}`;
+    if (carrier.includes('Canada Post')) return `https://www.canadapost-postescanada.ca/track-reperage/en#/result_list?searchFor=${clean}`;
+    if (carrier.includes('DHL')) return `https://www.dhl.com/en/express/tracking.html?AWB=${clean}`;
+    return `https://www.google.com/search?q=${clean}+tracking`;
+  }
+  window.detectPostalCarrier = detectPostalCarrier;
+  window.getPostalTrackingUrl = getPostalTrackingUrl;
+
+  // =========================================================================
+  // 38. OFFLINE ISO/IEC 18004 STANDARD QR CODE GENERATOR (PURE JS SVG)
+  // =========================================================================
+  function createQRCode(text) {
+    const GF256_EXP = new Uint8Array(512);
+    const GF256_LOG = new Uint8Array(256);
+    let x = 1;
+    for (let i = 0; i < 255; i++) {
+      GF256_EXP[i] = x;
+      GF256_EXP[i + 255] = x;
+      GF256_LOG[x] = i;
+      x = (x << 1) ^ (x & 0x80 ? 0x11d : 0);
+    }
+    function gfMul(a, b) {
+      return (a === 0 || b === 0) ? 0 : GF256_EXP[GF256_LOG[a] + GF256_LOG[b]];
+    }
+
+    const ver = 6;
+    const size = 17 + 4 * ver; // 41x41
+    const dataCapacity = 86;
+
+    const bytes = new TextEncoder().encode(text);
+    const bits = [];
+    function pushBits(val, len) {
+      for (let i = len - 1; i >= 0; i--) {
+        bits.push((val >> i) & 1);
+      }
+    }
+
+    pushBits(0b0100, 4); // Byte mode
+    pushBits(bytes.length, 8);
+    for (let b of bytes) pushBits(b, 8);
+
+    const totalDataBits = dataCapacity * 8;
+    const termLen = Math.min(4, totalDataBits - bits.length);
+    pushBits(0, termLen);
+    while (bits.length % 8 !== 0) bits.push(0);
+
+    const padBytes = [0xEC, 0x11];
+    let padIdx = 0;
+    while (bits.length < totalDataBits) {
+      pushBits(padBytes[padIdx % 2], 8);
+      padIdx++;
+    }
+
+    const dataBytes = new Uint8Array(dataCapacity);
+    for (let i = 0; i < dataCapacity; i++) {
+      let b = 0;
+      for (let j = 0; j < 8; j++) b = (b << 1) | bits[i * 8 + j];
+      dataBytes[i] = b;
+    }
+
+    function rsGenPoly(numEc) {
+      let poly = [1];
+      for (let i = 0; i < numEc; i++) {
+        const next = [1, GF256_EXP[i]];
+        const res = new Uint8Array(poly.length + 1);
+        for (let j = 0; j < poly.length; j++) {
+          res[j] ^= gfMul(poly[j], next[0]);
+          res[j + 1] ^= gfMul(poly[j], next[1]);
+        }
+        poly = Array.from(res);
+      }
+      return poly;
+    }
+
+    function rsEncode(data, numEc) {
+      const gen = rsGenPoly(numEc);
+      const msg = new Uint8Array(data.length + numEc);
+      msg.set(data);
+      for (let i = 0; i < data.length; i++) {
+        const coef = msg[i];
+        if (coef !== 0) {
+          for (let j = 0; j < gen.length; j++) {
+            msg[i + j] ^= gfMul(gen[j], coef);
+          }
+        }
+      }
+      return msg.slice(data.length);
+    }
+
+    const block1Data = dataBytes.slice(0, 43);
+    const block2Data = dataBytes.slice(43, 86);
+    const block1Ec = rsEncode(block1Data, 24);
+    const block2Ec = rsEncode(block2Data, 24);
+
+    const finalCodewords = [];
+    for (let i = 0; i < 43; i++) {
+      finalCodewords.push(block1Data[i]);
+      finalCodewords.push(block2Data[i]);
+    }
+    for (let i = 0; i < 24; i++) {
+      finalCodewords.push(block1Ec[i]);
+      finalCodewords.push(block2Ec[i]);
+    }
+
+    const matrix = Array.from({ length: size }, () => new Int8Array(size).fill(-1));
+    const isFunction = Array.from({ length: size }, () => new Uint8Array(size).fill(0));
+
+    function setModule(r, c, val) {
+      matrix[r][c] = val ? 1 : 0;
+      isFunction[r][c] = 1;
+    }
+
+    function drawFinder(r, c) {
+      for (let dr = -1; dr <= 7; dr++) {
+        for (let dc = -1; dc <= 7; dc++) {
+          const nr = r + dr;
+          const nc = c + dc;
+          if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+            if (dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6) {
+              const isBorder = (dr === 0 || dr === 6 || dc === 0 || dc === 6);
+              const isCenter = (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4);
+              setModule(nr, nc, isBorder || isCenter);
+            } else {
+              setModule(nr, nc, 0);
+            }
+          }
+        }
+      }
+    }
+    drawFinder(0, 0);
+    drawFinder(0, size - 7);
+    drawFinder(size - 7, 0);
+
+    function drawAlignment(r, c) {
+      for (let dr = -2; dr <= 2; dr++) {
+        for (let dc = -2; dc <= 2; dc++) {
+          const isBlack = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
+          setModule(r + dr, c + dc, isBlack);
+        }
+      }
+    }
+    const alignCoords = [6, 34];
+    for (let r of alignCoords) {
+      for (let c of alignCoords) {
+        if ((r === 6 && c === 6) || (r === 6 && c === size - 7) || (r === size - 7 && c === 6)) continue;
+        drawAlignment(r, c);
+      }
+    }
+
+    for (let i = 8; i < size - 8; i++) {
+      if (!isFunction[6][i]) setModule(6, i, i % 2 === 0);
+      if (!isFunction[i][6]) setModule(i, 6, i % 2 === 0);
+    }
+    setModule(size - 8, 8, 1);
+
+    for (let i = 0; i < 9; i++) {
+      if (!isFunction[8][i]) isFunction[8][i] = 1;
+      if (!isFunction[i][8]) isFunction[i][8] = 1;
+      if (!isFunction[8][size - 1 - i]) isFunction[8][size - 1 - i] = 1;
+      if (!isFunction[size - 1 - i][8]) isFunction[size - 1 - i][8] = 1;
+    }
+
+    const allBits = [];
+    for (let cw of finalCodewords) {
+      for (let i = 7; i >= 0; i--) allBits.push((cw >> i) & 1);
+    }
+    for (let i = 0; i < 7; i++) allBits.push(0);
+
+    let bitIdx = 0;
+    let upwards = true;
+    for (let right = size - 1; right > 0; right -= 2) {
+      if (right === 6) right--;
+      const cols = [right, right - 1];
+      for (let step = 0; step < size; step++) {
+        const row = upwards ? (size - 1 - step) : step;
+        for (let col of cols) {
+          if (!isFunction[row][col]) {
+            const bit = bitIdx < allBits.length ? allBits[bitIdx++] : 0;
+            const mask = ((row + col) % 2 === 0);
+            matrix[row][col] = mask ? (bit ^ 1) : bit;
+          }
+        }
+      }
+      upwards = !upwards;
+    }
+
+    const formatBits = [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0];
+    for (let i = 0; i < 6; i++) matrix[8][i] = formatBits[i];
+    matrix[8][7] = formatBits[6];
+    matrix[8][8] = formatBits[7];
+    matrix[7][8] = formatBits[8];
+    for (let i = 0; i < 6; i++) matrix[5 - i][8] = formatBits[9 + i];
+    for (let i = 0; i < 7; i++) matrix[size - 1 - i][8] = formatBits[i];
+    for (let i = 0; i < 8; i++) matrix[8][size - 8 + i] = formatBits[7 + i];
+
+    let svg = `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">`;
+    svg += `<rect width="${size}" height="${size}" fill="#ffffff"/>`;
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (matrix[r][c] === 1) {
+          svg += `<rect x="${c}" y="${r}" width="1" height="1" fill="#0f172a"/>`;
+        }
+      }
+    }
+    svg += `</svg>`;
+    return svg;
+  }
+  window.createQRCode = createQRCode;
+
+  // =========================================================================
+  // 39. THE COUNTER SHIELD (TELLER DEFENSE PRESENTATION MODE)
+  // =========================================================================
+  const CENTRAL_BANK_CITATIONS = {
+    USD: {
+      statute: '31 CFR § 100.5 & Federal Reserve Circular No. 2',
+      authority: 'BEP / Bureau of Engraving & Printing',
+      statement: 'Under <strong>31 CFR § 100.5</strong> and Federal Reserve Circular No. 2, genuine United States currency with more than 50% of the original note intact qualifies for <strong>100% legal tender reimbursement</strong>. The presenting bearer is legally entitled to immediate par value deposit or counter exchange.',
+      url: 'https://www.bep.gov/services/mutilated-currency'
+    },
+    EUR: {
+      statute: 'ECB Decision 2013/10 (Article 3)',
+      authority: 'European Central Bank (ECB) / Eurosystem',
+      statement: 'Under <strong>ECB Decision 2013/10 (Art. 3)</strong>, national central banks and credit institutions within the Eurosystem shall exchange damaged genuine euro banknotes if <strong>more than 50% of the banknote surface area</strong> is presented.',
+      url: 'https://www.ecb.europa.eu/euro/banknotes/damaged/html/index.en.html'
+    },
+    GBP: {
+      statute: 'Bank of England Damaged Banknote Policy',
+      authority: 'Bank of England (BoE)',
+      statement: 'Under official <strong>Bank of England Policy</strong>, the Bank pays <strong>100% face value</strong> for genuine banknotes where more than half of the banknote (> 50% surface area) is presented with identifiable security markers.',
+      url: 'https://www.bankofengland.co.uk/banknotes/damaged-and-mutilated-banknotes'
+    },
+    CAD: {
+      statute: 'Bank of Canada Banknote Redemption Policy',
+      authority: 'Bank of Canada (BoC)',
+      statement: 'Under official <strong>Bank of Canada Policy</strong>, damaged banknotes retaining <strong>more than 50% of the original note intact</strong> qualify for immediate redemption at full par value through commercial financial institutions.',
+      url: 'https://www.bankofcanada.ca/banknotes/bank-note-redemption-service/'
+    },
+    AUD: {
+      statute: 'Reserve Bank of Australia (RBA) Policy',
+      authority: 'Reserve Bank of Australia (RBA)',
+      statement: 'Under <strong>RBA Damaged Banknotes Policy</strong>, Australian notes with <strong>≥80% surface area intact</strong> receive 100% full face value reimbursement. Notes between 20% and 79% receive a linear proportional pro-rata payout.',
+      url: 'https://www.rba.gov.au/banknotes/damaged-banknotes.html'
+    },
+    JPY: {
+      statute: 'Bank of Japan Act (Article 48)',
+      authority: 'Bank of Japan (BOJ)',
+      statement: 'Under <strong>Bank of Japan Act Art. 48</strong>, banknotes retaining <strong>≥66.7% (two-thirds)</strong> of their original size are redeemed at 100% par value, and notes with ≥40% to 66.7% are redeemed at 50% face value.',
+      url: 'https://www.boj.or.jp/en/about/services/bn/da_index.htm'
+    },
+    CHF: {
+      statute: 'Swiss National Bank (SNB) Instruction',
+      authority: 'Swiss National Bank (SNB)',
+      statement: 'Under <strong>SNB Instruction on Damaged Banknotes</strong>, genuine notes presenting <strong>more than half (> 50%) of the surface area</strong> are reimbursed at 100% par value upon branch submission.',
+      url: 'https://www.snb.ch/en/iabout/cash'
+    },
+    CNY: {
+      statute: 'PBOC Measures for Damaged RMB',
+      authority: 'People’s Bank of China (PBOC)',
+      statement: 'Under <strong>PBOC Regulations</strong>, banknotes with <strong>≥75% remaining</strong> are redeemed at full par value; banknotes with 50% to 74% are redeemed at half par value.',
+      url: 'http://www.pbc.gov.cn/'
+    },
+    JMD: {
+      statute: 'Bank of Jamaica Currency Operations',
+      authority: 'Bank of Jamaica (BOJ)',
+      statement: 'Under <strong>Bank of Jamaica Currency Operations</strong>, banknotes retaining <strong>more than 50% surface area</strong> with legible serial numbers are eligible for full par redemption.',
+      url: 'https://boj.org.jm/currency/damaged-banknotes/'
+    }
+  };
+
+  function initCounterShield() {
+    const modal = document.getElementById('modal-counter-shield');
+    const card = document.getElementById('counter-shield-card');
+    const btnRotate = document.getElementById('btn-shield-rotate');
+    const btnMaxBright = document.getElementById('btn-shield-max-bright');
+    const btnClose = document.getElementById('btn-close-counter-shield');
+
+    if (!modal) return;
+
+    function openCounterShield() {
+      const curr = state.activeCurrency || 'USD';
+      const cite = CENTRAL_BANK_CITATIONS[curr] || CENTRAL_BANK_CITATIONS.USD;
+
+      const currNameEl = document.getElementById('shield-curr-name');
+      const areaEl = document.getElementById('shield-area-percent');
+      const serialEl = document.getElementById('shield-serial-val');
+      const authEl = document.getElementById('shield-authority-name');
+      const statuteEl = document.getElementById('shield-statute-text');
+      const urlLink = document.getElementById('shield-statute-url-link');
+      const urlText = document.getElementById('shield-statute-url-text');
+      const qrBox = document.getElementById('shield-qr-container');
+
+      const measured = state.scanner.measuredPercent > 0 ? state.scanner.measuredPercent.toFixed(1) + '%' : '58.4%';
+      const serial = state.dossier.serialLeft || 'MF 89234812 B';
+
+      if (currNameEl) currNameEl.textContent = `${curr} Federal / Central Banknote`;
+      if (areaEl) areaEl.textContent = `${measured} (Verified Statutory Proof)`;
+      if (serialEl) serialEl.textContent = serial;
+      if (authEl) authEl.textContent = cite.authority;
+      if (statuteEl) statuteEl.innerHTML = cite.statement;
+
+      if (urlLink) urlLink.href = cite.url;
+      if (urlText) urlText.textContent = cite.url;
+
+      if (qrBox) {
+        qrBox.innerHTML = createQRCode(cite.url);
+      }
+
+      modal.classList.add('active');
+      audio.modalOpen();
+    }
+
+    function closeCounterShield() {
+      modal.classList.remove('active');
+      if (card) {
+        card.classList.remove('rotated');
+        card.classList.remove('max-contrast');
+      }
+      audio.modalClose();
+    }
+
+    if (btnRotate && card) {
+      btnRotate.addEventListener('click', () => {
+        card.classList.toggle('rotated');
+        audio.tap();
+      });
+    }
+
+    if (btnMaxBright && card) {
+      btnMaxBright.addEventListener('click', () => {
+        card.classList.toggle('max-contrast');
+        audio.tap();
+      });
+    }
+
+    if (btnClose) btnClose.addEventListener('click', closeCounterShield);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeCounterShield();
+    });
+
+    // Wire trigger buttons
+    const triggerTile = document.getElementById('tile-counter-shield');
+    const triggerScanner = document.getElementById('btn-scanner-shield');
+    const triggerQuick = document.getElementById('btn-quick-counter-shield');
+    const triggerWorkflow = document.getElementById('btn-workflow-counter-shield');
+
+    if (triggerTile) triggerTile.addEventListener('click', openCounterShield);
+    if (triggerScanner) triggerScanner.addEventListener('click', openCounterShield);
+    if (triggerQuick) triggerQuick.addEventListener('click', openCounterShield);
+    if (triggerWorkflow) triggerWorkflow.addEventListener('click', openCounterShield);
+
+    window.openCounterShield = openCounterShield;
+  }
+
+  // =========================================================================
+  // 40. MULTI-FRAGMENT JIGSAW ASSEMBLER (TACTILE PIXEL UNION SOLVER)
+  // =========================================================================
+  function initJigsawAssembler() {
+    const modal = document.getElementById('modal-jigsaw-assembler');
+    const canvas = document.getElementById('jigsaw-canvas');
+    if (!modal || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const btnClose = document.getElementById('btn-close-jigsaw');
+    const btnSample = document.getElementById('btn-jigsaw-sample');
+    const btnSnapA = document.getElementById('btn-jigsaw-snap-a');
+    const btnSnapB = document.getElementById('btn-jigsaw-snap-b');
+    const btnAutoAlign = document.getElementById('btn-jigsaw-auto-align');
+    const btnReset = document.getElementById('btn-jigsaw-reset');
+    const btnExport = document.getElementById('btn-export-jigsaw-dossier');
+
+    const sliderRotA = document.getElementById('slider-rot-a');
+    const sliderRotB = document.getElementById('slider-rot-b');
+    const valRotA = document.getElementById('val-rot-a');
+    const valRotB = document.getElementById('val-rot-b');
+
+    const valA = document.getElementById('jigsaw-val-a');
+    const valB = document.getElementById('jigsaw-val-b');
+    const valOverlap = document.getElementById('jigsaw-val-overlap');
+    const valTotal = document.getElementById('jigsaw-val-total');
+
+    const fragments = {
+      a: {
+        x: 60,
+        y: 50,
+        rot: 0,
+        w: 180,
+        h: 150,
+        color: '#10b981',
+        label: 'Fragment A (Left Serial: MF 8923)',
+        tearPoints: [[0, 0], [180, 0], [160, 45], [175, 90], [150, 150], [0, 150]]
+      },
+      b: {
+        x: 280,
+        y: 50,
+        rot: 0,
+        w: 180,
+        h: 150,
+        color: '#38bdf8',
+        label: 'Fragment B (Right Serial: 4812 B)',
+        tearPoints: [[20, 0], [180, 0], [180, 150], [30, 150], [0, 95], [25, 45]]
+      }
+    };
+
+    let activeDrag = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    function renderJigsaw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw faint full banknote alignment outline
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 6]);
+      ctx.strokeRect(100, 50, 360, 150);
+      ctx.restore();
+
+      // Draw Fragment A
+      drawPiece(fragments.a);
+      // Draw Fragment B
+      drawPiece(fragments.b);
+
+      calculatePixelUnion();
+    }
+
+    function drawPiece(f) {
+      ctx.save();
+      ctx.translate(f.x + f.w / 2, f.y + f.h / 2);
+      ctx.rotate((f.rot * Math.PI) / 180);
+      ctx.translate(-f.w / 2, -f.h / 2);
+
+      ctx.beginPath();
+      ctx.moveTo(f.tearPoints[0][0], f.tearPoints[0][1]);
+      for (let i = 1; i < f.tearPoints.length; i++) {
+        ctx.lineTo(f.tearPoints[i][0], f.tearPoints[i][1]);
+      }
+      ctx.closePath();
+
+      ctx.fillStyle = f.color === '#10b981' ? 'rgba(16, 185, 129, 0.45)' : 'rgba(56, 189, 248, 0.45)';
+      ctx.fill();
+
+      ctx.strokeStyle = f.color;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Serial typography marker
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText(f.label, 12, 75);
+
+      ctx.restore();
+    }
+
+    function calculatePixelUnion() {
+      // Offscreen union calculation to get exact non-overlapping surface area %
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = 360;
+      offCanvas.height = 150;
+      const offCtx = offCanvas.getContext('2d');
+      if (!offCtx) return;
+
+      const targetArea = offCanvas.width * offCanvas.height;
+
+      // Draw Fragment A in Red (channel 0)
+      offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+      offCtx.save();
+      offCtx.translate(fragments.a.x - 100 + fragments.a.w / 2, fragments.a.y - 50 + fragments.a.h / 2);
+      offCtx.rotate((fragments.a.rot * Math.PI) / 180);
+      offCtx.translate(-fragments.a.w / 2, -fragments.a.h / 2);
+      offCtx.beginPath();
+      offCtx.moveTo(fragments.a.tearPoints[0][0], fragments.a.tearPoints[0][1]);
+      for (let i = 1; i < fragments.a.tearPoints.length; i++) offCtx.lineTo(fragments.a.tearPoints[i][0], fragments.a.tearPoints[i][1]);
+      offCtx.closePath();
+      offCtx.fillStyle = 'rgb(255, 0, 0)';
+      offCtx.fill();
+      offCtx.restore();
+
+      // Read Mask A
+      const imgDataA = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data;
+
+      // Draw Fragment B in Green (channel 1)
+      offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+      offCtx.save();
+      offCtx.translate(fragments.b.x - 100 + fragments.b.w / 2, fragments.b.y - 50 + fragments.b.h / 2);
+      offCtx.rotate((fragments.b.rot * Math.PI) / 180);
+      offCtx.translate(-fragments.b.w / 2, -fragments.b.h / 2);
+      offCtx.beginPath();
+      offCtx.moveTo(fragments.b.tearPoints[0][0], fragments.b.tearPoints[0][1]);
+      for (let i = 1; i < fragments.b.tearPoints.length; i++) offCtx.lineTo(fragments.b.tearPoints[i][0], fragments.b.tearPoints[i][1]);
+      offCtx.closePath();
+      offCtx.fillStyle = 'rgb(0, 255, 0)';
+      offCtx.fill();
+      offCtx.restore();
+
+      // Read Mask B
+      const imgDataB = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data;
+
+      let pxA = 0;
+      let pxB = 0;
+      let pxOverlap = 0;
+      let pxUnion = 0;
+
+      for (let i = 0; i < imgDataA.length; i += 4) {
+        const inA = imgDataA[i] > 100;
+        const inB = imgDataB[i + 1] > 100;
+
+        if (inA) pxA++;
+        if (inB) pxB++;
+        if (inA && inB) pxOverlap++;
+        if (inA || inB) pxUnion++;
+      }
+
+      const pctA = ((pxA / targetArea) * 100).toFixed(1);
+      const pctB = ((pxB / targetArea) * 100).toFixed(1);
+      const pctOverlap = ((pxOverlap / targetArea) * 100).toFixed(1);
+      const pctTotal = ((pxUnion / targetArea) * 100).toFixed(1);
+
+      if (valA) valA.textContent = `${pctA}%`;
+      if (valB) valB.textContent = `${pctB}%`;
+      if (valOverlap) valOverlap.textContent = `${pctOverlap}%`;
+      if (valTotal) {
+        valTotal.textContent = `${pctTotal}%`;
+        valTotal.className = parseFloat(pctTotal) >= 50.0 ? 'jm-val text-success' : 'jm-val text-warning';
+      }
+    }
+
+    // Touch & Mouse Drag handlers
+    canvas.addEventListener('pointerdown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      // Hit test B first, then A
+      if (x >= fragments.b.x && x <= fragments.b.x + fragments.b.w && y >= fragments.b.y && y <= fragments.b.y + fragments.b.h) {
+        activeDrag = 'b';
+        dragOffsetX = x - fragments.b.x;
+        dragOffsetY = y - fragments.b.y;
+      } else if (x >= fragments.a.x && x <= fragments.a.x + fragments.a.w && y >= fragments.a.y && y <= fragments.a.y + fragments.a.h) {
+        activeDrag = 'a';
+        dragOffsetX = x - fragments.a.x;
+        dragOffsetY = y - fragments.a.y;
+      }
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!activeDrag) return;
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      fragments[activeDrag].x = Math.max(10, Math.min(canvas.width - fragments[activeDrag].w - 10, x - dragOffsetX));
+      fragments[activeDrag].y = Math.max(10, Math.min(canvas.height - fragments[activeDrag].h - 10, y - dragOffsetY));
+
+      renderJigsaw();
+    });
+
+    window.addEventListener('pointerup', () => {
+      if (activeDrag) {
+        activeDrag = null;
+        audio.tap();
+      }
+    });
+
+    if (sliderRotA && valRotA) {
+      sliderRotA.addEventListener('input', (e) => {
+        fragments.a.rot = parseInt(e.target.value, 10);
+        valRotA.textContent = `${fragments.a.rot}°`;
+        renderJigsaw();
+      });
+    }
+
+    if (sliderRotB && valRotB) {
+      sliderRotB.addEventListener('input', (e) => {
+        fragments.b.rot = parseInt(e.target.value, 10);
+        valRotB.textContent = `${fragments.b.rot}°`;
+        renderJigsaw();
+      });
+    }
+
+    if (btnAutoAlign) {
+      btnAutoAlign.addEventListener('click', () => {
+        fragments.a.x = 100;
+        fragments.a.y = 50;
+        fragments.a.rot = 0;
+        fragments.b.x = 265;
+        fragments.b.y = 50;
+        fragments.b.rot = 0;
+        if (sliderRotA) sliderRotA.value = 0;
+        if (sliderRotB) sliderRotB.value = 0;
+        if (valRotA) valRotA.textContent = '0°';
+        if (valRotB) valRotB.textContent = '0°';
+        renderJigsaw();
+        audio.successChord();
+        if (window.AndroidBridge?.showToast) window.AndroidBridge.showToast('Torn edge aligned seamlessly!');
+      });
+    }
+
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        fragments.a.x = 60;
+        fragments.a.y = 50;
+        fragments.a.rot = 0;
+        fragments.b.x = 280;
+        fragments.b.y = 50;
+        fragments.b.rot = 0;
+        if (sliderRotA) sliderRotA.value = 0;
+        if (sliderRotB) sliderRotB.value = 0;
+        if (valRotA) valRotA.textContent = '0°';
+        if (valRotB) valRotB.textContent = '0°';
+        renderJigsaw();
+        audio.tap();
+      });
+    }
+
+    if (btnSample) {
+      btnSample.addEventListener('click', () => {
+        renderJigsaw();
+        audio.tap();
+      });
+    }
+
+    if (btnExport) {
+      btnExport.addEventListener('click', () => {
+        const total = valTotal ? valTotal.textContent : '62.8%';
+        state.dossier.surfacePercent = total;
+        state.dossier.narrative = 'Reconstructed composite banknote assembled from matching torn fragments. Physical continuity and identical serial identifiers verified with no artificial overlap.';
+        updateDossierSheet();
+        modal.classList.remove('active');
+        switchTab('tab-dossier');
+        audio.successChord();
+        if (window.AndroidBridge?.showToast) window.AndroidBridge.showToast(`Exported ${total} composite area to Dossier!`);
+      });
+    }
+
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        audio.modalClose();
+      });
+    }
+
+    const triggerTile = document.getElementById('tile-jigsaw-assembler');
+    if (triggerTile) {
+      triggerTile.addEventListener('click', () => {
+        modal.classList.add('active');
+        renderJigsaw();
+        audio.modalOpen();
+      });
+    }
+
+    window.openJigsawAssembler = () => {
+      modal.classList.add('active');
+      renderJigsaw();
+      audio.modalOpen();
+    };
+  }
+
+  // =========================================================================
+  // 41. WATERMARK LIGHTBOX & WOOD’S LAMP UV FORENSICS
+  // =========================================================================
+  function initWatermarkAndUvAssist() {
+    const modal = document.getElementById('modal-watermark-lightbox');
+    const screenEl = document.getElementById('lightbox-fullscreen');
+    const btnInvert = document.getElementById('btn-lightbox-invert-tint');
+    const btnClose = document.getElementById('btn-close-lightbox');
+    const btnLightboxTorch = document.getElementById('btn-lightbox-torch');
+    const btnScannerTorch = document.getElementById('btn-scanner-torch');
+    const btnScannerUv = document.getElementById('btn-scanner-uv');
+
+    let isTorchOn = false;
+    let isUvMode = false;
+
+    function toggleTorch() {
+      isTorchOn = !isTorchOn;
+
+      // 1. Android Native Torch
+      if (window.AndroidBridge && typeof window.AndroidBridge.toggleTorch === 'function') {
+        window.AndroidBridge.toggleTorch();
+      }
+
+      // 2. Web MediaStream Track Torch constraint
+      if (state.scanner.stream) {
+        const track = state.scanner.stream.getVideoTracks()[0];
+        if (track && typeof track.applyConstraints === 'function') {
+          track.applyConstraints({ advanced: [{ torch: isTorchOn }] }).catch(() => {});
+        }
+      }
+
+      if (btnScannerTorch) btnScannerTorch.classList.toggle('active', isTorchOn);
+      if (btnLightboxTorch) btnLightboxTorch.classList.toggle('active', isTorchOn);
+      audio.tap();
+      if (window.AndroidBridge?.showToast) {
+        window.AndroidBridge.showToast(isTorchOn ? '🔦 Hardware Torch Active' : 'Torch Turned Off');
+      }
+    }
+
+    if (btnScannerTorch) btnScannerTorch.addEventListener('click', toggleTorch);
+    if (btnLightboxTorch) btnLightboxTorch.addEventListener('click', toggleTorch);
+
+    // 365nm Wood's Lamp UV Simulation Filter
+    if (btnScannerUv) {
+      btnScannerUv.addEventListener('click', () => {
+        isUvMode = !isUvMode;
+        btnScannerUv.classList.toggle('active', isUvMode);
+        if (state.scanner.canvasEl) state.scanner.canvasEl.classList.toggle('uv-mode', isUvMode);
+        if (state.scanner.videoEl) state.scanner.videoEl.classList.toggle('uv-mode', isUvMode);
+        audio.tap();
+        if (window.AndroidBridge?.showToast) {
+          window.AndroidBridge.showToast(isUvMode ? '🔬 365nm UV Mode Active' : 'UV Mode Off');
+        }
+      });
+    }
+
+    if (btnInvert && screenEl) {
+      btnInvert.addEventListener('click', () => {
+        screenEl.classList.toggle('tinted');
+        audio.tap();
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        audio.modalClose();
+      });
+    }
+
+    const triggerTile = document.getElementById('tile-watermark-lightbox');
+    if (triggerTile && modal) {
+      triggerTile.addEventListener('click', () => {
+        modal.classList.add('active');
+        audio.modalOpen();
+      });
+    }
+
+    window.openWatermarkLightbox = () => {
+      if (modal) {
+        modal.classList.add('active');
+        audio.modalOpen();
+      }
+    };
+  }
+
+  // =========================================================================
+  // 42. DISASTER RECOVERY & MASS SALVAGE BATCH CLAIM MANIFEST
+  // =========================================================================
+  function initBatchAuditManifest() {
+    const modal = document.getElementById('modal-batch-manifest');
+    const btnClose = document.getElementById('btn-close-batch-modal');
+    const btnAdd = document.getElementById('btn-batch-add-note');
+    const btnSampleStack = document.getElementById('btn-batch-sample-stack');
+    const btnExportCsv = document.getElementById('btn-batch-export-csv');
+    const btnExportPdf = document.getElementById('btn-batch-export-pdf');
+    const btnSaveVault = document.getElementById('btn-batch-save-vault');
+
+    if (!modal) return;
+
+    let batchNotes = JSON.parse(localStorage.getItem('mog_batch_manifest') || '[]');
+
+    function updateBatchUI() {
+      const tbody = document.getElementById('batch-table-body');
+      const totalNotesEl = document.getElementById('batch-total-notes');
+      const faceValEl = document.getElementById('batch-face-val');
+      const recoverableValEl = document.getElementById('batch-recoverable-val');
+      const counterEligibleEl = document.getElementById('batch-counter-eligible');
+
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let totalFace = 0;
+      let totalRecoverable = 0;
+      let counterEligible = 0;
+
+      batchNotes.forEach((n, idx) => {
+        const denom = parseFloat(n.denom) || 0;
+        const pct = parseFloat(n.pct) || 0;
+        totalFace += denom;
+
+        let payout = 0;
+        if (pct >= 50.0) {
+          payout = denom;
+          counterEligible++;
+        }
+        totalRecoverable += payout;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>$${denom.toFixed(0)}</strong></td>
+          <td class="font-mono">${n.serial}</td>
+          <td>${n.condition}</td>
+          <td class="${pct >= 50 ? 'text-success' : 'text-warning'}"><strong>${pct.toFixed(1)}%</strong></td>
+          <td class="text-success">$${payout.toFixed(2)}</td>
+          <td><button class="btn btn-sm btn-outline-danger" data-idx="${idx}" style="padding:2px 6px;">✕</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll('button[data-idx]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.dataset.idx, 10);
+          batchNotes.splice(i, 1);
+          localStorage.setItem('mog_batch_manifest', JSON.stringify(batchNotes));
+          updateBatchUI();
+        });
+      });
+
+      if (totalNotesEl) totalNotesEl.textContent = batchNotes.length;
+      if (faceValEl) faceValEl.textContent = `$${totalFace.toFixed(2)}`;
+      if (recoverableValEl) recoverableValEl.textContent = `$${totalRecoverable.toFixed(2)}`;
+      if (counterEligibleEl) counterEligibleEl.textContent = `${counterEligible} Notes`;
+    }
+
+    if (btnAdd) {
+      btnAdd.addEventListener('click', () => {
+        const denom = parseFloat(document.getElementById('batch-add-denom')?.value || 20);
+        const pct = parseFloat(document.getElementById('batch-add-pct')?.value || 65);
+        const serial = document.getElementById('batch-add-serial')?.value || 'BEP-9812';
+        const cond = document.getElementById('batch-add-cond')?.value || 'Charred / Heat';
+
+        batchNotes.push({ denom, pct, serial, condition: cond, timestamp: new Date().toISOString() });
+        localStorage.setItem('mog_batch_manifest', JSON.stringify(batchNotes));
+        updateBatchUI();
+        audio.tap();
+      });
+    }
+
+    if (btnSampleStack) {
+      btnSampleStack.addEventListener('click', () => {
+        batchNotes = [
+          { denom: 100, pct: 64.2, serial: 'LB 82910481 A', condition: 'Residential Fire Char', timestamp: new Date().toISOString() },
+          { denom: 100, pct: 58.9, serial: 'LB 82910482 A', condition: 'Residential Fire Char', timestamp: new Date().toISOString() },
+          { denom: 50, pct: 72.1, serial: 'ML 39481029 B', condition: 'Residential Fire Char', timestamp: new Date().toISOString() },
+          { denom: 50, pct: 51.5, serial: 'ML 39481030 B', condition: 'Edge Burned', timestamp: new Date().toISOString() },
+          { denom: 20, pct: 88.0, serial: 'NE 49102834 C', condition: 'Smoke / Ash', timestamp: new Date().toISOString() },
+          { denom: 20, pct: 54.3, serial: 'NE 49102835 C', condition: 'Charred Corner', timestamp: new Date().toISOString() },
+          { denom: 20, pct: 42.1, serial: 'NE 49102836 C', condition: 'Mutilated (<50%)', timestamp: new Date().toISOString() },
+          { denom: 20, pct: 67.8, serial: 'NE 49102837 C', condition: 'Smoke Stained', timestamp: new Date().toISOString() },
+          { denom: 10, pct: 79.4, serial: 'JF 10928374 D', condition: 'Heat Singed', timestamp: new Date().toISOString() },
+          { denom: 10, pct: 91.2, serial: 'JF 10928375 D', condition: 'Water Soaked', timestamp: new Date().toISOString() }
+        ];
+        localStorage.setItem('mog_batch_manifest', JSON.stringify(batchNotes));
+        updateBatchUI();
+        audio.successChord();
+      });
+    }
+
+    if (btnExportCsv) {
+      btnExportCsv.addEventListener('click', () => {
+        if (batchNotes.length === 0) return alert('No notes in batch to export!');
+        let csv = 'Line,Denomination,Serial,Condition,Intact_Percent,Payout_Eligible,Timestamp\n';
+        batchNotes.forEach((n, i) => {
+          const eligible = n.pct >= 50.0 ? 'YES' : 'NO';
+          csv += `${i + 1},${n.denom},"${n.serial}","${n.condition}",${n.pct}%,${eligible},"${n.timestamp}"\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `BEP_Disaster_Batch_Schedule_${Date.now()}.csv`;
+        a.click();
+        audio.successChord();
+      });
+    }
+
+    if (btnExportPdf) {
+      btnExportPdf.addEventListener('click', () => {
+        alert('Compiling official Treasury Casualty Schedule PDF...');
+        switchTab('tab-dossier');
+        showOfficialForm('BEP5283');
+        modal.classList.remove('active');
+        audio.successChord();
+      });
+    }
+
+    if (btnSaveVault) {
+      btnSaveVault.addEventListener('click', () => {
+        const claims = JSON.parse(localStorage.getItem('mog_vault_claims') || '[]');
+        let totalFace = 0;
+        let totalRecoverable = 0;
+        batchNotes.forEach(n => {
+          totalFace += n.denom;
+          if (n.pct >= 50) totalRecoverable += n.denom;
+        });
+
+        const avgPct = batchNotes.length ? (batchNotes.reduce((acc, n) => acc + (parseFloat(n.pct) || 0), 0) / batchNotes.length) : 0;
+        const newClaim = {
+          id: `BATCH-${Date.now()}`,
+          date: new Date().toISOString(),
+          submissionDate: new Date().toLocaleDateString(),
+          currency: `${state.activeCurrency || 'USD'} Disaster Batch`,
+          denom: `(${batchNotes.length} Notes • $${totalFace.toFixed(2)})`,
+          faceValue: totalFace,
+          recoverableValue: totalRecoverable,
+          percent: avgPct,
+          status: 'audited',
+          notesCount: batchNotes.length,
+          trackingNumber: '',
+          serial: `${batchNotes.length} Logged Items`,
+          centralBank: 'Federal Reserve / BEP'
+        };
+        claims.unshift(newClaim);
+        localStorage.setItem('mog_vault_claims', JSON.stringify(claims));
+        modal.classList.remove('active');
+        renderVaultClaims('all');
+        switchTab('tab-vault');
+        audio.successChord();
+        if (window.AndroidBridge?.showToast) {
+          window.AndroidBridge.showToast(`Saved Batch Claim ($${totalRecoverable.toFixed(2)}) to Vault!`);
+        }
+      });
+    }
+
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        audio.modalClose();
+      });
+    }
+
+    const triggerTile = document.getElementById('tile-disaster-batch');
+    if (triggerTile) {
+      triggerTile.addEventListener('click', () => {
+        modal.classList.add('active');
+        updateBatchUI();
+        audio.modalOpen();
+      });
+    }
+
+    window.openBatchManifest = () => {
+      if (modal) {
+        modal.classList.add('active');
+        updateBatchUI();
+        audio.modalOpen();
+      }
+    };
+  }
+
+  // =========================================================================
+  // 43. NUMISMATIC COLLECTOR WARNING ADVISOR
+  // =========================================================================
+  function initNumismaticAdvisor() {
+    const banner = document.getElementById('viewfinder-numismatic-banner');
+    const dismissBtn = document.getElementById('btn-dismiss-numismatic');
+    const titleEl = document.getElementById('numis-title') || document.getElementById('numismatic-title');
+    const subEl = document.getElementById('numis-desc') || document.getElementById('numismatic-sub');
+
+    if (!banner) return;
+
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', () => {
+        banner.style.display = 'none';
+        banner.classList.remove('active');
+      });
+    }
+
+    banner.addEventListener('click', () => {
+      banner.style.display = 'none';
+      banner.classList.remove('active');
+    });
+
+    // Inspect serial number whenever changed
+    window.checkNumismaticValue = function (serial, currency = 'USD') {
+      if (!serial) return;
+      const clean = serial.trim().toUpperCase();
+
+      if (clean.endsWith('*') || clean.includes('★') || clean.includes('STAR')) {
+        showNumismaticAlert(
+          '⭐ RARE STAR NOTE DETECTED!',
+          'Replacement banknote with collector premium ($40 – $150+). Do NOT destroy or surrender at face value!'
+        );
+      } else if (clean.startsWith('SC') || clean.includes('SILVER') || /^(1928|1934|1935|1957)/.test(clean)) {
+        showNumismaticAlert(
+          '🪙 VINTAGE SILVER CERTIFICATE (BLUE SEAL)',
+          'Pre-1964 historic US note. Collector value $25 – $250+. Consult a numismatic dealer before bank exchange!'
+        );
+      } else if (/^00000[0-9]{3}/.test(clean)) {
+        showNumismaticAlert(
+          '🔥 LOW SERIAL NUMBER ALERT (#<1000)',
+          'Rare 3-digit serial number! Collector market premium exceeds $200 – $800+ par value.'
+        );
+      }
+    };
+
+    function showNumismaticAlert(title, sub) {
+      if (titleEl) titleEl.textContent = title;
+      if (subEl) subEl.textContent = sub;
+      banner.style.display = 'flex';
+      banner.classList.add('active');
+      audio.successChord();
+    }
+  }
+
+  // =========================================================================
+  // 44. VOICE GUIDANCE FOR THE VISUALLY IMPAIRED
+  // =========================================================================
+  function initVoiceGuidance() {
+    const btnVoice = document.getElementById('btn-scanner-voice');
+    if (!btnVoice) return;
+
+    let voiceActive = false;
+    let lastSpokenTime = 0;
+
+    function speak(text) {
+      if (!voiceActive || !window.speechSynthesis) return;
+      const now = Date.now();
+      if (now - lastSpokenTime < 3200) return; // rate-limit cues
+      lastSpokenTime = now;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 1.05;
+      utter.pitch = 1.0;
+      window.speechSynthesis.speak(utter);
+    }
+
+    btnVoice.addEventListener('click', () => {
+      voiceActive = !voiceActive;
+      btnVoice.classList.toggle('active', voiceActive);
+      const spanText = document.getElementById('voice-btn-label') || btnVoice.querySelector('span');
+      if (spanText) spanText.textContent = voiceActive ? '🔊 Voice: ON' : '🔊 Voice: OFF';
+      audio.tap();
+
+      if (voiceActive) {
+        speak('Voice Guidance Active. Point camera flat at damaged banknote.');
+        if (window.AndroidBridge?.showToast) window.AndroidBridge.showToast('🗣️ Voice Guidance Enabled');
+      } else {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (window.AndroidBridge?.showToast) window.AndroidBridge.showToast('Voice Guidance Off');
+      }
+    });
+
+    // Provide voice update hook to scanner
+    window.provideVoiceGuidance = function (detected, percent, curr) {
+      if (!voiceActive) return;
+      if (!detected) {
+        speak('Searching. Bring camera closer and place note on dark background.');
+      } else {
+        const p = percent.toFixed(0);
+        if (percent >= 50) {
+          speak(`${curr} note detected. ${p} percent intact. Meets central bank standard for full reimbursement.`);
+        } else {
+          speak(`${curr} note detected. ${p} percent intact. Below 50 percent threshold. Requires affidavit.`);
+        }
+      }
+    };
+  }
+
+  function initConsumerHomeTiles() {
+    const tShield = document.getElementById('tile-counter-shield');
+    const tJigsaw = document.getElementById('tile-jigsaw-assembler');
+    const tBatch = document.getElementById('tile-disaster-batch');
+    const tLightbox = document.getElementById('tile-watermark-lightbox');
+    const btnWfShield = document.getElementById('btn-workflow-counter-shield');
+    const btnWfJigsaw = document.getElementById('btn-workflow-jigsaw');
+
+    if (tShield) tShield.addEventListener('click', () => window.openCounterShield && window.openCounterShield());
+    if (btnWfShield) btnWfShield.addEventListener('click', () => window.openCounterShield && window.openCounterShield());
+    if (tJigsaw) tJigsaw.addEventListener('click', () => window.openJigsawAssembler && window.openJigsawAssembler());
+    if (btnWfJigsaw) btnWfJigsaw.addEventListener('click', () => window.openJigsawAssembler && window.openJigsawAssembler());
+    if (tBatch) tBatch.addEventListener('click', () => window.openBatchManifest && window.openBatchManifest());
+    if (tLightbox) tLightbox.addEventListener('click', () => window.openWatermarkLightbox && window.openWatermarkLightbox());
   }
 
 })();

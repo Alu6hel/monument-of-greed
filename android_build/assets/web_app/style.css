@@ -356,7 +356,9 @@ body {
   color: var(--text-main);
   z-index: 110;
   transform: translateX(-100%);
-  transition: transform var(--transition-normal) cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform var(--transition-normal) cubic-bezier(0.16, 1, 0.3, 1), visibility var(--transition-normal);
   display: flex;
   flex-direction: column;
   box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3);
@@ -365,6 +367,8 @@ body {
 
 .app-drawer.active {
   transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .drawer-header {
@@ -4000,28 +4004,13 @@ body.theme-cyber-mint .banner-green {
 }
 
 /* Responsive adjustments for tactile rail and workflow cards on mobile / tablet */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .tactile-quick-strip {
-    left: 0;
-    transform: translateY(-50%) translateX(calc(-100% + 14px));
-    width: 44px;
-    padding: 10px 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.35);
+    display: none !important;
   }
-  .tactile-quick-strip.expanded {
-    transform: translateY(-50%) translateX(0);
-    box-shadow: 6px 0 24px rgba(217, 119, 6, 0.45), 0 8px 24px rgba(0, 0, 0, 0.6);
-  }
-  .rail-toggle-tab {
-    display: flex;
-  }
-  .tactile-quick-strip.expanded .rail-toggle-icon {
-    transform: rotate(180deg);
-  }
-  .rail-icon-btn {
-    width: 30px;
-    height: 30px;
-  }
+}
+
+@media (max-width: 768px) {
   .tactile-salvage-tray {
     flex-direction: column;
     text-align: center;
@@ -4486,5 +4475,914 @@ body.theme-cyber-mint .banner-green {
   margin: 0 auto 20px auto;
   line-height: 1.45;
 }
+
+/* ==========================================================================
+   37. CONSUMER FORENSIC ARSENAL & ADVANCED BANKING MODALS
+   ========================================================================== */
+
+/* 37.1 Consumer Tools Section (Home Tab) */
+.consumer-tools-section {
+  margin: 24px 0 28px 0;
+  position: relative;
+  z-index: 10;
+}
+
+.consumer-tools-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.consumer-tools-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.consumer-tools-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.consumer-tools-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.consumer-tools-sub {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.consumer-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.tool-tile {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
+  font-family: inherit;
+}
+
+.tool-tile:hover {
+  border-color: rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(245, 158, 11, 0.1);
+}
+
+.tool-tile:active {
+  transform: translateY(0);
+}
+
+.tool-tile-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease;
+}
+
+.tool-tile:hover .tool-tile-icon-wrap {
+  transform: scale(1.08);
+}
+
+.tool-tile-icon-wrap.shield-accent {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.tool-tile-icon-wrap.jigsaw-accent {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.tool-tile-icon-wrap.batch-accent {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.tool-tile-icon-wrap.lightbox-accent {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.tool-tile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tool-tile-name {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tool-tile-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.tool-tile-action-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+
+/* 37.2 Viewfinder Numismatic Warning Banner */
+.viewfinder-banner {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 25;
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.95), rgba(217, 119, 6, 0.95));
+  border: 1px solid #fbbf24;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(251, 191, 36, 0.3);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  animation: bannerSlideDown 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.viewfinder-banner.active {
+  display: flex;
+}
+
+@keyframes bannerSlideDown {
+  from { transform: translateY(-16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.viewfinder-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.banner-star-icon {
+  font-size: 1.3rem;
+  animation: pulse 1.5s infinite;
+}
+
+.banner-title-text {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: #ffffff;
+}
+
+.banner-sub-text {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 1px;
+}
+
+.banner-dismiss-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.banner-dismiss-btn:hover {
+  color: #ffffff;
+}
+
+/* 37.3 Scanner Forensic Action Buttons */
+#btn-scanner-torch.active {
+  background: #f59e0b !important;
+  color: #0f172a !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6) !important;
+}
+
+#btn-scanner-uv.active {
+  background: #8b5cf6 !important;
+  color: #ffffff !important;
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.6) !important;
+}
+
+#btn-scanner-voice.active {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.6) !important;
+}
+
+/* 365nm UV Mode Filter */
+.uv-mode {
+  filter: hue-rotate(240deg) saturate(260%) contrast(155%) brightness(88%) !important;
+}
+
+/* 37.4 Modal 1: Counter Shield (Teller Defense Mode) */
+.counter-shield-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(3, 7, 18, 0.96);
+  backdrop-filter: blur(12px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.counter-shield-overlay.active {
+  display: flex;
+}
+
+.counter-shield-container {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.counter-shield-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.shield-badge-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 1px;
+}
+
+.shield-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: pulse 1.8s infinite;
+}
+
+.shield-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.counter-shield-content {
+  background: linear-gradient(145deg, #0b1120 0%, #020617 100%);
+  border: 2px solid #38bdf8;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 36px rgba(56, 189, 248, 0.2);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+
+.counter-shield-content.rotated {
+  transform: rotate(180deg);
+}
+
+.counter-shield-content.max-contrast {
+  background: #ffffff !important;
+  border-color: #000000 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8) !important;
+}
+
+.counter-shield-content.max-contrast .shield-main-title,
+.counter-shield-content.max-contrast .s-val {
+  color: #000000 !important;
+}
+
+.counter-shield-content.max-contrast .shield-statement-box {
+  background: #f1f5f9 !important;
+  border-left-color: #000000 !important;
+}
+
+.counter-shield-content.max-contrast .shield-statute-statement {
+  color: #0f172a !important;
+}
+
+.shield-header-block {
+  text-align: center;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.shield-alert-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #f59e0b;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.shield-main-title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.shield-par-badge {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid #10b981;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 5px 16px;
+  border-radius: 20px;
+}
+
+.shield-statement-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-left: 4px solid #38bdf8;
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+.shield-statute-statement {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.shield-evidence-grid {
+  display grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.shield-metric-cell {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.shield-metric-cell .s-lbl {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.shield-metric-cell .s-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.shield-qr-section {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+
+.shield-qr-box {
+  width: 110px;
+  height: 110px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.shield-qr-box svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.shield-qr-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shield-qr-info .qr-heading {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.shield-qr-info .qr-sub {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.shield-url-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-family: monospace;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  word-break: break-all;
+  margin-top: 4px;
+}
+
+.shield-url-chip:hover {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+/* 37.5 Modal 2: Multi-Fragment Jigsaw Assembler */
+.jigsaw-modal-card {
+  max-width: 680px;
+  width: 100%;
+}
+
+.jigsaw-intro-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.jigsaw-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.jigsaw-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  background: #060b14;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  touch-action: none;
+}
+
+#jigsaw-canvas {
+  width: 100%;
+  max-width: 560px;
+  height: 260px;
+  display: block;
+  background: radial-gradient(circle, #0f1c34 0%, #050a12 100%);
+  border-radius: 8px;
+  cursor: grab;
+}
+
+#jigsaw-canvas:active {
+  cursor: grabbing;
+}
+
+.jigsaw-hint-pill {
+  position: absolute;
+  bottom: 14px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  color: #94a3b8;
+  font-size: 0.68rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.jigsaw-sliders-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 14px 0;
+}
+
+.frag-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.styled-slider {
+  width: 100%;
+  accent-color: #f59e0b;
+}
+
+.jigsaw-metrics-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.jigsaw-metric-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jigsaw-metric-box.highlight {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.jm-lbl {
+  font-size: 0.64rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.jm-val {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.jigsaw-match-card {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: #a7f3d0;
+}
+
+.jigsaw-match-card .match-icon {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #34d399;
+}
+
+/* 37.6 Modal 3: Watermark Lightbox & Screen Backlight */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #ffffff;
+  display: none;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.lightbox-overlay.active {
+  display: flex;
+}
+
+.lightbox-fullscreen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.lightbox-fullscreen.tinted {
+  background: #e0f2fe;
+}
+
+.lightbox-screen-surface {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.lightbox-outline-bill {
+  width: 360px;
+  height: 160px;
+  max-width: 90vw;
+  border: 2px dashed rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-hint-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.35);
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.lightbox-control-bar {
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(10px);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-status-text {
+  color: #e2e8f0;
+  font-size: 0.78rem;
+  max-width: 520px;
+  line-height: 1.35;
+}
+
+.lightbox-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 37.7 Modal 4: Disaster Recovery Mass Salvage Batch Claim Manifest */
+.batch-modal-card {
+  max-width: 780px;
+  width: 100%;
+}
+
+.batch-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.batch-incident-strip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.batch-tally-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.batch-tally-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.batch-tally-card.highlight-green {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.tally-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.tally-lbl {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.batch-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 14px;
+  flex-wrap: wrap;
+}
+
+.batch-table-container {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--bg-card);
+}
+
+.batch-manifest-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.batch-manifest-table th {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 9px 12px;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(4px);
+}
+
+.batch-manifest-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.batch-manifest-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.batch-modal-card .modal-footer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 14px 20px;
+}
+
+@media (max-width: 600px) {
+  .batch-tally-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .batch-modal-card .modal-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+  .batch-modal-card .modal-footer .btn {
+    padding: 10px 8px;
+    font-size: 0.78rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+  }
+}
+
+/* 37.8 Vault Postal Tracking Row */
+.vault-postal-tracking-box {
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vault-tracking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.vault-tracking-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.vault-tracking-input {
+  flex: 1;
+  min-width: 180px;
+  font-family: monospace;
+  font-size: 0.78rem;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  color: var(--text-primary);
+}
+
+.vault-carrier-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+@media (max-width: 600px) {
+  .consumer-tools-grid {
+    grid-template-columns: 1fr;
+  }
+  .jigsaw-sliders-row {
+    grid-template-columns: 1fr;
+  }
+  .jigsaw-metrics-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .batch-tally-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .shield-evidence-grid {
+    grid-template-columns: 1fr;
+  }
+  .shield-qr-section {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
 
 

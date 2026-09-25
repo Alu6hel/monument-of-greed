@@ -303,6 +303,43 @@ public class MainActivity extends Activity {
         public boolean isNativeApp() {
             return true;
         }
+
+        private boolean isTorchOn = false;
+
+        @JavascriptInterface
+        public boolean setTorchMode(final boolean on) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    android.hardware.camera2.CameraManager camManager = (android.hardware.camera2.CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                    if (camManager != null) {
+                        String[] cameraIds = camManager.getCameraIdList();
+                        for (String id : cameraIds) {
+                            android.hardware.camera2.CameraCharacteristics chars = camManager.getCameraCharacteristics(id);
+                            Boolean hasFlash = chars.get(android.hardware.camera2.CameraCharacteristics.FLASH_INFO_AVAILABLE);
+                            Integer facing = chars.get(android.hardware.camera2.CameraCharacteristics.LENS_FACING);
+                            if (hasFlash != null && hasFlash && facing != null && facing == android.hardware.camera2.CameraCharacteristics.LENS_FACING_BACK) {
+                                camManager.setTorchMode(id, on);
+                                isTorchOn = on;
+                                return true;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error setting torch mode", e);
+                }
+            }
+            return false;
+        }
+
+        @JavascriptInterface
+        public boolean toggleTorch() {
+            return setTorchMode(!isTorchOn);
+        }
+
+        @JavascriptInterface
+        public boolean isTorchOn() {
+            return isTorchOn;
+        }
     }
 
     private void checkAndRequestPermissions() {
