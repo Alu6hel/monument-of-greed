@@ -768,28 +768,31 @@
               </div>
             </div>
 
-            <!-- Glare Warning Chip -->
-            <div id="viewfinder-glare-chip" class="viewfinder-alert-chip alert-glare" style="display:none;">
-              <span class="chip-icon">⚡</span>
-              <span>Glare Detected — Tilt bill slightly</span>
-            </div>
-
-            <!-- Low-Light Warning Chip -->
-            <div id="viewfinder-light-chip" class="viewfinder-alert-chip alert-lowlight" style="display:none;">
-              <span class="chip-icon">💡</span>
-              <span>Low Light — Increase illumination</span>
-            </div>
-
-            <!-- Camera Real-Time Currency Recognition HUD Badge -->
-            <div id="scanner-currency-recognition-hud" class="currency-recognition-hud" style="display:none;">
-              <div class="recog-pill">
-                <span class="recog-sparkle">✨</span>
-                <span id="recog-banknote-title">US Dollar ($20 Bill)</span>
-                <span id="recog-confidence-badge" class="recog-confidence-badge">96% Match</span>
+            <!-- Viewfinder Top Badges HUD Container (Zero Collision Overlay) -->
+            <div class="viewfinder-top-overlay">
+              <!-- Camera Real-Time Currency Recognition HUD Badge -->
+              <div id="scanner-currency-recognition-hud" class="currency-recognition-hud" style="display:none;">
+                <div class="recog-pill">
+                  <span class="recog-sparkle">✨</span>
+                  <span id="recog-banknote-title">US Dollar ($20 Bill)</span>
+                  <span id="recog-confidence-badge" class="recog-confidence-badge">96% Match</span>
+                </div>
+                <div id="recog-switch-prompt" class="recog-switch-banner" style="display:none;">
+                  <span id="recog-switch-text">Detected Euro (€50).</span>
+                  <button id="btn-recog-switch-curr" class="btn-recog-switch" type="button">Switch App to Euro (€) ›</button>
+                </div>
               </div>
-              <div id="recog-switch-prompt" class="recog-switch-banner" style="display:none;">
-                <span id="recog-switch-text">Detected Euro (€50).</span>
-                <button id="btn-recog-switch-curr" class="btn-recog-switch" type="button">Switch App to Euro (€) ›</button>
+
+              <!-- Glare Warning Chip -->
+              <div id="viewfinder-glare-chip" class="viewfinder-alert-chip alert-glare" style="display:none;">
+                <span class="chip-icon">⚡</span>
+                <span>Glare Detected — Tilt bill slightly</span>
+              </div>
+
+              <!-- Low-Light Warning Chip -->
+              <div id="viewfinder-light-chip" class="viewfinder-alert-chip alert-lowlight" style="display:none;">
+                <span class="chip-icon">💡</span>
+                <span>Low Light — Increase illumination</span>
               </div>
             </div>
 
@@ -1182,9 +1185,11 @@
               </div>
 
               <div class="dossier-btn-group">
-                <button id="btn-update-preview" class="btn btn-secondary">Refresh Preview</button>
                 <button id="btn-download-pdf" class="btn btn-accent" title="Generate Courtroom-Grade 3-Page Filing PDF">
                   <span>⚖️ Courtroom PDF Dossier</span>
+                </button>
+                <button id="btn-update-preview" class="btn btn-secondary" title="Refresh Live Dossier Preview">
+                  <span>🔄 Refresh Preview</span>
                 </button>
                 <button id="btn-share-pdf" class="btn btn-primary" title="Share Claim Package PDF">
                   <span>📤 Share Dossier</span>
@@ -1192,10 +1197,10 @@
                 <button id="btn-save-dossier-vault" class="btn btn-secondary" title="Save claim to local Salvage Vault">
                   <span>💼 Save to My Vault</span>
                 </button>
-                <button id="btn-print-dossier" class="btn btn-secondary">
+                <button id="btn-print-dossier" class="btn btn-secondary" title="Print Hardcopy Filing Spool">
                   <span>🖨️ Print Spooler</span>
                 </button>
-                <button id="btn-open-affidavit-modal" class="btn btn-outline" style="grid-column: 1 / -1;">
+                <button id="btn-open-affidavit-modal" class="btn btn-outline" title="Sworn Destruction Declaration (≤50% Claims)">
                   <span>📜 Generate Destruction Affidavit (≤50% Claims)</span>
                 </button>
               </div>

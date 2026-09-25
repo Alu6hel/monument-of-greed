@@ -759,6 +759,7 @@
       ambientMotionEngine.setTheme(themeName);
     }
   }
+  window.applyTheme = applyTheme;
 
   // =========================================================================
   // 7. NAVIGATION & DRAWER SYSTEM
@@ -4090,6 +4091,11 @@ ${xrefOffset}
       };
 
       const curStatus = statusMap[c.status] || statusMap['audited'];
+      const rawDenom = c.denom || '';
+      const displayTitle = rawDenom.startsWith(c.currency) ? rawDenom : `${c.currency} ${rawDenom}`.trim();
+      const faceValDisplay = c.faceValue 
+        ? (c.currency === 'EUR' ? `€${Number(c.faceValue).toFixed(2)}` : (c.currency === 'GBP' ? `£${Number(c.faceValue).toFixed(2)}` : `$${Number(c.faceValue).toFixed(2)}`))
+        : (c.denom || '$0.00');
 
       card.innerHTML = `
         <div class="vault-card-header">
@@ -4097,7 +4103,7 @@ ${xrefOffset}
             <span class="vault-card-flag">${c.flag || '💵'}</span>
             <div>
               <div class="vault-card-ref">${c.id}</div>
-              <div style="font-size:0.7rem;color:var(--text-muted);">${c.currency} ${c.denom || ''} • Filed ${c.submissionDate || 'Recently'}</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);">${displayTitle} • Filed ${c.submissionDate || 'Recently'}</div>
             </div>
           </div>
           <span class="vault-status-badge ${curStatus.class}">${curStatus.label}</span>
@@ -4106,7 +4112,7 @@ ${xrefOffset}
         <div class="vault-card-body">
           <div class="vault-stat-item">
             <span class="vault-stat-lbl">Face Value</span>
-            <span class="vault-stat-val highlight">${c.denom ? (c.denom.startsWith('$') ? c.denom : `${c.currency} ${c.denom}`) : (c.faceValue ? `$${Number(c.faceValue).toFixed(2)}` : '$0.00')}</span>
+            <span class="vault-stat-val highlight">${faceValDisplay}</span>
           </div>
           <div class="vault-stat-item">
             <span class="vault-stat-lbl">Surviving Area</span>

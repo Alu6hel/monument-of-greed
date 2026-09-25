@@ -268,6 +268,36 @@ async function runTests() {
     assert(trackingInputBg === 'rgb(255, 255, 255)', `Vault tracking input in light theme has white background (${trackingInputBg})`);
     assert(trackingInputColor === 'rgb(30, 41, 59)', `Vault tracking input in light theme has dark slate text (${trackingInputColor})`);
 
+    // 5. Layout Polish & Responsive Alignment Verification
+    console.log('\n[TEST GROUP 5] Layout Polish & Responsive Alignment');
+    
+    // Switch to Dossier Tab & Check 2-Column Grid
+    await cdp.eval(`document.querySelector('.bottom-nav .nav-tab-btn[data-tab="tab-dossier"]').click()`);
+    const dossierGridDisplay = await cdp.eval(`window.getComputedStyle(document.querySelector('.dossier-btn-group')).display`);
+    const dossierGridCols = await cdp.eval(`window.getComputedStyle(document.querySelector('.dossier-btn-group')).gridTemplateColumns.split(' ').length`);
+    assert(dossierGridDisplay === 'grid', `Dossier action button group uses CSS Grid (display: ${dossierGridDisplay})`);
+    assert(dossierGridCols === 2, `Dossier action button group has 2 equal columns (${dossierGridCols} columns)`);
+
+    // Switch to Scanner Tab & Check Tuner 2-Column Grid
+    await cdp.eval(`document.querySelector('.bottom-nav .nav-tab-btn[data-tab="tab-scanner"]').click()`);
+    const tunerGridDisplay = await cdp.eval(`window.getComputedStyle(document.querySelector('.tuner-mode-row')).display`);
+    const tunerGridCols = await cdp.eval(`window.getComputedStyle(document.querySelector('.tuner-mode-row')).gridTemplateColumns.split(' ').length`);
+    assert(tunerGridDisplay === 'grid', `Scanner optical tuner controls use CSS Grid (display: ${tunerGridDisplay})`);
+    assert(tunerGridCols === 2, `Scanner optical tuner controls have 2 equal columns (${tunerGridCols} columns)`);
+
+    // Viewfinder Top Overlay Container Verification
+    const overlayExists = await cdp.eval(`!!document.querySelector('.viewfinder-top-overlay')`);
+    assert(overlayExists, 'Viewfinder top overlay container exists to isolate badges from overlapping');
+
+    // Emerald Theme Currency Contrast Check
+    await cdp.eval(`window.applyTheme('theme-vault-emerald')`);
+    const emeraldSymColor = await cdp.eval(`window.getComputedStyle(document.getElementById('active-currency-symbol')).color`);
+    assert(emeraldSymColor === 'rgb(52, 211, 153)', `Emerald theme currency symbol has bright mint high contrast (#34d399 = ${emeraldSymColor})`);
+
+    // Main Content Bottom Clearance Check
+    const bottomPadding = await cdp.eval(`parseInt(window.getComputedStyle(document.querySelector('.main-content')).paddingBottom)`);
+    assert(bottomPadding >= 120, `Main content has safe bottom clearance above bottom nav (${bottomPadding}px >= 120px)`);
+
     // Return to Home tab
     await cdp.eval(`(function() {
       const brand = document.getElementById('brand-header-link');

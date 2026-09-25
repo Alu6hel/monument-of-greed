@@ -1206,27 +1206,43 @@ body {
 }
 
 .tuner-mode-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
-  flex-wrap: wrap;
-  padding-top: 6px;
+  padding-top: 10px;
   border-top: 1px solid var(--border-light);
+}
+
+.tuner-mode-row button {
+  width: 100%;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  padding: 0 8px;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .chip-toggle {
   background: var(--bg-card-subtle);
   border: 1px solid var(--border-light);
   color: var(--text-main);
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
   font-weight: 700;
   cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .chip-toggle.active {
   background: var(--pill-active-bg);
   color: var(--pill-active-text);
+  border-color: var(--border-active);
 }
 
 /* Measurement Results Card */
@@ -1809,9 +1825,35 @@ body.theme-cyber-mint .banner-green {
 }
 
 .dossier-btn-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 16px;
+}
+
+.dossier-btn-group .btn {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.25;
+  box-sizing: border-box;
+}
+
+.dossier-btn-group .btn-accent {
+  grid-column: 1 / -1;
+  min-height: 52px;
+  font-size: 0.92rem;
+}
+
+.dossier-btn-group #btn-open-affidavit-modal {
+  grid-column: 1 / -1;
+  min-height: 46px;
+  font-size: 0.80rem;
 }
 
 .dossier-preview-card {
@@ -2782,8 +2824,73 @@ body.theme-cyber-mint .banner-green {
     width: 100%;
   }
 
+  /* Compact Top Bar on Phones - Zero Wrapping, Zero Right-Edge Clipping */
+  .top-bar {
+    padding: 10px 10px 8px 10px;
+    gap: 4px;
+  }
+
+  .brand-title-wrap {
+    gap: 5px;
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .brand-title {
+    font-size: 0.92rem;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .currency-selector-pill {
+    padding: 3px 6px;
+    font-size: 0.72rem;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .currency-selector-pill .curr-sym {
+    display: none;
+  }
+
+  .top-bar-actions {
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .top-bar-actions .icon-btn {
+    width: 29px;
+    height: 29px;
+    padding: 3px;
+    flex-shrink: 0;
+  }
+
+  .top-bar-actions .icon-btn svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .top-back-btn {
+    padding: 4px 7px;
+    font-size: 0.74rem;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .top-back-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Full Bottom Clearance for Floating Nav */
   .main-content {
-    padding: 12px 12px 90px 12px;
+    padding: 12px 12px 125px 12px !important;
+  }
+
+  .tab-pane {
+    padding-bottom: 25px;
   }
 
   /* Compact Hero Card on Phones */
@@ -3461,6 +3568,12 @@ body.theme-cyber-mint .banner-green {
   color: var(--accent-coral);
   font-weight: 800;
 }
+body.theme-vault-emerald .currency-selector-pill .curr-sym {
+  color: #34d399;
+}
+body.theme-obsidian-oled .currency-selector-pill .curr-sym {
+  color: #f59e0b;
+}
 .currency-selector-pill:hover .curr-sym {
   color: #fff;
 }
@@ -4080,30 +4193,50 @@ body.theme-cyber-mint .banner-green {
   line-height: 1.35;
 }
 
+/* Viewfinder Top Badges Overlay (Non-Colliding HUD & Alert Container) */
+.viewfinder-top-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.viewfinder-top-overlay .currency-recognition-hud {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  z-index: auto;
+}
+
 /* Viewfinder Alert Chips (Glare & Low-Light) */
 .viewfinder-alert-chip {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  position: relative;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(245, 158, 11, 0.45);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: #fef08a;
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   gap: 6px;
-  z-index: 24;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   pointer-events: none;
+  animation: fadeInDown 0.25s ease;
 }
 
 .viewfinder-alert-chip.alert-lowlight {
-  top: 48px;
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: rgba(56, 189, 248, 0.45);
   color: #bae6fd;
 }
 
