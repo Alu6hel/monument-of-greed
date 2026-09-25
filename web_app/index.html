@@ -19,6 +19,14 @@
 
     <!-- Top Navigation Bar -->
     <header class="top-bar">
+      <button id="btn-top-back" class="icon-btn top-back-btn" style="display: none;" aria-label="Back to Dashboard" title="Back to Dashboard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span class="top-back-label">Back</span>
+      </button>
+
       <button id="btn-drawer-open" class="icon-btn" aria-label="Open Menu Drawer">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -312,6 +320,7 @@
             <div class="tactile-tray-content">
               <div class="simple-consumer-rule">
                 <strong>Consumer Rule:</strong> <span id="workflow-simple-rule">If more than half (50%) of your banknote survives, central banks are legally required to exchange it for 100% full cash value.</span>
+                <button class="info-circle-btn" data-info-id="statute-general" title="Official Central Bank Statutory Thresholds" aria-label="Statute Information" type="button">ⓘ</button>
               </div>
               <div class="curr-quick-actions-row">
                 <button class="btn-curr-action accent" id="btn-workflow-counter-shield" type="button" title="Present Teller Defense Mode">
@@ -640,7 +649,10 @@
         
         <div class="scanner-header-strip">
           <div class="scanner-title-group">
-            <h2 class="view-title">Optical Note Scanner</h2>
+            <div style="display:flex;align-items:center;">
+              <h2 class="view-title" style="margin-bottom:0;">Optical Note Scanner</h2>
+              <button class="info-circle-btn" data-info-id="scanner-cv" title="Optical Edge Density & Aspect Ratio Thresholds" aria-label="Scanner Information" type="button">ⓘ</button>
+            </div>
             <p class="view-subtitle">Calculates remaining banknote fragment surface area against standard aspect ratios</p>
           </div>
         </div>
@@ -744,6 +756,7 @@
                 <strong id="numis-title">RARE NUMISMATIC SPECIMEN DETECTED</strong>
                 <p id="numis-desc">This vintage note carries significant collector premium. Appraise before central bank surrender!</p>
               </div>
+              <button class="info-circle-btn" data-info-id="numismatic-collector" title="Collector Value & Rarity" aria-label="Numismatic Info" type="button" style="margin-left:auto;">ⓘ</button>
             </div>
 
             <!-- Standby: No Banknote Detected Banner -->
@@ -948,13 +961,19 @@
       <section id="tab-grid" class="tab-pane">
         
         <div class="view-header-strip">
-          <h2 class="view-title">Manual 100-Grid Surface Audit</h2>
-          <p class="view-subtitle">Precision 1% tactile grid for charred, water-logged, or heavily fragmented currency where auto-edge detection cannot trace borders.</p>
+          <div style="display:flex;align-items:center;">
+            <h2 class="view-title" style="margin-bottom:0;">Manual 100-Grid Surface Audit</h2>
+            <button class="info-circle-btn" data-info-id="grid-formula" title="100-Cell Forensic Calibration Standard" aria-label="Grid Information" type="button">ⓘ</button>
+          </div>
+          <p class="view-subtitle">Precision 1% tactile grid for charred, water-logged, or heavily fragmented currency</p>
         </div>
 
         <div class="grid-audit-workspace">
           <div class="grid-audit-instructions">
-            <p><strong>Instructions:</strong> Each square represents exactly <strong>1.0%</strong> of the banknote surface. Touch or drag across cells to mark intact portions (green) vs destroyed portions (faded red). <span id="grid-aspect-indicator" class="aspect-indicator-chip">USD Ratio (2.35:1)</span></p>
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+              <span style="font-size:0.8rem;color:var(--text-muted);font-weight:600;">Touch or drag across cells (1 cell = 1.0% surface area):</span>
+              <span id="grid-aspect-indicator" class="aspect-indicator-chip">USD Ratio (2.35:1)</span>
+            </div>
             <div class="grid-tools-row">
               <button id="btn-grid-all" class="btn-sm btn-secondary">Fill 100%</button>
               <button id="btn-grid-clear" class="btn-sm btn-secondary">Clear All</button>
@@ -1012,8 +1031,11 @@
       <section id="tab-database" class="tab-pane">
         
         <div class="view-header-strip">
-          <h2 class="view-title">Global Redemption Database</h2>
-          <p class="view-subtitle">Official statutory banking codes, redemption thresholds, teller talk tracks, and central bank claim procedures worldwide.</p>
+          <div style="display:flex;align-items:center;">
+            <h2 class="view-title" style="margin-bottom:0;">Global Redemption Database</h2>
+            <button class="info-circle-btn" data-info-id="statute-general" title="Central Bank Statutory Regulations & Legal Codes" aria-label="Database Information" type="button">ⓘ</button>
+          </div>
+          <p class="view-subtitle">Official statutory banking codes, redemption thresholds, and claim procedures worldwide</p>
         </div>
 
         <!-- Search & Filter Controls -->
@@ -1048,8 +1070,11 @@
       <section id="tab-locator" class="tab-pane">
         
         <div class="view-header-strip">
-          <h2 class="view-title">Central Bank & Teller Locator</h2>
-          <p class="view-subtitle">Verified redemption windows, Federal Reserve cash offices, and commercial bank branches that officially exchange mutilated money.</p>
+          <div style="display:flex;align-items:center;">
+            <h2 class="view-title" style="margin-bottom:0;">Central Bank & Teller Locator</h2>
+            <button class="info-circle-btn" data-info-id="chain-custody" title="Registered Mail Chain of Custody & Packaging" aria-label="Locator Information" type="button">ⓘ</button>
+          </div>
+          <p class="view-subtitle">Verified redemption windows, Federal Reserve cash offices, and commercial depository branches</p>
         </div>
 
         <!-- Locator Search & Filters -->
@@ -1083,8 +1108,11 @@
       <section id="tab-dossier" class="tab-pane">
         
         <div class="view-header-strip">
-          <h2 class="view-title">Official Claim Dossier Generator</h2>
-          <p class="view-subtitle">Compiles optical surface measurements, serial numbers, fragment imagery, and legal declarations into an official banking submission packet.</p>
+          <div style="display:flex;align-items:center;">
+            <h2 class="view-title" style="margin-bottom:0;">Official Claim Dossier Generator</h2>
+            <button class="info-circle-btn" data-info-id="dossier-courtroom" title="Courtroom Admissibility & Legal Standards" aria-label="Dossier Information" type="button">ⓘ</button>
+          </div>
+          <p class="view-subtitle">Compiles optical measurements, serial numbers, fragment imagery, and legal declarations</p>
         </div>
 
         <div class="dossier-builder-grid">
@@ -1312,8 +1340,11 @@
         <div class="view-header">
           <div class="header-icon-badge">💼</div>
           <div class="header-text-group">
-            <h2 class="view-title">My Salvage Vault</h2>
-            <p class="view-subtitle">Permanent local ledger tracking currency claims from forensic audit through postal dispatch to central bank reimbursement.</p>
+            <div style="display:flex;align-items:center;">
+              <h2 class="view-title" style="margin-bottom:0;">My Salvage Vault</h2>
+              <button class="info-circle-btn" data-info-id="vault-ledger" title="Salvage Vault & Postal Tracking Lifecycle" aria-label="Vault Information" type="button">ⓘ</button>
+            </div>
+            <p class="view-subtitle">Permanent local ledger tracking claims from audit to reimbursement</p>
           </div>
         </div>
 
@@ -1416,7 +1447,9 @@
   <div id="modal-form-viewer" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-header">
+        <button id="btn-form-viewer-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <h3 id="modal-form-title" class="modal-title">Official Claim Form Viewer</h3>
+        <button class="info-circle-btn" data-info-id="statute-general" title="Statutory Claims & Official Forms" aria-label="Form Info" type="button">ⓘ</button>
         <button id="btn-modal-close" class="icon-btn modal-close-btn">&times;</button>
       </div>
       <div class="modal-body" id="modal-form-content">
@@ -1433,7 +1466,9 @@
   <div id="modal-teller-script" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-header">
+        <button id="btn-teller-script-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <h3 id="modal-script-title" class="modal-title">Bank Teller Talk Track</h3>
+        <button class="info-circle-btn" data-info-id="statute-general" title="Statutory Code & Teller Defense" aria-label="Statute Info" type="button">ⓘ</button>
         <button id="btn-script-close" class="icon-btn modal-close-btn">&times;</button>
       </div>
       <div class="modal-body" id="modal-script-content">
@@ -1449,7 +1484,9 @@
   <div id="modal-affidavit-generator" class="modal-overlay">
     <div class="modal-card modal-large">
       <div class="modal-header">
+        <button id="btn-affidavit-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <h3 class="modal-title">Sworn Affidavit of Total Destruction</h3>
+        <button class="info-circle-btn" data-info-id="statute-general" title="Statutory Affidavit Mandate" aria-label="Affidavit Info" type="button">ⓘ</button>
         <button id="btn-affidavit-close" class="icon-btn modal-close-btn">&times;</button>
       </div>
       <div class="modal-body" id="modal-affidavit-content">
@@ -1564,6 +1601,7 @@
   <div id="modal-reciprocity-gift" class="modal-overlay">
     <div class="modal-card modal-large reciprocity-modal-card">
       <div class="modal-header">
+        <button id="btn-gift-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <div class="onboarding-header-title">
           <span class="onboarding-emoji">🎁</span>
           <div>
@@ -1571,6 +1609,7 @@
             <span class="onboarding-sub">$49 Statutory Tool Unlocked Free of Charge</span>
           </div>
         </div>
+        <button class="info-circle-btn" data-info-id="statute-general" title="Statutory Rights" aria-label="Gift Info" type="button">ⓘ</button>
         <button id="btn-close-gift-modal-x" class="icon-btn modal-close-btn">&times;</button>
       </div>
       <div class="modal-body">
@@ -1628,6 +1667,7 @@
   <div id="modal-currency-selector" class="modal-overlay">
     <div class="modal-card modal-large currency-selector-modal-card">
       <div class="modal-header">
+        <button id="btn-currency-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <div class="onboarding-header-title">
           <span class="onboarding-emoji">🌍</span>
           <div>
@@ -1771,7 +1811,9 @@
   <div id="modal-vault-input" class="modal-overlay">
     <div class="modal-card modal-small" style="max-width: 420px;">
       <div class="modal-header">
+        <button id="btn-vault-input-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <h3 id="modal-vault-input-title" class="modal-title">Update Claim</h3>
+        <button class="info-circle-btn" data-info-id="vault-ledger" title="Salvage Vault Lifecycle" aria-label="Vault Info" type="button">ⓘ</button>
         <button id="btn-vault-input-close" class="icon-btn modal-close-btn">&times;</button>
       </div>
       <div class="modal-body" style="padding: 16px 20px;">
@@ -1791,9 +1833,15 @@
   <div id="modal-counter-shield" class="modal-overlay counter-shield-overlay">
     <div class="counter-shield-container">
       <div class="counter-shield-top-bar">
-        <div class="shield-badge-tag">
-          <span class="shield-pulse-dot"></span>
-          <span>BANK-GRADE STATUTORY COUNTER SHIELD</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button id="btn-shield-back" class="btn btn-sm btn-outline modal-back-btn" type="button" title="Back to Previous Screen">
+            <span>← Back</span>
+          </button>
+          <div class="shield-badge-tag">
+            <span class="shield-pulse-dot"></span>
+            <span>BANK-GRADE STATUTORY COUNTER SHIELD</span>
+          </div>
+          <button class="info-circle-btn" data-info-id="statute-general" title="Central Bank Statutory Regulations" aria-label="Statute Info" type="button" style="color:#f8fafc;border-color:rgba(255,255,255,0.4);">ⓘ</button>
         </div>
         <div class="shield-controls-row">
           <button id="btn-shield-rotate" class="btn btn-sm btn-outline" title="Rotate 180° for Teller View across the counter">
@@ -1861,14 +1909,20 @@
   <div id="modal-jigsaw-assembler" class="modal-overlay">
     <div class="modal-card modal-large jigsaw-modal-card">
       <div class="modal-header">
+        <button id="btn-jigsaw-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <div class="modal-header-brand">
           <span class="modal-badge-tag">FORENSIC RECONSTRUCTION</span>
-          <h3 class="modal-title">🧩 Multi-Fragment Banknote Jigsaw</h3>
+          <div style="display:flex;align-items:center;">
+            <h3 class="modal-title" style="margin:0;">🧩 Multi-Fragment Banknote Jigsaw</h3>
+            <button class="info-circle-btn" data-info-id="jigsaw-union" title="Non-Overlapping Pixel-Union Mathematics" aria-label="Jigsaw Information" type="button">ⓘ</button>
+          </div>
         </div>
         <button id="btn-close-jigsaw" class="icon-btn modal-close-btn">&times;</button>
       </div>
       <div class="modal-body jigsaw-body">
-        <p class="jigsaw-intro-text">Reconstruct notes torn into 2 or 3 separate pieces (pet chewing, machine shredding, accidental tearing). Align pieces along torn edges to calculate true non-overlapping surface area.</p>
+        <div class="jigsaw-intro-strip" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-size:0.8rem;color:var(--text-muted);font-weight:600;">Align torn fragments along shear lines (non-overlapping area calculation)</span>
+        </div>
 
         <div class="jigsaw-toolbar">
           <button id="btn-jigsaw-sample" class="btn btn-sm btn-secondary">🧪 Load Torn Specimen</button>
@@ -1946,6 +2000,8 @@
           💡 <strong>Watermark Substrate Backlight:</strong> In a dark room, hold physical note flat against this screen to reveal embedded watermarks, metallic threads, and micro-perforations.
         </div>
         <div class="lightbox-actions">
+          <button id="btn-lightbox-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
+          <button class="info-circle-btn" data-info-id="lightbox-watermark" title="Substrate Watermark & Security Thread Verification" aria-label="Lightbox Info" type="button">ⓘ</button>
           <button id="btn-lightbox-invert-tint" class="btn btn-sm btn-secondary">🎨 Invert Tint</button>
           <button id="btn-lightbox-torch" class="btn btn-sm btn-accent">🔦 Hardware Torch</button>
           <button id="btn-close-lightbox" class="btn btn-sm btn-primary">✕ Exit Lightbox</button>
@@ -1958,9 +2014,13 @@
   <div id="modal-batch-manifest" class="modal-overlay">
     <div class="modal-card modal-large batch-modal-card">
       <div class="modal-header">
+        <button id="btn-batch-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
         <div class="modal-header-brand">
           <span class="modal-badge-tag">DISASTER RECOVERY</span>
-          <h3 class="modal-title">🌊 Mass Salvage Batch Claim Manifest</h3>
+          <div style="display:flex;align-items:center;">
+            <h3 class="modal-title" style="margin:0;">🌊 Mass Salvage Batch Claim Manifest</h3>
+            <button class="info-circle-btn" data-info-id="batch-manifest" title="Disaster Loss Schedule & Statutory Protocol" aria-label="Batch Information" type="button">ⓘ</button>
+          </div>
         </div>
         <button id="btn-close-batch-modal" class="icon-btn modal-close-btn">&times;</button>
       </div>
@@ -2051,6 +2111,32 @@
         <button id="btn-batch-export-csv" class="btn btn-secondary">📊 Export CSV</button>
         <button id="btn-batch-export-pdf" class="btn btn-accent">📄 Generate Loss Schedule PDF</button>
         <button id="btn-batch-save-vault" class="btn btn-primary">💼 Save Batch to Vault</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Statutory & Forensic Knowledge Card Modal (Info-Circle System) -->
+  <div id="modal-info-sheet" class="modal-overlay info-sheet-overlay">
+    <div class="modal-card modal-large info-modal-card">
+      <div class="modal-header info-modal-header">
+        <button id="btn-info-sheet-back" class="btn btn-sm btn-outline modal-back-btn" type="button">← Back</button>
+        <span class="info-sheet-badge" id="info-sheet-badge">OFFICIAL STATUTE</span>
+        <button id="btn-info-sheet-close" class="icon-btn modal-close-btn" type="button" aria-label="Close Info">&times;</button>
+      </div>
+      <div class="modal-body info-modal-body">
+        <div class="info-sheet-hero">
+          <div class="info-sheet-icon" id="info-sheet-icon">⚖️</div>
+          <h3 class="info-sheet-title" id="info-sheet-title">Statutory Basis</h3>
+        </div>
+        <div class="info-sheet-content" id="info-sheet-content">
+          <!-- Populated dynamically with legit central bank statutes & forensic logic -->
+        </div>
+        <div class="info-sheet-citations-box" id="info-sheet-citations">
+          <!-- Official legal code citations -->
+        </div>
+      </div>
+      <div class="modal-footer info-modal-footer">
+        <button id="btn-info-sheet-done" class="btn btn-primary" type="button" style="width:100%;">Understood / Continue</button>
       </div>
     </div>
   </div>

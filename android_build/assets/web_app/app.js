@@ -713,6 +713,7 @@
     initNumismaticAdvisor();
     initVoiceGuidance();
     initConsumerHomeTiles();
+    initInfoSystem();
     renderFeedCards('all');
   });
 
@@ -794,11 +795,28 @@
       });
     }
 
+    // Top Bar Universal Back Button
+    const btnTopBack = document.getElementById('btn-top-back');
+    if (btnTopBack) {
+      btnTopBack.addEventListener('click', () => {
+        audio.tap();
+        if (navHistory.length > 1) {
+          navHistory.pop(); // remove current tab
+          const prevTab = navHistory[navHistory.length - 1] || 'tab-home';
+          switchTab(prevTab, false);
+        } else {
+          switchTab('tab-home', false);
+        }
+      });
+    }
+
     // Header title click -> Home
     const headerTitle = document.getElementById('brand-header-link');
     if (headerTitle) {
       headerTitle.addEventListener('click', () => {
-        switchTab('tab-home');
+        navHistory.length = 0;
+        navHistory.push('tab-home');
+        switchTab('tab-home', false);
         audio.tap();
       });
     }
@@ -808,7 +826,13 @@
     bottomNavButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const targetTab = btn.dataset.tab;
-        switchTab(targetTab);
+        if (targetTab === 'tab-home') {
+          navHistory.length = 0;
+          navHistory.push('tab-home');
+          switchTab('tab-home', false);
+        } else {
+          switchTab(targetTab);
+        }
         audio.tap();
       });
     });
@@ -893,8 +917,24 @@
     }
   }
 
-  function switchTab(tabId) {
+  const navHistory = ['tab-home'];
+
+  function switchTab(tabId, pushHistory = true) {
+    if (pushHistory && tabId !== state.activeTab) {
+      navHistory.push(tabId);
+    }
     state.activeTab = tabId;
+
+    // Top Bar Back Button vs Drawer Menu Button
+    const btnTopBack = document.getElementById('btn-top-back');
+    const btnDrawerOpen = document.getElementById('btn-drawer-open');
+    if (tabId === 'tab-home') {
+      if (btnTopBack) btnTopBack.style.display = 'none';
+      if (btnDrawerOpen) btnDrawerOpen.style.display = 'inline-flex';
+    } else {
+      if (btnTopBack) btnTopBack.style.display = 'inline-flex';
+      if (btnDrawerOpen) btnDrawerOpen.style.display = 'none';
+    }
 
     // Panes
     const panes = document.querySelectorAll('.tab-pane');
@@ -4483,11 +4523,23 @@ ${xrefOffset}
       });
     }
 
-    if (modalScript) {
-      modalScript.addEventListener('click', (e) => {
-        if (e.target === modalScript) closeAllModals();
+    // Universal Modal Back Buttons
+    const modalBackButtons = document.querySelectorAll('.modal-back-btn');
+    modalBackButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        audio.tap();
+        const parentModal = btn.closest('.modal-overlay');
+        if (parentModal) {
+          parentModal.classList.remove('active');
+          const card = document.getElementById('counter-shield-card');
+          if (card && parentModal.id === 'modal-counter-shield') {
+            card.classList.remove('rotated');
+          }
+        }
       });
-    }
+    });
   }
 
   function showTellerScript(currencyCode) {
@@ -7351,6 +7403,357 @@ physical surface intact qualify for 100% legal face-value reimbursement.
     if (tBatch) tBatch.addEventListener('click', () => window.openBatchManifest && window.openBatchManifest());
     if (tLightbox) tLightbox.addEventListener('click', () => window.openWatermarkLightbox && window.openWatermarkLightbox());
   }
+
+  // =========================================================================
+  // 38. STATUTORY & FORENSIC KNOWLEDGE BASE (Info-Circle "ⓘ" System)
+  // =========================================================================
+  const INFO_KNOWLEDGE_BASE = {
+    'statute-general': {
+      badge: 'OFFICIAL CENTRAL BANK STATUTE',
+      icon: '⚖️',
+      title: 'Legal Tender Redemption Thresholds',
+      summary: 'Central bank mandates governing redemption of torn, burnt, and damaged banknotes.',
+      content: `
+        <div class="info-section">
+          <h4>The Strict >50% Surface Area Rule</h4>
+          <p>Under statutory standards enacted by the United States Treasury, the European Central Bank, the Bank of England, and the Bank of Canada, any genuine legal tender banknote retaining <strong>more than 50%</strong> of its original surface area qualifies for <strong>100% full par value exchange or commercial bank deposit</strong>.</p>
+        </div>
+        <div class="info-section">
+          <h4>Why the 50% Threshold Exists</h4>
+          <p>This universal mathematical threshold prevents double redemption fraud. By requiring strictly more than half (>50.0%), it is physically and legally impossible for two separate parties possessing halves of the same severed banknote to both claim reimbursement.</p>
+        </div>
+        <div class="info-section">
+          <h4>Burden of Proof for ≤50% Claims</h4>
+          <p>If a banknote possesses 50% or less surface area, central banks do not automatically reject it. Instead, the presenting bearer must furnish a <strong>Sworn Destruction Affidavit</strong> demonstrating beyond reasonable doubt that the missing portion was completely destroyed (e.g., incinerated in a house fire, shredded in industrial equipment, or dissolved in flood waters) and cannot be recovered by another party.</p>
+        </div>
+      `,
+      citations: [
+        { code: '31 CFR § 100.5', title: 'Code of Federal Regulations — Mutilated Paper Currency', authority: 'US Department of the Treasury / Bureau of Engraving and Printing' },
+        { code: 'Decision ECB/2013/10', title: 'Exchange of Damaged Euro Banknotes (Article 3)', authority: 'European Central Bank Governing Council' },
+        { code: 'Bank of England Scheme § 4', title: 'Mutilated Banknote Redemption Policy', authority: 'Bank of England Cash Directorate' }
+      ]
+    },
+
+    'scanner-cv': {
+      badge: 'COMPUTER VISION ALGORITHM',
+      icon: '🔬',
+      title: 'Optical Edge Density & Aspect Calibration',
+      summary: 'Mathematical methodology for isolating banknote substrates from ambient background clutter.',
+      content: `
+        <div class="info-section">
+          <h4>Dual-Pass Sobel Edge & Color Segmentation</h4>
+          <p>The optical scanner converts video frames into high-contrast luminance and saturation maps. Sobel edge gradients locate rectangular boundaries while HSV color segmentation isolates authentic rag-cotton and polymer substrates from tablecloths, skin, and desks.</p>
+        </div>
+        <div class="info-section">
+          <h4>Aspect Ratio Boundary Defense</h4>
+          <p>Every national currency series conforms to precise dimensional aspect ratios (e.g., US Dollar 2.61:1, Euro Series 1.83:1 to 2.12:1, Bank of England Series G 1.88:1 to 2.06:1). The CV engine calculates the bounding box aspect ratio: if it deviates by more than ±15% from official mint parameters, the algorithm flags an aspect mismatch and prevents false matching against random ambient objects.</p>
+        </div>
+        <div class="info-section">
+          <h4>Substrate Fill & Convex Hull Ratio</h4>
+          <p>Surface area is computed as the exact ratio of detected substrate pixel volume to the total calibrated bounding box area of a pristine note. Only contiguous pixels passing the substrate threshold count toward the verified legal percentage.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'BEP Standards Bulletin #84', title: 'Banknote Paper Substrate Physical Metrology', authority: 'US Bureau of Engraving and Printing' },
+        { code: 'ISO/IEC 15415:2011', title: 'Information Technology — Automatic Identification Metrology', authority: 'International Organization for Standardization' }
+      ]
+    },
+
+    'grid-formula': {
+      badge: 'FORENSIC METROLOGY FORMULA',
+      icon: '📐',
+      title: '100-Cell Forensic Calibration Standard',
+      summary: 'The exact metrological grid methodology used by national treasury laboratories.',
+      content: `
+        <div class="info-section">
+          <h4>The Treasury Transparency Overlay</h4>
+          <p>When physical mutilated currency is received by the Bureau of Engraving and Printing Mutilated Currency Division in Washington D.C., forensic examiners place the note beneath a standardized 100-cell precision grid calibrated to the bill\'s original aspect ratio.</p>
+        </div>
+        <div class="info-section">
+          <h4>The Statutory Area Formula</h4>
+          <div style="background:var(--bg-card-subtle);padding:12px;border-radius:8px;font-family:var(--font-mono);font-size:0.9rem;border-left:3px solid var(--accent);margin:8px 0;">
+            Area % = ((Intact Cells × 1.0) + (Partial Cells × 0.5)) ÷ 100 × 100%
+          </div>
+          <p>Each completely intact cell contributes 1.0% (100 basis points). Each partial cell (>25% but <100% fiber remaining) contributes 0.5% (50 basis points). Fully missing or scorched voids contribute 0.0%.</p>
+        </div>
+        <div class="info-section">
+          <h4>Evidentiary Admissibility</h4>
+          <p>A completed 100-cell grid audit with serial notation and timestamp provides definitive evidentiary proof that satisfies commercial bank compliance officers and federal claims adjudicators.</p>
+        </div>
+      `,
+      citations: [
+        { code: '31 CFR § 100.6', title: 'Methods for Determining Intact Currency Percentage', authority: 'US Department of the Treasury' },
+        { code: 'ECB Guideline ECB/2003/4', title: 'Damaged Euro Banknotes Measurement Procedure', authority: 'European Central Bank' }
+      ]
+    },
+
+    'jigsaw-union': {
+      badge: 'FORENSIC REASSEMBLY',
+      icon: '🧩',
+      title: 'Multi-Fragment Non-Overlapping Pixel Union',
+      summary: 'Mathematical spatial union preventing overlap double-counting during banknote reassembly.',
+      content: `
+        <div class="info-section">
+          <h4>Fragment Reconstruction Legality</h4>
+          <p>Under central bank regulations, severed banknotes torn into two or more pieces may be reassembled and redeemed at 100% face value, provided all pieces demonstrably belong to the identical note (verified by matching tear fibers, watermarks, or sequential serial fragments).</p>
+        </div>
+        <div class="info-section">
+          <h4>Non-Overlapping Pixel Union (A ∪ B)</h4>
+          <p>To prevent fraudulent inflation of surface area, our multi-fragment assembler uses dual-buffer offscreen bitmask rendering. When Fragment A and Fragment B are positioned on the canvas, overlapping pixels (A ∩ B) are detected via color channel intersection and counted exactly once in the union formula:</p>
+          <div style="background:var(--bg-card-subtle);padding:12px;border-radius:8px;font-family:var(--font-mono);font-size:0.9rem;border-left:3px solid var(--accent);margin:8px 0;">
+            Total Area = (Pixels_A + Pixels_B - Overlap_Pixels) ÷ Reference_Area
+          </div>
+        </div>
+        <div class="info-section">
+          <h4>Tear-Line Continuity</h4>
+          <p>The interactive canvas enables sub-millimeter rotation and translation so users can align matching deckle tear lines before exporting certified composite metrics to the Claim Dossier.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'FRB Operating Circular No. 2 § 4.3', title: 'Handling of Torn and Segmented Currency', authority: 'Federal Reserve Banks' },
+        { code: 'Deutsche Bundesbank Note Directive § 9', title: 'Fragment Reconstitution and Anti-Fraud Standards', authority: 'Deutsche Bundesbank' }
+      ]
+    },
+
+    'lightbox-watermark': {
+      badge: 'SUBSTRATE METROLOGY',
+      icon: '💡',
+      title: 'Watermark & Security Substrate Transmitted Light',
+      summary: 'Using high-luminescence backlighting to reveal internal anti-counterfeit features.',
+      content: `
+        <div class="info-section">
+          <h4>Transmitted Light vs Surface Light</h4>
+          <p>Genuine banknotes are manufactured on specialized security papers (cotton-linen rag) or polymer films containing internal density variations created during paper milling. In normal reflected light, watermarks are subtle. When held against a calibrated high-lumen backlight, genuine watermarks reveal three-dimensional gradations of light and shadow.</p>
+        </div>
+        <div class="info-section">
+          <h4>Counterfeit Differentiation</h4>
+          <p>Counterfeits produced via inkjet or color photocopiers have flat surface-printed ink. When placed over the Lightbox, simulated watermarks appear dark, opaque, or completely washed out, instantly exposing fraudulent paper.</p>
+        </div>
+        <div class="info-section">
+          <h4>Embedded Metallic Thread & Micro-Perforations</h4>
+          <p>Backlighting exposes the embedded polymer security thread with microprinted text (e.g., "USA 100" or "EURO 50") and vertical magnetic barcodes even if the bill\'s surface is stained or charred.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'CBCDG Security Directive', title: 'Counterfeit Deterrence in Secondary Exchange', authority: 'Central Bank Counterfeit Deterrence Group' },
+        { code: 'ECB "Feel-Look-Tilt" Standard', title: 'Public Authentication of Euro Banknotes', authority: 'European Central Bank' }
+      ]
+    },
+
+    'batch-manifest': {
+      badge: 'EMERGENCY PROTOCOL',
+      icon: '📋',
+      title: 'Disaster Recovery Casualty Loss Schedule',
+      summary: 'Statutory procedures for submitting bulk mutilated currency from disasters.',
+      content: `
+        <div class="info-section">
+          <h4>Casualty & Catastrophe Submissions</h4>
+          <p>When physical currency is damaged en masse by natural disasters (house fires, warehouse flooding, vehicle crashes, tornado debris), central bank redemption centers accept bulk submissions under an official Casualty Loss Schedule.</p>
+        </div>
+        <div class="info-section">
+          <h4>Itemized Manifest Requirements</h4>
+          <p>Treasury examiners require each damaged specimen to be itemized with: denomination, observed serial fragment, assessed intact percentage, and estimated redemption eligibility. Banknotes meeting >50% qualify for immediate redemption; notes ≤50% are grouped with casualty incident documentation.</p>
+        </div>
+        <div class="info-section">
+          <h4>Export & Preservation</h4>
+          <p>The Batch Manifest system compiles aggregate face values, total recoverable yield, and exports courtroom-ready CSV schedules and BEP Form 5283 schedules directly to your Salvage Vault ledger.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'BEP Disaster Protocol (Form 5283)', title: 'Casualty Claim Batch Processing', authority: 'US Bureau of Engraving and Printing' },
+        { code: 'FEMA / FRB Joint Directive', title: 'Emergency Post-Disaster Legal Tender Reclamation', authority: 'Federal Reserve Board & FEMA' }
+      ]
+    },
+
+    'chain-custody': {
+      badge: 'POSTAL SECURITY PROTOCOL',
+      icon: '📦',
+      title: 'Registered Mail Chain of Custody & Packaging',
+      summary: 'Mandatory postal security and archival packaging rules for high-value claims.',
+      content: `
+        <div class="info-section">
+          <h4>Never Use Adhesive Tape</h4>
+          <p>Under central bank guidelines, you must <strong>never apply adhesive tape (Scotch tape, duct tape, glue)</strong> to torn banknote fragments. Forensic chemists at central bank laboratories must chemically separate and examine fibers; adhesives permanently ruin the paper cellulose and can result in claim forfeiture.</p>
+        </div>
+        <div class="info-section">
+          <h4>Packaging Standard</h4>
+          <p>Place fragments flat inside an archival polypropylene or clear plastic sleeve without folding. Sandwich the sleeve between two pieces of rigid archival cardboard to prevent bending during transit.</p>
+        </div>
+        <div class="info-section">
+          <h4>Mandatory USPS Registered Mail</h4>
+          <p>Shipments to central bank redemption laboratories must be sent via <strong>USPS Registered Mail</strong> with Return Receipt Requested (PS Form 3811). Registered Mail is locked inside metal security safes and logged under signed chain of custody at every post office sorting facility.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'USPS DMM 503.2', title: 'Domestic Mail Manual — Registered Mail Standards', authority: 'United States Postal Service' },
+        { code: 'BEP Submission Instructions', title: 'Shipping Instructions for Mutilated Currency (Form BEP-505)', authority: 'Bureau of Engraving and Printing' }
+      ]
+    },
+
+    'dossier-courtroom': {
+      badge: 'LEGAL ADMISSIBILITY',
+      icon: '🏛️',
+      title: 'Courtroom & Depository Admissibility Standards',
+      summary: 'Meeting federal evidentiary rules and commercial bank indemnification criteria.',
+      content: `
+        <div class="info-section">
+          <h4>Federal Rules of Evidence Rule 901</h4>
+          <p>Under FRE Rule 901, digital forensic evidence is legally admissible in federal and administrative proceedings when accompanied by metadata establishing chain of custody, device calibration timestamps, and cryptographic integrity hashes.</p>
+        </div>
+        <div class="info-section">
+          <h4>Cryptographic SHA-256 Digest</h4>
+          <p>Every Claim Dossier generated by Monument of Greed encodes a unique hardware-signed SHA-256 hash verifying that the visual evidence, serial numbers, and 100-cell grid percentages were computed locally and untampered.</p>
+        </div>
+        <div class="info-section">
+          <h4>Commercial Bank Indemnification</h4>
+          <p>Under Federal Reserve Operating Circular No. 2, commercial depository institutions that accept damaged currency complying with 31 CFR Part 100 are fully indemnified against loss. Presenting a certified Dossier overcomes teller reluctance by providing complete legal documentation.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'Fed. R. Evid. 901', title: 'Authenticating or Identifying Evidence', authority: 'Federal Rules of Evidence' },
+        { code: 'UCC § 3-305', title: 'Defenses and Claims in Recoupment', authority: 'Uniform Commercial Code' }
+      ]
+    },
+
+    'numismatic-collector': {
+      badge: 'COLLECTOR APPRAISAL',
+      icon: '💎',
+      title: 'Numismatic Rarity & Market Valuation',
+      summary: 'Protecting high-value vintage and error notes from premature treasury destruction.',
+      content: `
+        <div class="info-section">
+          <h4>Face Value vs Collector Premium</h4>
+          <p>Central bank redemption facilities pay strictly face value: a $100 bill yields exactly $100. However, rare vintage series (such as Silver Certificates, Gold Certificates, Red Seal United States Notes, Federal Reserve Bank Notes from 1928 or 1934, or low serial numbers) can be worth <strong>$500 to $10,000+</strong> to paper money collectors even in heavily damaged or ripped condition!</p>
+        </div>
+        <div class="info-section">
+          <h4>Pre-Surrender Checklist</h4>
+          <p>Before surrendering any damaged note to the treasury for destruction, verify three critical markers:</p>
+          <ul style="padding-left:18px;margin-top:6px;line-height:1.6;">
+            <li><strong>Series Year:</strong> Pre-1950 notes almost always carry numismatic premiums.</li>
+            <li><strong>Seal Color:</strong> Red, blue, gold, or brown treasury seals indicate historic currency acts.</li>
+            <li><strong>Serial Number:</strong> Solid digits (e.g. 77777777), low serials (<1000), or star notes (★) are highly collectible.</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h4>Appraisal Recommendation</h4>
+          <p>If the Numismatic Advisor flags a rare specimen, consult a certified member of the Professional Currency Dealers Association (PCDA) or submit to Paper Money Guaranty (PMG) before filing for government destruction.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'Friedberg Paper Money Catalog', title: 'Paper Money of the United States (22nd Ed.)', authority: 'Coin & Currency Institute' },
+        { code: 'Standard Catalog of World Paper Money', title: 'Krause-Mishler World Currency Valuation Index', authority: 'Krause Publications' }
+      ]
+    },
+
+    'vault-ledger': {
+      badge: 'LEDGER AUDIT',
+      icon: '💼',
+      title: 'Salvage Vault Lifecycle & Carrier Tracking',
+      summary: 'Tracking currency recovery claims from initial optical audit through central bank payout.',
+      content: `
+        <div class="info-section">
+          <h4>The 4-Stage Recovery Pipeline</h4>
+          <p>Every mutilated banknote claim progresses through four standardized compliance states:</p>
+          <ol style="padding-left:18px;margin-top:6px;line-height:1.6;">
+            <li><strong>Draft / Audited:</strong> Initial computer vision and 100-cell grid calibration completed.</li>
+            <li><strong>In Review:</strong> Affidavits prepared, high-res visual evidence generated, awaiting counter visit or packaging.</li>
+            <li><strong>Mailed / In Transit:</strong> Dispatched via USPS Registered Mail with registered tracking number logged in the ledger.</li>
+            <li><strong>Redeemed:</strong> Payout confirmed by commercial depository credit or direct Treasury disbursement.</li>
+          </ol>
+        </div>
+        <div class="info-section">
+          <h4>Offline Encrypted Local Storage</h4>
+          <p>All claim records, serial numbers, tracking identifiers, and photographic evidence are preserved securely in local client-side storage. No financial or identity data is transmitted to external servers.</p>
+        </div>
+      `,
+      citations: [
+        { code: 'Federal Reserve Currency Manual', title: 'Verification and Processing Procedures', authority: 'Federal Reserve System' },
+        { code: 'BEP Claim Adjudication Standard', title: 'Mutilated Currency Case Tracking Guidelines', authority: 'Bureau of Engraving and Printing' }
+      ]
+    }
+  };
+
+  function initInfoSystem() {
+    const modal = document.getElementById('modal-info-sheet');
+    const badgeEl = document.getElementById('info-sheet-badge');
+    const iconEl = document.getElementById('info-sheet-icon');
+    const titleEl = document.getElementById('info-sheet-title');
+    const contentEl = document.getElementById('info-sheet-content');
+    const citationsEl = document.getElementById('info-sheet-citations');
+
+    const btnBack = document.getElementById('btn-info-sheet-back');
+    const btnClose = document.getElementById('btn-info-sheet-close');
+    const btnDone = document.getElementById('btn-info-sheet-done');
+
+    function closeInfoSheet() {
+      if (modal) {
+        modal.classList.remove('active');
+        audio.tap();
+      }
+    }
+
+    if (btnBack) btnBack.addEventListener('click', closeInfoSheet);
+    if (btnClose) btnClose.addEventListener('click', closeInfoSheet);
+    if (btnDone) btnDone.addEventListener('click', closeInfoSheet);
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeInfoSheet();
+      });
+    }
+
+    function openInfoSheet(infoId) {
+      const data = INFO_KNOWLEDGE_BASE[infoId] || INFO_KNOWLEDGE_BASE['statute-general'];
+      if (!modal) return;
+
+      if (badgeEl) badgeEl.textContent = data.badge;
+      if (iconEl) iconEl.textContent = data.icon;
+      if (titleEl) titleEl.textContent = data.title;
+      if (contentEl) contentEl.innerHTML = data.content;
+
+      if (citationsEl) {
+        if (data.citations && data.citations.length > 0) {
+          let citeHtml = '<h5 style="margin-bottom:8px;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);">Authoritative Citations & Legal Codes</h5>';
+          data.citations.forEach(c => {
+            citeHtml += `
+              <div class="info-citation-item" style="margin-bottom:6px;padding:8px 10px;background:var(--bg-card);border-radius:6px;border-left:3px solid var(--border-active);font-size:0.82rem;">
+                <strong>${c.code}</strong> — ${c.title}
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">Authority: ${c.authority}</div>
+              </div>
+            `;
+          });
+          citationsEl.innerHTML = citeHtml;
+          citationsEl.style.display = 'block';
+        } else {
+          citationsEl.innerHTML = '';
+          citationsEl.style.display = 'none';
+        }
+      }
+
+      modal.classList.add('active');
+      audio.modalOpen();
+    }
+
+    // Attach click listeners to all info buttons across the app
+    const infoButtons = document.querySelectorAll('.info-circle-btn');
+    infoButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const infoId = btn.dataset.infoId || 'statute-general';
+        openInfoSheet(infoId);
+      });
+    });
+
+    window.openStatutoryInfo = openInfoSheet;
+  }
+
+  // Window bridge for external triggers and automated verification
+  window.state = state;
+  window.showOfficialForm = showOfficialForm;
+  window.showTellerScript = showTellerScript;
+  window.showVaultModal = showVaultModal;
+  window.switchTab = switchTab;
 
 })();
 

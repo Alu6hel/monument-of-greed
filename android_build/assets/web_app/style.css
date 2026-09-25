@@ -5384,5 +5384,272 @@ body.theme-cyber-mint .banner-green {
   }
 }
 
+/* ==========================================================================
+   38. UNIVERSAL BACK NAVIGATION, INFO-CIRCLE (ⓘ) SYSTEM & HIGH-CONTRAST POLISH
+   ========================================================================== */
 
+/* 38.1 Universal Top Back Navigation Button */
+.top-back-btn {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  background: var(--pill-bg);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.top-back-btn:hover {
+  background: var(--pill-active-bg);
+  color: var(--pill-active-text);
+  transform: translateX(-2px);
+}
+.top-back-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
 
+/* 38.2 Universal Modal Back Buttons */
+.modal-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  background: var(--pill-bg);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.modal-back-btn:hover {
+  background: var(--pill-active-bg);
+  color: var(--pill-active-text);
+  transform: translateX(-2px);
+}
+
+/* 38.3 Info-Circle (ⓘ) Trigger Button */
+.info-circle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-active);
+  background: rgba(250, 112, 81, 0.12);
+  color: var(--border-active);
+  font-size: 0.76rem;
+  font-weight: 900;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 6px;
+  transition: all var(--transition-fast);
+  padding: 0;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+.info-circle-btn:hover {
+  transform: scale(1.18);
+  background: var(--border-active);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(250, 112, 81, 0.35);
+}
+.info-circle-btn:active {
+  transform: scale(0.95);
+}
+
+/* 38.4 Universal Info Sheet Modal */
+.info-sheet-overlay {
+  z-index: 1050;
+}
+.info-modal-card {
+  max-width: 600px;
+  width: 100%;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.info-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-card-subtle);
+}
+.info-sheet-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--border-active);
+  background: rgba(250, 112, 81, 0.1);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(250, 112, 81, 0.25);
+}
+.info-modal-body {
+  padding: 20px 22px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.info-sheet-hero {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+.info-sheet-icon {
+  font-size: 1.8rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(250, 112, 81, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.info-sheet-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+}
+.info-sheet-content {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+.info-sheet-content p {
+  margin: 0 0 10px 0;
+}
+.info-sheet-content ul {
+  margin: 0 0 14px 0;
+  padding-left: 20px;
+}
+.info-sheet-content li {
+  margin-bottom: 6px;
+}
+.info-sheet-citations-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-left: 3px solid #38bdf8;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+  margin-top: 14px;
+}
+
+/* 38.5 Counter Shield High-Contrast Overrides (Fix for media_1790367496200.png) */
+.counter-shield-content {
+  background: #0b1120 !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+}
+.counter-shield-content .shield-main-title {
+  color: #ffffff !important;
+}
+.counter-shield-content .shield-statute-statement {
+  color: #f8fafc !important;
+}
+.counter-shield-content .shield-statement-box {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-left: 4px solid #38bdf8 !important;
+}
+.counter-shield-content .shield-metric-cell {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+.counter-shield-content .shield-metric-cell .s-lbl {
+  color: #94a3b8 !important;
+  font-weight: 800 !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.8px !important;
+}
+.counter-shield-content .shield-metric-cell .s-val {
+  color: #f8fafc !important;
+  font-weight: 800 !important;
+  font-size: 0.95rem !important;
+}
+.counter-shield-content .shield-metric-cell .s-val.text-success {
+  color: #34d399 !important;
+}
+.counter-shield-content .shield-qr-box {
+  background: #ffffff !important;
+  padding: 6px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+}
+.counter-shield-content .shield-qr-box svg {
+  background: #ffffff !important;
+}
+
+/* 38.6 Light Theme Vault Input & Action Polish (Fix for media_1790370490692.png) */
+body.theme-clay-peach .vault-tracking-input {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+body.theme-clay-peach .vault-tracking-input::placeholder {
+  color: #94a3b8 !important;
+}
+body.theme-clay-peach .vault-tracking-input:focus {
+  border-color: #f97316 !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important;
+  outline: none !important;
+}
+.vault-tracking-input {
+  transition: all var(--transition-fast);
+}
+
+/* Delete / Action Button Polishing */
+.btn-outline-danger {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-outline-danger:hover {
+  background: #ef4444;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Status Progression Button in Light Theme */
+body.theme-clay-peach .vault-action-right .btn-advance-status[data-next="mailed"] {
+  background: #f97316 !important;
+  color: #ffffff !important;
+}
+body.theme-clay-peach .vault-action-right .btn-advance-status[data-next="mailed"]:hover {
+  background: #ea580c !important;
+}
+body.theme-clay-peach .vault-action-right .btn-advance-status[data-next="review"] {
+  background: #eab308 !important;
+  color: #ffffff !important;
+}
+body.theme-clay-peach .vault-action-right .btn-advance-status[data-next="review"]:hover {
+  background: #ca8a04 !important;
+}
