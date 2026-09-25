@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Monument of Greed — Currency Salvage & Damaged Note Redemption</title>
+  <meta name="description" content="Professional utility to assess, measure, and redeem mutilated or torn banknotes using optical computer vision and statutory banking regulations.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logos/alu-company-logo-symbol.png">
+</head>
+<body class="theme-clay-peach">
+  <!-- Audio Feedback Element (Synthesizer initialized via Web Audio) -->
+
+  <!-- App Container -->
+  <div id="app" class="app-root">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+      <button id="btn-drawer-open" class="icon-btn" aria-label="Open Menu Drawer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="brand-title-wrap" id="brand-header-link">
+        <span class="brand-title">Monument of Greed</span>
+        <span class="brand-badge">PRO</span>
+      </div>
+
+      <div class="top-bar-actions">
+        <button id="btn-theme-quick" class="icon-btn" title="Toggle Live Theme" aria-label="Toggle Live Theme">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+        </button>
+        <button id="btn-pro-crown" class="icon-btn crown-btn" title="Statutory Certification" aria-label="Pro Certification">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Side Drawer Menu -->
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <aside id="app-drawer" class="app-drawer">
+      <div class="drawer-header">
+        <div class="drawer-logo-wrap">
+          <img src="logos/alu-company-logo-symbol.png" alt="Alu Company Logo" class="drawer-logo-img">
+        </div>
+        <div class="drawer-header-text">
+          <div class="drawer-brand-name">MONUMENT OF GREED</div>
+          <div class="drawer-brand-sub">Currency Salvage Division</div>
+        </div>
+        <button id="btn-drawer-close" class="icon-btn drawer-close-btn" aria-label="Close Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <div class="drawer-section-title">NAVIGATION</div>
+        <ul class="drawer-menu-list">
+          <li>
+            <a href="#home" class="drawer-nav-link active" data-tab="tab-home">
+              <span class="drawer-nav-icon">🏠</span>
+              <span>Home Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#scanner" class="drawer-nav-link" data-tab="tab-scanner">
+              <span class="drawer-nav-icon">📷</span>
+              <span>Optical Surface Scanner</span>
+            </a>
+          </li>
+          <li>
+            <a href="#grid" class="drawer-nav-link" data-tab="tab-grid">
+              <span class="drawer-nav-icon">📐</span>
+              <span>Interactive 100-Grid Audit</span>
+            </a>
+          </li>
+          <li>
+            <a href="#database" class="drawer-nav-link" data-tab="tab-database">
+              <span class="drawer-nav-icon">📚</span>
+              <span>Global Redemption Database</span>
+            </a>
+          </li>
+          <li>
+            <a href="#locator" class="drawer-nav-link" data-tab="tab-locator">
+              <span class="drawer-nav-icon">📍</span>
+              <span>Central Bank Locator</span>
+            </a>
+          </li>
+          <li>
+            <a href="#dossier" class="drawer-nav-link" data-tab="tab-dossier">
+              <span class="drawer-nav-icon">📑</span>
+              <span>Claim Dossier Generator</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="drawer-section-title">SELECT LIVE THEME</div>
+        <div class="drawer-theme-picker">
+          <button class="theme-select-btn active" data-theme="theme-clay-peach">
+            <span class="theme-dot dot-clay"></span>
+            <span>Warm Clay & Peach</span>
+          </button>
+          <button class="theme-select-btn" data-theme="theme-vault-emerald">
+            <span class="theme-dot dot-emerald"></span>
+            <span>Vault Emerald</span>
+          </button>
+          <button class="theme-select-btn" data-theme="theme-obsidian-oled">
+            <span class="theme-dot dot-obsidian"></span>
+            <span>Obsidian OLED</span>
+          </button>
+          <button class="theme-select-btn" data-theme="theme-royal-gold">
+            <span class="theme-dot dot-royal"></span>
+            <span>Royal Gold & Navy</span>
+          </button>
+          <button class="theme-select-btn" data-theme="theme-cyber-mint">
+            <span class="theme-dot dot-cyber"></span>
+            <span>Cyber Mint</span>
+          </button>
+        </div>
+
+        <div class="drawer-section-title">GLOBAL LEGAL STANDARDS</div>
+        <div class="drawer-legal-box">
+          <div class="drawer-legal-item">
+            <strong>US 31 CFR Part 100:</strong> >50% surface area = 100% full face value redemption.
+          </div>
+          <div class="drawer-legal-item">
+            <strong>ECB Decision 2013/10:</strong> Euro notes replaced if >50% presented.
+          </div>
+          <div class="drawer-legal-item">
+            <strong>Bank of England:</strong> Currency & Bank Notes Act for damaged polymer.
+          </div>
+          <div class="drawer-legal-item">
+            <strong>Bank of Jamaica:</strong> Section 28 statutory tender reclamation.
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div class="charter-badge">
+          <img src="logos/alu-company-logo-symbol.png" alt="Charter Seal" class="charter-mini-seal">
+          <div class="charter-text">
+            <strong>Alumungandr Master Charter © 2026</strong>
+            <p>100% Offline Optical Processing • No Data Leaves Device</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- ======================================================== -->
+      <!-- TAB 1: HOME DASHBOARD (InShot-Inspired Aesthetic)        -->
+      <!-- ======================================================== -->
+      <section id="tab-home" class="tab-pane active">
+        
+        <!-- Hero Section: CREATE NEW (InShot Style) -->
+        <div class="home-hero-container">
+          <div class="section-label-row">
+            <span class="section-label">ASSESS DAMAGED NOTE</span>
+            <span class="section-sub-label">STATUTORY AUDIT</span>
+          </div>
+
+          <!-- Floating White Action Card with 3 Big Circular Buttons -->
+          <div class="hero-action-card">
+            <div class="circular-triggers-row">
+
+              <!-- Trigger 1: Live Camera Scan (Pink/Coral Circle) -->
+              <div class="action-trigger-item" id="trigger-live-scan">
+                <button class="circle-btn circle-pink" aria-label="Open Camera Scan">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                  </svg>
+                </button>
+                <span class="trigger-label">Live Scan</span>
+              </div>
+
+              <!-- Trigger 2: Upload Bill Photo (Warm Orange/Peach Circle with Badge) -->
+              <div class="action-trigger-item" id="trigger-upload-photo">
+                <button class="circle-btn circle-peach" aria-label="Upload Banknote Photo">
+                  <span class="trigger-badge">⚡</span>
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                </button>
+                <span class="trigger-label">Upload Photo</span>
+                <input type="file" id="file-input-upload" accept="image/*" class="visually-hidden">
+              </div>
+
+              <!-- Trigger 3: Interactive Grid Audit (Tangerine/Mint Circle) -->
+              <div class="action-trigger-item" id="trigger-grid-audit">
+                <button class="circle-btn circle-tangerine" aria-label="Manual 100-Grid Audit">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="3" y1="15" x2="21" y2="15"></line>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                  </svg>
+                </button>
+                <span class="trigger-label">Grid Audit</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal Category Pill Filter Bar (InShot Reference Image 2 Style) -->
+        <div class="category-pill-container">
+          <div class="pill-scroll-track" id="home-category-pills">
+            <button class="filter-pill pill-menu-btn" id="pill-quick-menu" title="Filter Menu">☰</button>
+            <button class="filter-pill active" data-category="all">ALL</button>
+            <button class="filter-pill" data-category="north-america">NORTH AMERICA</button>
+            <button class="filter-pill" data-category="europe">EUROPE</button>
+            <button class="filter-pill" data-category="caribbean">CARIBBEAN</button>
+            <button class="filter-pill" data-category="asia-pacific">ASIA & PACIFIC</button>
+            <button class="filter-pill" data-category="forms">OFFICIAL FORMS</button>
+          </div>
+        </div>
+
+        <!-- Key Metrics Strip -->
+        <div class="metrics-strip">
+          <div class="metric-card">
+            <div class="metric-val">>50%</div>
+            <div class="metric-lbl">Universal Standard</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val">100%</div>
+            <div class="metric-lbl">Face Value Claim</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val">12+</div>
+            <div class="metric-lbl">Central Banks</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val">0 ms</div>
+            <div class="metric-lbl">Offline Pipeline</div>
+          </div>
+        </div>
+
+        <!-- Section: Featured Guides & Feeds -->
+        <div class="home-feeds-section">
+          <div class="section-header-inline">
+            <h3 class="section-heading">REDEMPTION STANDARDS & FORMS</h3>
+            <button class="link-btn" id="btn-see-all-db">VIEW ALL ›</button>
+          </div>
+
+          <div class="feed-cards-grid" id="home-feed-cards">
+            <!-- Dynamically populated or rendered static cards -->
+            <div class="guide-feed-card" data-cat="north-america">
+              <div class="feed-card-header">
+                <span class="currency-tag">USD • 31 CFR PART 100</span>
+                <span class="badge-status-green">100% REPLACEMENT</span>
+              </div>
+              <h4 class="feed-card-title">United States Dollar Damaged Note Protocol</h4>
+              <p class="feed-card-desc">Bureau of Engraving and Printing (BEP) Mutilated Currency Division. If >50% remains with legible serial, full face value is honored.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="USD">Teller Talk Track</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="BEP5283">BEP Form 5283</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="europe">
+              <div class="feed-card-header">
+                <span class="currency-tag">EUR • ECB DECISION 2013/10</span>
+                <span class="badge-status-green">OFFICIAL EUROSYSTEM</span>
+              </div>
+              <h4 class="feed-card-title">Eurozone Mutilated Banknote Redemption</h4>
+              <p class="feed-card-desc">Exchangeable at any National Central Bank (Bundesbank, Banque de France, etc.) when presenting >50% of the surface area.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="EUR">Euro Guide</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="ECB_REQUEST">ECB Claim Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="europe">
+              <div class="feed-card-header">
+                <span class="currency-tag">GBP • BANK OF ENGLAND</span>
+                <span class="badge-status-green">POLYMER & PAPER</span>
+              </div>
+              <h4 class="feed-card-title">UK Damaged Banknote Section</h4>
+              <p class="feed-card-desc">Bank of England Debden facility reimburses full value for torn polymer £5, £10, £20, and £50 notes when >50% is verified.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="GBP">BoE Protocol</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="BOE_CLAIM">BoE Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="caribbean">
+              <div class="feed-card-header">
+                <span class="currency-tag">JMD • BANK OF JAMAICA ACT SEC 28</span>
+                <span class="badge-status-green">POLYMER SERIES</span>
+              </div>
+              <h4 class="feed-card-title">Jamaican Dollar Salvage Standard</h4>
+              <p class="feed-card-desc">Redeemable at BOJ Nethersole Place, Kingston or via commercial bank remittance for genuine polymer fragments exceeding 50%.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="JMD">BOJ Guide</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="BOJ_FORM">BOJ Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="asia-pacific">
+              <div class="feed-card-header">
+                <span class="currency-tag">JPY • BANK OF JAPAN</span>
+                <span class="badge-status-amber">TWO-TIER RATIO</span>
+              </div>
+              <h4 class="feed-card-title">Japan Banknote Exchange Standard</h4>
+              <p class="feed-card-desc">≥ 2/3 (66.7%) remaining = 100% face value. Between 2/5 (40.0%) and 2/3 = 50% face value. Under 2/5 = zero value.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="JPY">BOJ Japan Guide</button>
+                <button class="btn-sm btn-outline btn-open-locator" data-country="Japan">Tokyo Windows</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 2: OPTICAL NOTE SCANNER                              -->
+      <!-- ======================================================== -->
+      <section id="tab-scanner" class="tab-pane">
+        
+        <div class="scanner-header-strip">
+          <div class="scanner-title-group">
+            <h2 class="view-title">Optical Note Scanner</h2>
+            <p class="view-subtitle">Calculates remaining banknote fragment surface area against standard aspect ratios</p>
+          </div>
+        </div>
+
+        <!-- Scanner Configuration Controls -->
+        <div class="scanner-controls-card">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="select-scanner-currency">Currency Standard:</label>
+              <select id="select-scanner-currency" class="styled-select">
+                <option value="USD">USD — US Dollar (Aspect 2.353:1)</option>
+                <option value="EUR">EUR — Euro Note (Aspect 1.818:1)</option>
+                <option value="GBP">GBP — British Pound Polymer (Aspect 1.904:1)</option>
+                <option value="JMD">JMD — Jamaican Dollar Polymer (Aspect 2.132:1)</option>
+                <option value="CAD">CAD — Canadian Dollar Polymer (Aspect 2.162:1)</option>
+                <option value="AUD">AUD — Australian Dollar Polymer (Aspect 2.000:1)</option>
+                <option value="JPY">JPY — Japanese Yen (Aspect 2.000:1)</option>
+                <option value="CHF">CHF — Swiss Franc (Aspect 2.000:1)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="select-scanner-denom">Denomination:</label>
+              <select id="select-scanner-denom" class="styled-select">
+                <option value="20">$20 Standard Bill</option>
+                <option value="100">$100 High Value</option>
+                <option value="50">$50 Note</option>
+                <option value="10">$10 Note</option>
+                <option value="5">$5 Note</option>
+                <option value="1">$1 Note</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="scanner-action-buttons">
+            <button id="btn-start-camera" class="btn btn-primary">
+              <span class="btn-icon">📷</span>
+              <span>Start Camera</span>
+            </button>
+            <button id="btn-switch-camera" class="btn btn-secondary" title="Flip Camera" style="display:none;">
+              <span>🔄 Flip</span>
+            </button>
+            <button id="btn-trigger-upload" class="btn btn-secondary">
+              <span class="btn-icon">🖼️</span>
+              <span>Upload Image</span>
+            </button>
+            <button id="btn-load-sample" class="btn btn-secondary" title="Test with sample damaged bill">
+              <span>🧪 Sample Bill</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Viewfinder & Canvas Processing Stage -->
+        <div class="viewfinder-container">
+          <div class="viewfinder-viewport" id="viewfinder-viewport">
+            <!-- Hidden Video Stream Source -->
+            <video id="scanner-video" autoplay playsinline muted class="camera-stream"></video>
+            
+            <!-- Real Canvas Processing Layer -->
+            <canvas id="scanner-canvas" class="processing-canvas"></canvas>
+
+            <!-- Guide Overlay Frame with Target Aspect Ratio -->
+            <div id="aspect-guide-box" class="aspect-guide-box">
+              <div class="guide-corner top-left"></div>
+              <div class="guide-corner top-right"></div>
+              <div class="guide-corner bottom-left"></div>
+              <div class="guide-corner bottom-right"></div>
+              <div class="guide-crosshair"></div>
+              <div class="guide-label-chip">ALIGN BILL EDGES TO FRAME</div>
+            </div>
+
+            <!-- Optical Processing Active Indicator -->
+            <div id="scanner-status-chip" class="scanner-status-chip">
+              <span class="pulse-indicator"></span>
+              <span id="scanner-status-text">CAMERA READY</span>
+            </div>
+          </div>
+
+          <!-- Slider Controls for Optical Edge Sensitivity -->
+          <div class="optical-tuner-card">
+            <div class="tuner-row">
+              <label for="slider-threshold">Luminance Cutoff: <span id="val-threshold">128</span></label>
+              <input type="range" id="slider-threshold" min="30" max="220" value="128" class="styled-slider">
+            </div>
+            <div class="tuner-row">
+              <label for="slider-edge-gain">Contrast Gain: <span id="val-gain">1.2</span>x</label>
+              <input type="range" id="slider-edge-gain" min="0.8" max="2.5" step="0.1" value="1.2" class="styled-slider">
+            </div>
+            <div class="tuner-mode-row">
+              <button id="btn-toggle-mask" class="chip-toggle active">🟩 Highlight Fragment</button>
+              <button id="btn-toggle-missing" class="chip-toggle active">🟥 Show Missing Area</button>
+              <button id="btn-recalculate" class="btn-sm btn-primary">⚡ Compute Surface Area</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Surface Area Gauge & Statutory Verdict -->
+        <div class="measurement-results-card">
+          <div class="gauge-display-container">
+            <!-- Speedometer-style Gauge -->
+            <div class="gauge-meter-box">
+              <svg viewBox="0 0 200 120" class="gauge-svg">
+                <!-- Background Arc -->
+                <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="18" stroke-linecap="round"/>
+                <!-- Sub-50% Red Zone -->
+                <path d="M 20 100 A 80 80 0 0 1 100 20" fill="none" stroke="#ef4444" stroke-width="18" stroke-dasharray="125.6" stroke-dashoffset="0"/>
+                <!-- 50%+ Green Zone -->
+                <path d="M 100 20 A 80 80 0 0 1 180 100" fill="none" stroke="#10b981" stroke-width="18" stroke-dasharray="125.6" stroke-dashoffset="0"/>
+                <!-- Active Measurement Arc -->
+                <path id="gauge-active-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
+                <!-- Needle Indicator -->
+                <line id="gauge-needle" x1="100" y1="100" x2="100" y2="28" stroke="#1f2937" stroke-width="4" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+                <circle cx="100" cy="100" r="8" fill="#1f2937"/>
+              </svg>
+
+              <div class="gauge-readout-value">
+                <span id="meter-percent-display">0.0%</span>
+                <span class="readout-label">SURFACE AREA REMAINING</span>
+              </div>
+            </div>
+
+            <!-- Statutory Verdict Badge & Explanation -->
+            <div class="verdict-summary-box">
+              <div id="verdict-badge" class="verdict-pill verdict-pending">
+                <span id="verdict-status-icon">⏳</span>
+                <span id="verdict-status-title">AWAITING SCAN</span>
+              </div>
+              
+              <div id="verdict-details" class="verdict-text-box">
+                Position your banknote inside the frame or load an image to begin optical calculation.
+              </div>
+
+              <div class="verdict-metric-row">
+                <div class="verdict-stat">
+                  <span class="stat-lbl">Fragment Pixels</span>
+                  <span class="stat-val" id="val-fragment-px">0 px</span>
+                </div>
+                <div class="verdict-stat">
+                  <span class="stat-lbl">Full Bill Target</span>
+                  <span class="stat-val" id="val-target-px">0 px</span>
+                </div>
+                <div class="verdict-stat">
+                  <span class="stat-lbl">Legal Threshold</span>
+                  <span class="stat-val" id="val-legal-threshold">> 50.0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security Feature Audit Checklist -->
+          <div class="security-features-card">
+            <h4 class="card-subtitle">SECURITY FEATURE INSPECTION (REQUIRED BY CENTRAL BANKS)</h4>
+            <div class="checklist-grid">
+              <label class="check-item">
+                <input type="checkbox" id="chk-serial-left" class="styled-checkbox">
+                <span>Left Serial Number Intact & Legible</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="chk-serial-right" class="styled-checkbox">
+                <span>Right Serial Number Intact & Legible</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="chk-watermark" class="styled-checkbox">
+                <span>Watermark Portrait Verified (Backlit)</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="chk-security-thread" class="styled-checkbox">
+                <span>Embedded Security Thread / Polymer Window</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="chk-treasury-seal" class="styled-checkbox">
+                <span>Treasury / Central Bank Seal Intact</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Quick Action: Export directly to Claim Dossier -->
+          <div class="scanner-footer-actions">
+            <button id="btn-export-to-dossier" class="btn btn-accent btn-block" disabled>
+              <span>Compile Into Official Claim Dossier ›</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: INTERACTIVE 100-GRID AUDIT                        -->
+      <!-- ======================================================== -->
+      <section id="tab-grid" class="tab-pane">
+        
+        <div class="view-header-strip">
+          <h2 class="view-title">Manual 100-Grid Surface Audit</h2>
+          <p class="view-subtitle">Precision 1% tactile grid for charred, water-logged, or heavily fragmented currency where auto-edge detection cannot trace borders.</p>
+        </div>
+
+        <div class="grid-audit-workspace">
+          <div class="grid-audit-instructions">
+            <p><strong>Instructions:</strong> Each square below represents exactly <strong>1.0%</strong> of the official banknote surface. Tap or drag across cells to mark intact portions (green) versus destroyed portions (faded red). The calculator computes your legal redemption status in real-time.</p>
+            <div class="grid-tools-row">
+              <button id="btn-grid-all" class="btn-sm btn-secondary">Fill 100%</button>
+              <button id="btn-grid-clear" class="btn-sm btn-secondary">Clear All</button>
+              <button id="btn-grid-51" class="btn-sm btn-accent">Set 51% (Threshold)</button>
+              <button id="btn-grid-invert" class="btn-sm btn-secondary">Invert Selection</button>
+            </div>
+          </div>
+
+          <!-- The 10x10 Interactive Grid -->
+          <div class="grid-100-wrapper">
+            <div class="banknote-aspect-container" id="grid-aspect-box">
+              <div id="grid-100" class="grid-100-cells">
+                <!-- 100 cells generated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid Calculation Summary -->
+          <div class="grid-summary-card">
+            <div class="grid-stat-display">
+              <div class="grid-big-percent" id="grid-percent-display">51.0%</div>
+              <div class="grid-stat-sub">
+                <span id="grid-intact-count">51</span> of 100 segments present • <span id="grid-destroyed-count">49</span> segments missing
+              </div>
+            </div>
+
+            <div id="grid-verdict-banner" class="verdict-banner banner-green">
+              <div class="banner-title">✅ STATUTORY >50% THRESHOLD MET</div>
+              <div class="banner-desc">Meets US 31 CFR § 100.5, ECB Decision 2013/10, and Bank of England standard. Eligible for 100% face-value reimbursement.</div>
+            </div>
+
+            <div class="grid-action-row">
+              <button id="btn-grid-to-dossier" class="btn btn-primary btn-block">
+                <span>Transfer 100-Grid Data to Claim Dossier ›</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 4: GLOBAL REDEMPTION DATABASE                        -->
+      <!-- ======================================================== -->
+      <section id="tab-database" class="tab-pane">
+        
+        <div class="view-header-strip">
+          <h2 class="view-title">Global Redemption Database</h2>
+          <p class="view-subtitle">Official statutory banking codes, redemption thresholds, teller talk tracks, and central bank claim procedures worldwide.</p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="db-filter-bar">
+          <div class="search-input-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="db-search-input" placeholder="Search currency, country, or regulation (e.g. USD, BEP, 31 CFR, ECB)..." class="styled-input">
+          </div>
+          
+          <div class="db-region-pills">
+            <button class="filter-pill active" data-dbregion="all">All Currencies</button>
+            <button class="filter-pill" data-dbregion="North America">North America</button>
+            <button class="filter-pill" data-dbregion="Europe">Europe</button>
+            <button class="filter-pill" data-dbregion="Caribbean">Caribbean</button>
+            <button class="filter-pill" data-dbregion="Asia & Pacific">Asia & Pacific</button>
+          </div>
+        </div>
+
+        <!-- Currency List Accordion / Grid -->
+        <div class="db-currency-list" id="db-currency-list">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 5: CENTRAL BANK & TELLER LOCATOR                     -->
+      <!-- ======================================================== -->
+      <section id="tab-locator" class="tab-pane">
+        
+        <div class="view-header-strip">
+          <h2 class="view-title">Central Bank & Teller Locator</h2>
+          <p class="view-subtitle">Verified redemption windows, Federal Reserve cash offices, and commercial bank branches that officially exchange mutilated money.</p>
+        </div>
+
+        <!-- Locator Search & Filters -->
+        <div class="locator-filter-card">
+          <div class="search-input-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="locator-search-input" placeholder="Filter by city, state, or bank (e.g. Washington, Frankfurt, London, Kingston)..." class="styled-input">
+          </div>
+
+          <div class="locator-type-tabs">
+            <button class="type-tab active" data-type="all">All Locations</button>
+            <button class="type-tab" data-type="central">Central Banks</button>
+            <button class="type-tab" data-type="commercial">Commercial Hubs</button>
+            <button class="type-tab" data-type="mail">Postal Submission Depts</button>
+          </div>
+        </div>
+
+        <!-- Bank Location Cards -->
+        <div class="bank-locations-grid" id="bank-locations-grid">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 6: CLAIM DOSSIER GENERATOR                           -->
+      <!-- ======================================================== -->
+      <section id="tab-dossier" class="tab-pane">
+        
+        <div class="view-header-strip">
+          <h2 class="view-title">Official Claim Dossier Generator</h2>
+          <p class="view-subtitle">Compiles optical surface measurements, serial numbers, fragment imagery, and legal declarations into an official banking submission packet.</p>
+        </div>
+
+        <div class="dossier-builder-grid">
+          
+          <!-- Dossier Form Inputs -->
+          <div class="dossier-input-card">
+            <h3 class="card-title">Claimant & Note Details</h3>
+            
+            <form id="dossier-form" onsubmit="return false;">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="dossier-claimant-name">Claimant Full Legal Name:</label>
+                  <input type="text" id="dossier-claimant-name" class="styled-input" placeholder="e.g. Jane Doe" value="Legal Currency Bearer">
+                </div>
+                <div class="form-group">
+                  <label for="dossier-phone">Contact Phone / Email:</label>
+                  <input type="text" id="dossier-phone" class="styled-input" placeholder="e.g. +1 (555) 019-2834" value="+1 (555) 234-5678">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="dossier-currency">Currency & Denomination:</label>
+                  <input type="text" id="dossier-currency" class="styled-input" value="USD $20 Federal Reserve Note">
+                </div>
+                <div class="form-group">
+                  <label for="dossier-surface-area">Assessed Surface Area:</label>
+                  <input type="text" id="dossier-surface-area" class="styled-input" value="58.4% (Threshold Satisfied)">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="dossier-serial-left">Left Serial Number:</label>
+                  <input type="text" id="dossier-serial-left" class="styled-input" placeholder="e.g. MF 89234812 B" value="MF 89234812 B">
+                </div>
+                <div class="form-group">
+                  <label for="dossier-serial-right">Right Serial Number:</label>
+                  <input type="text" id="dossier-serial-right" class="styled-input" placeholder="e.g. MF 89234812 B (or Partial)" value="MF 89234812 B">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dossier-cause-damage">Circumstance of Destruction / Damage:</label>
+                <select id="dossier-cause-damage" class="styled-select">
+                  <option value="Accidentally torn during pocket extraction">Accidentally torn during pocket extraction</option>
+                  <option value="Laundered accidentally in residential washing machine">Laundered accidentally in residential washing machine</option>
+                  <option value="Mutilated by household pet / animal chewing">Mutilated by household pet / animal chewing</option>
+                  <option value="Surface charring or heat exposure from fire">Surface charring or heat exposure from fire</option>
+                  <option value="Partial water saturation or moisture decomposition">Partial water saturation or moisture decomposition</option>
+                  <option value="Industrial equipment or paper shredder accident">Industrial equipment or paper shredder accident</option>
+                  <option value="Other accidental physical trauma">Other accidental physical trauma</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="dossier-narrative">Detailed Statement of Facts:</label>
+                <textarea id="dossier-narrative" class="styled-textarea" rows="3">The presented banknote was damaged accidentally under ordinary domestic circumstances. More than 50% of the genuine original note remains physically intact with legible serial identifiers. No portion of this banknote has been previously redeemed or tendered for duplicate value.</textarea>
+              </div>
+
+              <div class="dossier-btn-group">
+                <button id="btn-update-preview" class="btn btn-secondary">Refresh Dossier Preview</button>
+                <button id="btn-print-dossier" class="btn btn-primary">
+                  <span>🖨️ Print / Save Official Dossier</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Live Printable Dossier Preview -->
+          <div class="dossier-preview-card">
+            <div class="dossier-sheet" id="printable-dossier">
+              <div class="dossier-sheet-header">
+                <div class="dossier-header-logo">
+                  <img src="logos/alu-company-logo-symbol.png" alt="Official Header Seal" class="sheet-seal-img">
+                </div>
+                <div class="dossier-header-text">
+                  <div class="sheet-title">CLAIM DOSSIER FOR MUTILATED CURRENCY</div>
+                  <div class="sheet-subtitle">COMPLIANT WITH 31 CFR PART 100 • ECB DECISION 2013/10 • BANK OF ENGLAND PROTOCOLS</div>
+                  <div class="sheet-id">DOSSIER REF: <span id="sheet-ref-id">MOG-2026-9812-US</span></div>
+                </div>
+              </div>
+
+              <div class="sheet-divider"></div>
+
+              <div class="sheet-section">
+                <div class="sheet-sec-title">1. CLAIMANT IDENTIFICATION</div>
+                <div class="sheet-grid-2">
+                  <div><strong>Full Name:</strong> <span id="sheet-name">Legal Currency Bearer</span></div>
+                  <div><strong>Contact:</strong> <span id="sheet-contact">+1 (555) 234-5678</span></div>
+                  <div><strong>Date Assessed:</strong> <span id="sheet-date">September 25, 2026</span></div>
+                  <div><strong>Claim Type:</strong> Direct Bank Window / Central Submission</div>
+                </div>
+              </div>
+
+              <div class="sheet-section">
+                <div class="sheet-sec-title">2. BANKNOTE PARTICULARS & OPTICAL AUDIT</div>
+                <div class="sheet-grid-2">
+                  <div><strong>Currency & Note:</strong> <span id="sheet-currency">USD $20 Federal Reserve Note</span></div>
+                  <div><strong>Remaining Surface Area:</strong> <span id="sheet-area" class="highlight-green">58.4% (Threshold Met)</span></div>
+                  <div><strong>Left Serial:</strong> <span id="sheet-serial-l">MF 89234812 B</span></div>
+                  <div><strong>Right Serial:</strong> <span id="sheet-serial-r">MF 89234812 B</span></div>
+                </div>
+              </div>
+
+              <div class="sheet-section">
+                <div class="sheet-sec-title">3. EVIDENTIARY OPTICAL FRAGMENT MASK</div>
+                <div class="sheet-image-box">
+                  <canvas id="dossier-snapshot-canvas" width="400" height="170" class="sheet-canvas"></canvas>
+                  <div class="sheet-caption">Certified Optical Surface Boundary Detection Overlay (>50% Standard Verified)</div>
+                </div>
+              </div>
+
+              <div class="sheet-section">
+                <div class="sheet-sec-title">4. CIRCUMSTANCE OF DAMAGE</div>
+                <div class="sheet-narrative" id="sheet-narrative-text">
+                  The presented banknote was damaged accidentally under ordinary domestic circumstances. More than 50% of the genuine original note remains physically intact with legible serial identifiers. No portion of this banknote has been previously redeemed or tendered for duplicate value.
+                </div>
+              </div>
+
+              <div class="sheet-section">
+                <div class="sheet-sec-title">5. SWORN DECLARATION & SIGNATURE</div>
+                <p class="sheet-legal-text">
+                  I solemnly declare under penalty of perjury under the laws of the applicable jurisdiction that the currency presented herein is genuine legal tender, that the missing portions were destroyed accidentally and not intentionally mutilated, and that I have not received payment or credit for any portion thereof.
+                </p>
+                <div class="sheet-signature-box">
+                  <div class="sig-line">
+                    <span class="sig-placeholder">X ________________________________________</span>
+                    <span class="sig-lbl">Signature of Claimant / Bearer</span>
+                  </div>
+                  <div class="sig-line">
+                    <span class="sig-placeholder">Date: ________________________</span>
+                    <span class="sig-lbl">Execution Date</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sheet-footer">
+                <span>Certified via Monument of Greed Utility • Master Charter © 2026 • Verified Banking Channels</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Dock -->
+    <nav class="bottom-nav">
+      <button class="nav-tab-btn active" data-tab="tab-home">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-scanner">
+        <span class="nav-icon">📷</span>
+        <span class="nav-label">Scanner</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-grid">
+        <span class="nav-icon">📐</span>
+        <span class="nav-label">Grid</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-database">
+        <span class="nav-icon">📚</span>
+        <span class="nav-label">Guides</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-locator">
+        <span class="nav-icon">📍</span>
+        <span class="nav-label">Banks</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-dossier">
+        <span class="nav-icon">📑</span>
+        <span class="nav-label">Dossier</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Official Form Modal (BEP 5283, ECB, BoE, BOJ) -->
+  <div id="modal-form-viewer" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-form-title" class="modal-title">Official Claim Form Viewer</h3>
+        <button id="btn-modal-close" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-form-content">
+        <!-- Injected form template -->
+      </div>
+      <div class="modal-footer">
+        <button id="btn-print-modal-form" class="btn btn-primary">Print Form Template</button>
+        <button id="btn-dismiss-modal" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teller Script Modal -->
+  <div id="modal-teller-script" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-script-title" class="modal-title">Bank Teller Talk Track</h3>
+        <button id="btn-script-close" class="icon-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-script-content">
+        <!-- Injected talk track -->
+      </div>
+      <div class="modal-footer">
+        <button id="btn-dismiss-script" class="btn btn-primary">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

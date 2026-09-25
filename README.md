@@ -1,23 +1,87 @@
 # Monument of Greed 💵💔
 
-"Unusable money issues solved."
+> **"Unusable money issues solved."**
 
-It hurts to look at a torn banknote and think the value is permanently gone. **Monument of Greed** is a global utility app designed to help users assess mutilated, torn, or damaged paper and polymer currency from around the world. Whether you are dealing with USD, EUR, GBP, JMD, or other popular minor currencies, this app helps you salvage their value through official banking channels.
+Monument of Greed is a professional utility application engineered to help individuals and businesses assess, catalog, and redeem mutilated, torn, or damaged paper and polymer banknotes from around the world. Whether dealing with United States Dollars (USD), Euros (EUR), British Pounds (GBP), Jamaican Dollars (JMD), Canadian Dollars (CAD), Australian Dollars (AUD), or Japanese Yen (JPY), Monument of Greed guides you through verified statutory redemption channels to salvage the full face value of your currency.
 
-## The Real-World Solution (How to redeem damaged money)
-If you are holding a torn banknote, it is **not** necessarily worthless! While exact regulations vary by country, most central banks operate on a similar set of global banking standards for mutilated currency:
+---
 
-1. **The >50% Rule (Global Standard):** Most central banks—including the US Federal Reserve, the European Central Bank, the Bank of England, and the Bank of Jamaica—require that you possess *more than half* (usually 51% or more) of the original note to claim its full face value. This prevents scammers from tearing a bill in half to claim double the money.
-2. **Serial Numbers & Security Features:** Institutions generally require at least one complete, legible serial number. For modern polymer or high-security notes, intact security threads or holographic foils may also be required.
-3. **Action:** Once verified, you can take the torn note to a local commercial bank or mail/deliver it to the designated central banking authority (e.g., the Bureau of Engraving and Printing in the US, or the Bank of England in the UK) for a crisp, usable replacement.
+## 🏛️ The Real-World Banking Solution
 
-## App Features
-* **AI Currency Scanner (Concept):** Use your phone camera to identify the currency type and scan the torn bill. The app estimates if more than 50% of the surface area remains.
-* **Global Redemption Database:** Select your currency to access step-by-step, localized instructions on what forms to fill out, what to say, and where to go to exchange your specific damaged money.
-* **Central Bank Locator:** A mapped directory of local commercial banks and central bank branches worldwide that officially accept and exchange mutilated currency.
+A torn banknote is **not** worthless paper. Most global central banks maintain formal legal standards and specialized reclamation divisions dedicated to replacing damaged legal tender free of charge.
 
-## Setup & Installation
-1. Clone the repository: `git clone https://github.com/[Your-Username]/monument-of-greed.git`
-2. Navigate to the project folder: `cd monument-of-greed`
-3. Install the required dependencies: `npm install`
-4. Start the development server: `npm run dev`
+### The Universal Global Redemption Rules
+1. **The >50% Surface Area Standard (Global Rule):**
+   * **United States (31 CFR Part 100):** If more than 50% of a genuine USD note is present, it is redeemable at 100% face value through the Bureau of Engraving and Printing (BEP) or participating Federal Reserve member banks. If 50% or less remains, redemption requires a sworn affidavit proving the missing portion was totally destroyed.
+   * **Eurozone (ECB Decision 2013/10):** Euro banknotes are replaced if more than 50% of the banknote surface is presented, or if 50% or less is presented but proof is provided that the missing parts were destroyed.
+   * **United Kingdom (Currency & Bank Notes Act):** The Bank of England pays face value on damaged polymer or paper notes if more than half of the original note remains, or if satisfied the remaining portion has been destroyed.
+   * **Jamaica (Bank of Jamaica Act Sec 28):** Bank of Jamaica redeems genuine polymer and paper notes where greater than 50% of the surface area remains with at least one complete serial number.
+   * **Japan (Bank of Japan Act):** BOJ exchanges notes at:
+     * **100% Value:** If 2/3 or more of the original banknote remains.
+     * **50% Value:** If 2/5 to less than 2/3 of the banknote remains.
+     * **0% Value:** If less than 2/5 remains.
+2. **Serial Numbers & Security Features:**
+   * Central and commercial banks require at least one complete, unadulterated serial number matching the series.
+   * Security elements—such as watermarks, polymer transparent windows, metallic threads, and color-shifting ink—must show authentic physical composition.
+3. **Redemption Channels:**
+   * **Over-the-Counter:** Commercial banks exchange moderately damaged notes (torn edges, soiled, taped) over the counter for account holders.
+   * **Central Bank Direct Filing:** Severely damaged, charred, or fragmented notes are submitted directly to the national central bank's mutilated currency division with an official claim packet.
+
+---
+
+## 📱 App Capabilities
+
+* 📷 **Optical Surface Area Scanner:** High-precision computer vision pipeline using HTML5 Canvas 2D and camera capture. Analyzes pixel luminance, color contrast, and contour geometry to calculate the exact percentage of surface area remaining against official banknote aspect ratios.
+* 📐 **Interactive Grid Audit:** A manual 100-cell precision overlay grid allowing users to trace torn edges and calculate remaining surface percentage when lighting or extreme charring prevents automated contour extraction.
+* 📚 **Global Redemption Database:** Comprehensive, statutory redemption protocols for 12+ international currencies, including step-by-step instructions, official claim forms (BEP Form 5283, BoE Claim Form, ECB Mutilated Banknote Request, BOJ Exchange Form), and verbatim teller talk tracks.
+* 📍 **Central Bank & Teller Locator:** Directory of central bank redemption windows, regional Federal Reserve banks, and major commercial institutions with verified addresses, phone numbers, and direct Google Maps navigation links.
+* 📄 **Official Claim Dossier Generator:** Compiles banknote fragment imagery, calculated surface area percentage, serial numbers, security feature audits, and user declarations into a professional, printable redemption dossier ready for bank presentation or postal submission.
+* 🎨 **5 Tactile Live Themes:**
+  * **Warm Clay & Peach:** Inspired by modern creative tool interfaces with soft terracotta cards and vibrant circular action triggers.
+  * **Vault Emerald:** Deep banking green with high-contrast mint accents.
+  * **Obsidian OLED:** True black (`#000000`) with high-legibility cyan borders.
+  * **Royal Gold & Navy:** Traditional sovereign treasury aesthetic.
+  * **Cyber Mint:** High-voltage slate and neon mint styling.
+
+---
+
+## 🔒 Privacy & Local Processing
+
+* **Zero Cloud Dependence:** All optical edge detection, image thresholding, and surface area calculations run locally in the browser/WebView sandbox.
+* **Camera Privacy:** Captured banknote images never leave your local device.
+* **No Telemetry / No Tracking:** Your currency holdings, serial numbers, and claim dossiers remain completely private on your hardware.
+
+---
+
+## 🚀 Native Android Standalone APK Build
+
+Monument of Greed is packaged as a standalone Android APK using hardware acceleration and local assets.
+
+```bash
+# Build the native Android APK
+cd android_build
+bash build_apk.sh
+
+# Install directly to an Android device or emulator
+adb install -r monument_of_greed.apk
+```
+
+---
+
+## 💻 Web Application Usage
+
+Run the web application locally with any static web server:
+
+```bash
+cd web_app
+python3 -m http.server 8080
+# Open http://localhost:8080 in your browser
+```
+
+---
+
+## ⚖️ Disclaimer
+
+*Monument of Greed provides automated optical measurements and statutory banking guidance for educational and claim preparation purposes. Final redemption determination is made solely by the authorized central banking institution or commercial bank in accordance with local currency laws.*
+
+*Licensed under the Alumungandr Master Charter © 2026. All rights reserved.*
