@@ -5100,15 +5100,21 @@ ${xrefOffset}
       return csvContent;
     }
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `IRS_Form_4684_Casualty_Loss_Schedule_${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    const filename = `IRS_Form_4684_Casualty_Loss_Schedule_${new Date().toISOString().split('T')[0]}.csv`;
+
+    if (window.AndroidBridge && typeof window.AndroidBridge.saveCsvToStorage === 'function') {
+      window.AndroidBridge.saveCsvToStorage(csvContent, filename);
+    } else {
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
     audio.successChord();
     return csvContent;
   }
@@ -5295,6 +5301,16 @@ ${xrefOffset}
           return;
         }
 
+        const filename = `MOG_Forensic_Evidence_Card_${claimData?.id || 'SPECIMEN'}.png`;
+
+        if (window.AndroidBridge && typeof window.AndroidBridge.saveImageToStorage === 'function') {
+          const dataUrl = canvas.toDataURL('image/png');
+          window.AndroidBridge.saveImageToStorage(dataUrl, filename);
+          audio.successChord();
+          resolve(dataUrl);
+          return;
+        }
+
         canvas.toBlob((blob) => {
           if (!blob) {
             resolve(null);
@@ -5303,7 +5319,7 @@ ${xrefOffset}
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `MOG_Forensic_Evidence_Card_${claimData?.id || 'SPECIMEN'}.png`;
+          a.download = filename;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
@@ -8596,6 +8612,78 @@ physical surface intact qualify for 100% legal face-value reimbursement.
   window.exportCasualtyLossCsv = exportCasualtyLossCsv;
   window.exportForensicEvidencePhotoCard = exportForensicEvidencePhotoCard;
   window.Haptics = Haptics;
+
+  // Android Hardware Back Button Dispatcher (Prevents abrupt app exits)
+  window.handleAndroidBack = function() {
+    // 1. If Drawer is open, close it
+    const drawer = document.getElementById('app-drawer');
+    if (drawer && drawer.classList.contains('open')) {
+      const overlay = document.getElementById('drawer-overlay');
+      if (overlay) overlay.click();
+      else drawer.classList.remove('open');
+      audio.modalClose();
+      return true;
+    }
+
+    // 2. If Vault Security Auth modal is open, dismiss it
+    const vaultModal = document.getElementById('modal-vault-auth');
+    if (vaultModal && (vaultModal.classList.contains('active') || vaultModal.style.display === 'flex')) {
+      if (window.VaultSecurity) window.VaultSecurity.closeModal(false);
+      return true;
+    }
+
+    // 3. If Panic Purge modal is open, dismiss it
+    const purgeModal = document.getElementById('modal-purge-confirm');
+    if (purgeModal && (purgeModal.classList.contains('active') || purgeModal.style.display === 'flex')) {
+      purgeModal.classList.remove('active');
+      purgeModal.style.display = 'none';
+      audio.modalClose();
+      return true;
+    }
+
+    // 4. If Form Viewer modal is open, dismiss it
+    const formModal = document.getElementById('modal-form-viewer');
+    if (formModal && formModal.classList.contains('active')) {
+      formModal.classList.remove('active');
+      audio.modalClose();
+      return true;
+    }
+
+    // 5. If Teller Script modal is open, dismiss it
+    const scriptModal = document.getElementById('modal-teller-script');
+    if (scriptModal && scriptModal.classList.contains('active')) {
+      scriptModal.classList.remove('active');
+      audio.modalClose();
+      return true;
+    }
+
+    // 6. If Counter Shield modal is open, dismiss it
+    const shieldModal = document.getElementById('modal-counter-shield');
+    if (shieldModal && shieldModal.classList.contains('active')) {
+      shieldModal.classList.remove('active');
+      audio.modalClose();
+      return true;
+    }
+
+    // 7. If Statutory Info sheet is open, dismiss it
+    const infoSheet = document.getElementById('statutory-info-sheet');
+    if (infoSheet && infoSheet.classList.contains('active')) {
+      infoSheet.classList.remove('active');
+      audio.modalClose();
+      return true;
+    }
+
+    // 8. If on any tab other than Home, navigate back to Home!
+    const activeTab = document.querySelector('.tab-pane.active');
+    if (activeTab && activeTab.id !== 'tab-home') {
+      switchTab('tab-home');
+      audio.tap();
+      return true;
+    }
+
+    // 9. On Home tab with no active overlays: return false so native double-back safety handles exit
+    return false;
+  };
 
 })();
 
