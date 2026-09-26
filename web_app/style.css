@@ -381,22 +381,26 @@ body {
 }
 
 .drawer-logo-wrap {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
-  background: #ffffff;
-  padding: 6px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1e293b, #0f172a);
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45), 0 0 0 1.5px rgba(245, 158, 11, 0.65);
+  border: none;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .drawer-logo-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 .drawer-header-text {
@@ -1884,7 +1888,12 @@ body.theme-cyber-mint .banner-green {
 .sheet-seal-img {
   width: 52px;
   height: 52px;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  border: 1.5px solid rgba(245, 158, 11, 0.65);
+  background: radial-gradient(circle at 35% 35%, #1e293b, #0f172a);
+  display: block;
 }
 
 .sheet-title {
@@ -5793,19 +5802,20 @@ body.theme-clay-peach .vault-action-right .btn-advance-status[data-next="review"
 
 /* Top Navigation Bar Brand Logo */
 .top-brand-logo-img {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  background: rgba(0, 0, 0, 0.2);
-  padding: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 1.5px rgba(245, 158, 11, 0.65);
+  background: radial-gradient(circle at 35% 35%, #1e293b, #0f172a);
+  padding: 0;
+  display: block;
 }
 @media (max-width: 480px) {
   .top-brand-logo-img {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
 }
 
@@ -5947,20 +5957,24 @@ body.theme-clay-peach .vault-action-right .btn-advance-status[data-next="review"
   margin-bottom: 20px;
 }
 .vault-auth-emblem-wrap {
-  width: 58px;
-  height: 58px;
+  width: 62px;
+  height: 62px;
   margin: 0 auto 12px;
-  border-radius: var(--radius-md);
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1e293b, #0f172a);
+  border: 1.5px solid rgba(245, 158, 11, 0.65);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .vault-auth-logo {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 .vault-auth-title {
   font-size: 1.15rem;

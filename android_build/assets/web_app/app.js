@@ -5165,7 +5165,7 @@ ${xrefOffset}
       ctx.fillText('OFFICIAL METROLOGICAL REPORT • 31 CFR PART 100 / ECB DECISION 2013/10 STATUTORY BEARER CERTIFICATE', 130, 94);
 
       const logoImg = new Image();
-      logoImg.src = 'logos/mog-logo-variant1.png';
+      logoImg.src = 'logos/mog-kintsugi-medallion.png';
 
       const drawContent = () => {
         try {
