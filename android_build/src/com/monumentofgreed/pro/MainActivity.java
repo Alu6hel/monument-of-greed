@@ -304,6 +304,22 @@ public class MainActivity extends Activity {
             return true;
         }
 
+        @JavascriptInterface
+        public void vibrate(long milliseconds) {
+            try {
+                android.os.Vibrator v = (android.os.Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (v != null && v.hasVibrator()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(android.os.VibrationEffect.createOneShot(milliseconds, android.os.VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        v.vibrate(milliseconds);
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Vibrate error", e);
+            }
+        }
+
         private boolean isTorchOn = false;
 
         @JavascriptInterface

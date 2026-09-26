@@ -6,7 +6,7 @@
   <title>Monument of Greed — Currency Salvage & Damaged Note Redemption</title>
   <meta name="description" content="Professional utility to assess, measure, and redeem mutilated or torn banknotes using optical computer vision and statutory banking regulations.">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logos/alu-company-logo-symbol.png">
+  <link rel="icon" type="image/png" href="logos/mog-logo-variant1.png">
 </head>
 <body class="theme-clay-peach">
   <!-- Live Ambient Motion Canvas Layer (Live Moving Atmosphere) -->
@@ -36,6 +36,7 @@
       </button>
 
       <div class="brand-title-wrap" id="brand-header-link">
+        <img src="logos/mog-logo-variant1.png" alt="Monument of Greed Emblem" class="top-brand-logo-img">
         <span class="brand-title">Monument of Greed</span>
         <button id="btn-currency-selector" class="currency-selector-pill" aria-label="Select Country and Currency" title="Select Country & Currency">
           <span id="active-currency-flag" class="curr-flag">🇺🇸</span>
@@ -71,7 +72,7 @@
     <aside id="app-drawer" class="app-drawer">
       <div class="drawer-header">
         <div class="drawer-logo-wrap">
-          <img src="logos/alu-company-logo-symbol.png" alt="Alu Company Logo" class="drawer-logo-img">
+          <img src="logos/mog-logo-variant1.png" alt="Monument of Greed Logo" class="drawer-logo-img">
         </div>
         <div class="drawer-header-text">
           <div class="drawer-brand-name">MONUMENT OF GREED</div>
@@ -174,6 +175,13 @@
       </div>
 
       <div class="drawer-footer">
+        <div class="drawer-offline-badge">
+          <span class="offline-badge-shield">🛡️</span>
+          <div class="offline-badge-text">
+            <strong>100% Offline • Zero Cloud Upload</strong>
+            <p>Bank-grade privacy • Bearer ledger never leaves device</p>
+          </div>
+        </div>
         <div class="charter-badge">
           <img src="logos/alu-company-logo-symbol.png" alt="Charter Seal" class="charter-mini-seal">
           <div class="charter-text">
@@ -749,6 +757,13 @@
               <div class="corner-pin" id="pin-bl" data-corner="bl"></div>
             </div>
 
+            <!-- Digital & Optical Macro Zoom Controls (1x, 2x, 3x) -->
+            <div class="viewfinder-zoom-controls" id="viewfinder-zoom-controls">
+              <button class="zoom-pill active" data-zoom="1.0" id="btn-zoom-1x" type="button" aria-label="Normal 1x Zoom">1x</button>
+              <button class="zoom-pill" data-zoom="2.0" id="btn-zoom-2x" type="button" aria-label="Macro 2x Zoom">2x</button>
+              <button class="zoom-pill" data-zoom="3.0" id="btn-zoom-3x" type="button" aria-label="Fine Detail 3x Zoom">3x</button>
+            </div>
+
             <!-- Numismatic Collector Rarity Warning Banner -->
             <div id="viewfinder-numismatic-banner" class="viewfinder-numismatic-banner" style="display:none;">
               <span class="numis-icon">⚠️</span>
@@ -1088,6 +1103,18 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input type="text" id="locator-search-input" placeholder="Filter by city, state, or bank (e.g. Washington, Frankfurt, London, Kingston)..." class="styled-input">
+            <button id="btn-locator-search-clear" class="search-clear-btn" type="button" title="Clear Search" style="display:none;">✕</button>
+          </div>
+
+          <!-- Quick Geographic & Central Bank Filter Chips -->
+          <div class="locator-quick-chips" id="locator-quick-chips">
+            <button class="quick-chip active" data-query="" type="button">All Regions</button>
+            <button class="quick-chip" data-query="Federal Reserve" type="button">🇺🇸 US Federal Reserve</button>
+            <button class="quick-chip" data-query="European Central Bank" type="button">🇪🇺 European Central Bank</button>
+            <button class="quick-chip" data-query="Bank of England" type="button">🇬🇧 Bank of England</button>
+            <button class="quick-chip" data-query="Bank of Canada" type="button">🇨🇦 Bank of Canada</button>
+            <button class="quick-chip" data-query="Bank of Jamaica" type="button">🇯🇲 Bank of Jamaica</button>
+            <button class="quick-chip" data-query="Reserve Bank of Australia" type="button">🇦🇺 Reserve Bank of Australia</button>
           </div>
 
           <div class="locator-type-tabs">
@@ -1197,6 +1224,12 @@
                 <button id="btn-save-dossier-vault" class="btn btn-secondary" title="Save claim to local Salvage Vault">
                   <span>💼 Save to My Vault</span>
                 </button>
+                <button id="btn-export-photo-card" class="btn btn-secondary" title="Export High-Res Forensic Evidence Photo Card">
+                  <span>📸 Forensic Photo Card</span>
+                </button>
+                <button id="btn-dossier-export-csv" class="btn btn-secondary" title="Export IRS Form 4684 Casualty Loss Schedule">
+                  <span>📊 Form 4684 CSV</span>
+                </button>
                 <button id="btn-print-dossier" class="btn btn-secondary" title="Print Hardcopy Filing Spool">
                   <span>🖨️ Print Spooler</span>
                 </button>
@@ -1212,7 +1245,7 @@
             <div class="dossier-sheet" id="printable-dossier">
               <div class="dossier-sheet-header">
                 <div class="dossier-header-logo">
-                  <img src="logos/alu-company-logo-symbol.png" alt="Official Header Seal" class="sheet-seal-img">
+                  <img src="logos/mog-logo-variant2.png" alt="Official Header Seal" class="sheet-seal-img">
                 </div>
                 <div class="dossier-header-text">
                   <div class="sheet-title">CLAIM DOSSIER FOR MUTILATED CURRENCY</div>
@@ -1389,8 +1422,21 @@
             <button id="btn-vault-new-claim" class="btn btn-sm btn-primary">
               <span>➕ Add Current Dossier</span>
             </button>
+            <button id="btn-vault-export-csv" class="btn btn-sm btn-secondary" title="Export IRS Form 4684 Casualty Loss Schedule">
+              <span>📊 Form 4684 CSV</span>
+            </button>
             <button id="btn-vault-export-json" class="btn btn-sm btn-secondary" title="Export encrypted vault backup">
               <span>📥 Export JSON</span>
+            </button>
+            <button id="btn-vault-import-json" class="btn btn-sm btn-secondary" title="Restore ledger from JSON backup">
+              <span>📤 Restore JSON</span>
+            </button>
+            <input type="file" id="vault-import-file-input" accept=".json" style="display:none;">
+            <button id="btn-vault-lock-toggle" class="btn btn-sm btn-secondary" title="Lock Salvage Vault">
+              <span>🔒 Lock Vault</span>
+            </button>
+            <button id="btn-vault-purge" class="btn btn-sm btn-outline-danger" title="Purge local ledger records (Panic Wipe)">
+              <span>⚠️ Purge Ledger</span>
             </button>
           </div>
         </div>
@@ -2142,6 +2188,68 @@
       </div>
       <div class="modal-footer info-modal-footer">
         <button id="btn-info-sheet-done" class="btn btn-primary" type="button" style="width:100%;">Understood / Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BIOMETRIC & 4-DIGIT PIN VAULT PRIVACY MODAL                               -->
+  <!-- ========================================================================= -->
+  <div id="modal-vault-auth" class="modal-overlay" style="display:none;">
+    <div class="modal-card modal-vault-pin-card">
+      <div class="vault-auth-header">
+        <div class="vault-auth-emblem-wrap">
+          <img src="logos/mog-logo-variant1.png" alt="Monument of Greed Security" class="vault-auth-logo">
+        </div>
+        <h3 id="vault-auth-title" class="vault-auth-title">Salvage Vault Security Lock</h3>
+        <p id="vault-auth-subtitle" class="vault-auth-subtitle">Enter your 4-digit security PIN to unlock financial records</p>
+      </div>
+
+      <div class="vault-pin-indicator" id="vault-pin-indicator">
+        <span class="pin-dot" data-idx="0"></span>
+        <span class="pin-dot" data-idx="1"></span>
+        <span class="pin-dot" data-idx="2"></span>
+        <span class="pin-dot" data-idx="3"></span>
+      </div>
+
+      <div id="vault-auth-error" class="vault-auth-error-msg" style="display:none;"></div>
+
+      <div class="vault-keypad-grid" id="vault-keypad">
+        <button class="keypad-btn" data-val="1" type="button">1</button>
+        <button class="keypad-btn" data-val="2" type="button">2</button>
+        <button class="keypad-btn" data-val="3" type="button">3</button>
+        <button class="keypad-btn" data-val="4" type="button">4</button>
+        <button class="keypad-btn" data-val="5" type="button">5</button>
+        <button class="keypad-btn" data-val="6" type="button">6</button>
+        <button class="keypad-btn" data-val="7" type="button">7</button>
+        <button class="keypad-btn" data-val="8" type="button">8</button>
+        <button class="keypad-btn" data-val="9" type="button">9</button>
+        <button class="keypad-btn action-clear" id="btn-keypad-clear" type="button">Clear</button>
+        <button class="keypad-btn" data-val="0" type="button">0</button>
+        <button class="keypad-btn action-backspace" id="btn-keypad-back" type="button">⌫</button>
+      </div>
+
+      <div class="vault-auth-actions">
+        <button id="btn-vault-biometric-auth" class="btn btn-accent vault-bio-btn" type="button">
+          <span class="bio-icon">👆</span>
+          <span>Unlock with Biometrics</span>
+        </button>
+        <button id="btn-vault-auth-cancel" class="btn btn-secondary" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PANIC WIPE / VAULT PURGE CONFIRMATION MODAL                               -->
+  <!-- ========================================================================= -->
+  <div id="modal-purge-confirm" class="modal-overlay" style="display:none;">
+    <div class="modal-card modal-purge-card">
+      <div class="purge-icon-wrap">⚠️</div>
+      <h3 class="purge-title">CONFIRM PERMANENT VAULT PURGE</h3>
+      <p class="purge-desc">This action will immediately and irreversibly delete all salvaged banknotes, claimant PII, serial numbers, and postal tracking receipts stored in your local ledger. No cloud backup exists.</p>
+      <div class="purge-actions">
+        <button id="btn-cancel-purge" class="btn btn-secondary" type="button">Cancel (Keep Data)</button>
+        <button id="btn-confirm-purge" class="btn btn-danger" type="button">Yes, Purge All Records</button>
       </div>
     </div>
   </div>
