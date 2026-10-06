@@ -1,8 +1,9 @@
 const http = require('http');
 
 async function getWsUrl() {
+  const port = process.env.CDP_PORT || 9223;
   const json = await new Promise((resolve, reject) => {
-    http.get('http://127.0.0.1:9222/json/list', res => {
+    http.get(`http://127.0.0.1:${port}/json/list`, res => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => resolve(JSON.parse(data)));

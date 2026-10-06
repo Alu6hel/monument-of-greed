@@ -74,12 +74,6 @@ public class MainActivity extends Activity {
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         );
 
-        // 3. Relax file URI exposure check for easy internal PDF/CSV sharing
-        try {
-            java.lang.reflect.Method m = android.os.StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-            m.invoke(null);
-        } catch (Exception ignored) {}
-
         webView = new WebView(this);
         setContentView(webView);
 
@@ -101,8 +95,8 @@ public class MainActivity extends Activity {
         settings.setDatabaseEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
-        settings.setAllowFileAccessFromFileURLs(true);
-        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setAllowFileAccessFromFileURLs(false);
+        settings.setAllowUniversalAccessFromFileURLs(false);
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setSupportZoom(false);
         settings.setBuiltInZoomControls(false);
@@ -335,9 +329,10 @@ public class MainActivity extends Activity {
                 fos.flush();
                 fos.close();
 
+                Uri contentUri = MonumentFileProvider.getUriForFile(cacheFile);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("application/pdf");
-                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(cacheFile));
+                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Mutilated Currency Forensic Claim Package");
                 shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(Intent.createChooser(shareIntent, "Share Claim Dossier PDF"));
@@ -356,9 +351,10 @@ public class MainActivity extends Activity {
                 fw.write(csvContent);
                 fw.close();
 
+                Uri contentUri = MonumentFileProvider.getUriForFile(cacheFile);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/csv");
-                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(cacheFile));
+                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "IRS Form 4684 Casualty Loss Schedule");
                 shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(Intent.createChooser(shareIntent, "Share Casualty Loss Schedule"));
@@ -380,9 +376,10 @@ public class MainActivity extends Activity {
                 fos.flush();
                 fos.close();
 
+                Uri contentUri = MonumentFileProvider.getUriForFile(cacheFile);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("image/png");
-                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(cacheFile));
+                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Mutilated Currency Forensic Evidence Card");
                 shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(Intent.createChooser(shareIntent, "Share Forensic Photo Card"));
@@ -508,25 +505,68 @@ public class MainActivity extends Activity {
     private File writeBytesToFile(byte[] bytes, String envDirectory, String filename) {
         File file = null;
         try {
-            File publicDir = Environment.getExternalStoragePublicDirectory(envDirectory);
-            if (!publicDir.exists()) publicDir.mkdirs();
-            file = new File(publicDir, filename);
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bytes);
-            fos.flush();
-            fos.close();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                android.content.ContentValues values = new android.content.ContentValues();
+                values.put(android.provider.MediaStore.MediaColumns.DISPLAY_NAME, filename);
+                if (filename.endsWith(".pdf")) {
+                    values.put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
+                } else if (filename.endsWith(".csv")) {
+                    values.put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "text/csv");
+                } else if (filename.endsWith(".png")) {
+                    values.put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "image/png");
+                } else {
+                    values.put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "application/octet-stream");
+                }
+
+                Uri collectionUri;
+                if (Environment.DIRECTORY_PICTURES.equals(envDirectory)) {
+                    values.put(android.provider.MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+                    collectionUri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else {
+                    values.put(android.provider.MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+                    collectionUri = android.provider.MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+                }
+
+                Uri uri = getContentResolver().insert(collectionUri, values);
+                if (uri != null) {
+                    try (java.io.OutputStream os = getContentResolver().openOutputStream(uri)) {
+                        if (os != null) {
+                            os.write(bytes);
+                            os.flush();
+                        }
+                    }
+                }
+            } else {
+                File publicDir = Environment.getExternalStoragePublicDirectory(envDirectory);
+                if (!publicDir.exists()) publicDir.mkdirs();
+                file = new File(publicDir, filename);
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(bytes);
+                    fos.flush();
+                }
+            }
+
+            // Always write local app storage backup for fast access & verification
+            File appDir = getExternalFilesDir(envDirectory);
+            if (appDir == null) appDir = getFilesDir();
+            if (!appDir.exists()) appDir.mkdirs();
+            file = new File(appDir, filename);
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(bytes);
+                fos.flush();
+            }
             return file;
-        } catch (Exception permEx) {
-            Log.w(TAG, "Public directory write restricted, saving to app internal storage", permEx);
+        } catch (Exception e) {
+            Log.e(TAG, "Error saving file via scoped storage", e);
             try {
                 File appDir = getExternalFilesDir(envDirectory);
                 if (appDir == null) appDir = getFilesDir();
                 if (!appDir.exists()) appDir.mkdirs();
                 file = new File(appDir, filename);
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(bytes);
-                fos.flush();
-                fos.close();
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(bytes);
+                    fos.flush();
+                }
                 return file;
             } catch (Exception inner) {
                 Log.e(TAG, "Fatal failure saving file", inner);

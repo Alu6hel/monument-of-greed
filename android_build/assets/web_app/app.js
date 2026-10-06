@@ -707,6 +707,7 @@
     initReciprocity();
     initTactileChart();
     initOnboarding();
+    initLegalAndPrivacyModals();
     initOpticalScanner();
     init3DBanknoteInspector();
     initPerspectivePins();
@@ -956,6 +957,11 @@
 
     lock() {
       this.isUnlocked = false;
+      this.pinBuffer = '';
+    },
+
+    unlock() {
+      this.isUnlocked = true;
       this.pinBuffer = '';
     },
 
@@ -3968,9 +3974,10 @@ Claimant Signature: ___________________________________   Date: ________________
     p1.push('BT /F2 12 Tf 1 1 1 rg 1 0 0 1 55 794 Tm (MONUMENT OF GREED | OFFICIAL MUTILATED BANKNOTE CLAIM) Tj ET');
     p1.push('BT /F1 7.5 Tf 0.82 0.88 0.94 rg 1 0 0 1 55 780 Tm (STATUTORY CENTRAL BANK REDEMPTION FILING - 31 CFR PART 100 / ECB 2013/10 / BOE / BANXICO) Tj ET');
 
-    p1.push(`BT /F2 9.5 Tf 0.1 0.1 0.1 rg 1 0 0 1 45 750 Tm (CASE DOSSIER REF: ${esc(claimData.refId)}) Tj ET`);
-    p1.push(`BT /F1 9 Tf 0.3 0.3 0.3 rg 1 0 0 1 380 750 Tm (FILING DATE: ${esc(claimData.dateStr)}) Tj ET`);
-    p1.push('0.5 w 0.7 0.7 0.7 RG 45 742 m 550 742 l S');
+    p1.push('BT /F1 6.5 Tf 0.3 0.3 0.3 rg 1 0 0 1 45 760 Tm (STATUTORY DISCLAIMER: Automated optical estimations for preparation purposes. Final determination made solely by central/commercial bank.) Tj ET');
+    p1.push(`BT /F2 9.5 Tf 0.1 0.1 0.1 rg 1 0 0 1 45 748 Tm (CASE DOSSIER REF: ${esc(claimData.refId)}) Tj ET`);
+    p1.push(`BT /F1 9 Tf 0.3 0.3 0.3 rg 1 0 0 1 380 748 Tm (FILING DATE: ${esc(claimData.dateStr)}) Tj ET`);
+    p1.push('0.5 w 0.7 0.7 0.7 RG 45 740 m 550 740 l S');
 
     // Section 1: Central Bank Authority
     p1.push('BT /F2 9 Tf 0.15 0.25 0.4 rg 1 0 0 1 45 726 Tm (1. CENTRAL BANK SUBMISSION AUTHORITY & CASH OFFICE) Tj ET');
@@ -4033,8 +4040,9 @@ Claimant Signature: ___________________________________   Date: ________________
     p2.push('BT /F2 12 Tf 1 1 1 rg 1 0 0 1 55 794 Tm (EXHIBIT A: FORENSIC SURFACE MEASUREMENT & CALIBRATION PLATE) Tj ET');
     p2.push('BT /F1 7.5 Tf 0.82 0.88 0.94 rg 1 0 0 1 55 780 Tm (HIGH-RESOLUTION MILLIMETER SCALE GEOMETRIC RECONSTRUCTION & CRYPTOGRAPHIC INTEGRITY) Tj ET');
 
-    p2.push(`BT /F2 9.5 Tf 0.1 0.1 0.1 rg 1 0 0 1 45 750 Tm (EVIDENCE PLATE: ${esc(claimData.refId)}-EXHIBIT-A) Tj ET`);
-    p2.push('0.5 w 0.7 0.7 0.7 RG 45 742 m 550 742 l S');
+    p2.push('BT /F1 6.5 Tf 0.7 0.2 0.2 rg 1 0 0 1 45 760 Tm (COMPLIANCE: EVIDENCE SPECIMEN - NOT LEGAL TENDER - 18 U.S.C. 504 / ECB 2003/4 COMPLIANT) Tj ET');
+    p2.push(`BT /F2 9.5 Tf 0.1 0.1 0.1 rg 1 0 0 1 45 748 Tm (EVIDENCE PLATE: ${esc(claimData.refId)}-EXHIBIT-A) Tj ET`);
+    p2.push('0.5 w 0.7 0.7 0.7 RG 45 740 m 550 740 l S');
 
     // Vector Millimeter Calibration 100-Grid
     const gridX = 95, gridY = 485, gridW = 405, gridH = 220;
@@ -5164,13 +5172,50 @@ ${xrefOffset}
       ctx.font = '13px system-ui, sans-serif';
       ctx.fillText('OFFICIAL METROLOGICAL REPORT • 31 CFR PART 100 / ECB DECISION 2013/10 STATUTORY BEARER CERTIFICATE', 130, 94);
 
-      const logoImg = new Image();
-      logoImg.src = 'logos/mog-kintsugi-medallion.png';
+      const drawKintsugiMedallion = (cx, cy, r) => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = '#0f172a';
+        ctx.fill();
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r - 5, 0, Math.PI * 2);
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.strokeStyle = '#fef08a';
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        ctx.beginPath();
+        ctx.moveTo(cx - r * 0.6, cy - r * 0.3);
+        ctx.lineTo(cx - r * 0.1, cy - r * 0.1);
+        ctx.lineTo(cx + r * 0.2, cy - r * 0.5);
+        ctx.lineTo(cx + r * 0.6, cy - r * 0.6);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(cx - r * 0.1, cy - r * 0.1);
+        ctx.lineTo(cx + r * 0.1, cy + r * 0.2);
+        ctx.lineTo(cx - r * 0.1, cy + r * 0.6);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold ' + Math.round(r * 0.75) + 'px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('金', cx, cy + 2);
+        ctx.restore();
+      };
 
       const drawContent = () => {
-        try {
-          ctx.drawImage(logoImg, 55, 42, 64, 64);
-        } catch (e) {}
+        drawKintsugiMedallion(85, 74, 30);
 
         // Left Frame: Damaged Banknote Photo Stage
         ctx.fillStyle = '#0f172a';
@@ -5207,6 +5252,22 @@ ${xrefOffset}
           ctx.fillText('BANKNOTE OPTICAL SPECIMEN [PHOTO VERIFIED]', 380, 410);
           ctx.textAlign = 'left';
         }
+
+        // Anti-Counterfeiting Compliance Watermark (18 U.S.C. § 474/504 & ECB/2003/4)
+        ctx.save();
+        ctx.translate(380, 400);
+        ctx.rotate(-Math.PI / 6);
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.45)';
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.lineWidth = 3;
+        ctx.font = '900 23px monospace';
+        ctx.textAlign = 'center';
+        ctx.strokeText('EVIDENCE SPECIMEN — NOT LEGAL TENDER', 0, 0);
+        ctx.fillText('EVIDENCE SPECIMEN — NOT LEGAL TENDER', 0, 0);
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+        ctx.fillText('18 U.S.C. § 504 / ECB REGULATION COMPLIANT', 0, 22);
+        ctx.restore();
 
         // 100-cell Calibrated Metrology Grid Overlay
         ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
@@ -5280,18 +5341,18 @@ ${xrefOffset}
         ctx.strokeRect(40, 680, 1120, 180);
 
         ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 15px system-ui, sans-serif';
-        ctx.fillText('LEGAL NOTICE OF BEARER ENTITLEMENT (31 U.S. CODE § 5120 & 31 CFR PART 100):', 65, 715);
+        ctx.font = 'bold 14px system-ui, sans-serif';
+        ctx.fillText('STATUTORY BANKING DISCLAIMER & LEGAL BEARER NOTICE (31 U.S.C. § 5120 & 31 CFR PART 100):', 65, 712);
 
         ctx.fillStyle = '#cbd5e1';
-        ctx.font = '12px system-ui, sans-serif';
+        ctx.font = '11px system-ui, sans-serif';
         const noticeLines = [
-          'Central bank regulations provide that mutilated currency may be exchanged at full face value if more than 50 percent of the whole banknote is presented.',
-          'This card constitutes physical photographic and surface metrology evidence authenticated on-device by the bearer without cloud interception.',
-          'Official Authenticity Hash: ' + (claimData?.auditHash || 'sha256:d8a2f7c0391b45e9981a2f64c11b0883b482e')
+          'Monument of Greed provides automated optical surface area estimations and statutory banking guidance for educational and preparation purposes.',
+          'Final redemption determination is made solely by the authorized central banking institution or commercial bank in accordance with local currency laws.',
+          'Evidence Specimen Watermarked: 18 U.S.C. § 504 / ECB Decision 2003/4 compliant • Authenticity Hash: ' + (claimData?.auditHash || 'sha256:d8a2f7c0391b45e9981a2f64c11b0883b482e')
         ];
         noticeLines.forEach((line, idx) => {
-          ctx.fillText(line, 65, 742 + idx * 22);
+          ctx.fillText(line, 65, 735 + idx * 20);
         });
 
         if (returnDataUrl) {
@@ -5328,13 +5389,7 @@ ${xrefOffset}
           resolve(url);
         }, 'image/png');
       };
-
-      if (logoImg.complete && logoImg.naturalWidth > 0) {
-        drawContent();
-      } else {
-        logoImg.onload = drawContent;
-        logoImg.onerror = drawContent;
-      }
+      drawContent();
     });
   }
 
@@ -6478,6 +6533,90 @@ physical surface intact qualify for 100% legal face-value reimbursement.
         openOnboarding();
         localStorage.setItem('mog_onboarding_shown_v2', 'true');
       }, 700);
+    }
+  }
+
+  // =========================================================================
+  // 20B. STATUTORY DISCLAIMER & PRIVACY POLICY CONTROLLERS
+  // =========================================================================
+  function initLegalAndPrivacyModals() {
+    const modalDisclaimer = document.getElementById('modal-statutory-disclaimer');
+    const btnDisclaimerClose = document.getElementById('btn-statutory-disclaimer-close');
+    const btnDisclaimerAccept = document.getElementById('btn-statutory-disclaimer-accept');
+    const btnDrawerDisclaimer = document.getElementById('btn-drawer-disclaimer');
+
+    const modalPrivacy = document.getElementById('modal-privacy-policy');
+    const btnPrivacyClose = document.getElementById('btn-privacy-close');
+    const btnPrivacyDismiss = document.getElementById('btn-privacy-dismiss');
+    const btnDrawerPrivacy = document.getElementById('btn-drawer-privacy');
+    const btnDrawerPrivacyBtn = document.getElementById('btn-drawer-privacy-btn');
+
+    function openDisclaimer() {
+      if (modalDisclaimer) {
+        modalDisclaimer.classList.add('active');
+        audio.tap();
+      }
+    }
+
+    function closeDisclaimer() {
+      if (modalDisclaimer) {
+        modalDisclaimer.classList.remove('active');
+        localStorage.setItem('mog_disclaimer_accepted', 'true');
+        audio.tap();
+      }
+    }
+
+    function openPrivacy() {
+      if (modalPrivacy) {
+        modalPrivacy.classList.add('active');
+        audio.tap();
+      }
+    }
+
+    function closePrivacy() {
+      if (modalPrivacy) {
+        modalPrivacy.classList.remove('active');
+        audio.tap();
+      }
+    }
+
+    window.openStatutoryDisclaimer = openDisclaimer;
+    window.closeStatutoryDisclaimer = closeDisclaimer;
+    window.openPrivacyPolicy = openPrivacy;
+    window.closePrivacyPolicy = closePrivacy;
+
+    if (btnDrawerDisclaimer) {
+      btnDrawerDisclaimer.addEventListener('click', () => {
+        closeDrawer();
+        openDisclaimer();
+      });
+    }
+
+    if (btnDisclaimerClose) btnDisclaimerClose.addEventListener('click', closeDisclaimer);
+    if (btnDisclaimerAccept) btnDisclaimerAccept.addEventListener('click', closeDisclaimer);
+
+    if (btnDrawerPrivacy) {
+      btnDrawerPrivacy.addEventListener('click', () => {
+        closeDrawer();
+        openPrivacy();
+      });
+    }
+    if (btnDrawerPrivacyBtn) {
+      btnDrawerPrivacyBtn.addEventListener('click', () => {
+        closeDrawer();
+        openPrivacy();
+      });
+    }
+
+    if (btnPrivacyClose) btnPrivacyClose.addEventListener('click', closePrivacy);
+    if (btnPrivacyDismiss) btnPrivacyDismiss.addEventListener('click', closePrivacy);
+
+    // Auto-display statutory banking disclaimer on first launch
+    const accepted = localStorage.getItem('mog_disclaimer_accepted');
+    if (!accepted) {
+      setTimeout(() => {
+        openDisclaimer();
+      }, 350);
     }
   }
 
@@ -8609,12 +8748,31 @@ physical surface intact qualify for 100% legal face-value reimbursement.
   window.showVaultModal = showVaultModal;
   window.switchTab = switchTab;
   window.VaultSecurity = VaultSecurity;
+  window.CURRENCY_REGISTRY = CURRENCY_REGISTRY;
+  window.DAMAGE_SCENARIOS = DAMAGE_SCENARIOS;
+  window.loadSampleDamagedBill = loadSampleDamagedBill;
   window.exportCasualtyLossCsv = exportCasualtyLossCsv;
   window.exportForensicEvidencePhotoCard = exportForensicEvidencePhotoCard;
+  window.audio = audio;
   window.Haptics = Haptics;
 
   // Android Hardware Back Button Dispatcher (Prevents abrupt app exits)
   window.handleAndroidBack = function() {
+    // 0. If Statutory Disclaimer or Privacy Policy modals are open, close them
+    const discModal = document.getElementById('modal-statutory-disclaimer');
+    if (discModal && discModal.classList.contains('active')) {
+      discModal.classList.remove('active');
+      localStorage.setItem('mog_disclaimer_accepted', 'true');
+      audio.modalClose();
+      return true;
+    }
+    const privModal = document.getElementById('modal-privacy-policy');
+    if (privModal && privModal.classList.contains('active')) {
+      privModal.classList.remove('active');
+      audio.modalClose();
+      return true;
+    }
+
     // 1. If Drawer is open, close it
     const drawer = document.getElementById('app-drawer');
     if (drawer && drawer.classList.contains('open')) {

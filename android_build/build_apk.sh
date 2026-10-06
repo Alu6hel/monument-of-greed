@@ -60,17 +60,19 @@ zip -ur "$DIR/build/unaligned.apk" assets/
 
 "$ZIPALIGN" -f -p 4 "$DIR/build/unaligned.apk" "$DIR/build/aligned.apk"
 
-# 7. Sign APK with debug keystore
-echo "[7/7] Signing APK..."
-KEYSTORE="$DIR/debug.keystore"
-if [ ! -f "$KEYSTORE" ]; then
-  echo "Generating debug keystore..."
-  keytool -genkey -v -keystore "$KEYSTORE" -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
-    -storepass android -keypass android -dname "CN=Monument of Greed,O=Alumungandr,C=US"
+# 7. Sign APK with production release keystore (or debug fallback)
+echo "[7/7] Signing APK with Release Keystore..."
+RELEASE_KEYSTORE="$DIR/release.keystore"
+if [ -f "$RELEASE_KEYSTORE" ]; then
+  echo "Using PKCS#12 Production Release Keystore: $RELEASE_KEYSTORE"
+  "$APKSIGNER" sign --ks "$RELEASE_KEYSTORE" --ks-pass pass:monument2026 --key-pass pass:monument2026 \
+    --out "$DIR/monument_of_greed.apk" "$DIR/build/aligned.apk"
+else
+  echo "Using debug keystore fallback..."
+  KEYSTORE="$DIR/debug.keystore"
+  "$APKSIGNER" sign --ks "$KEYSTORE" --ks-pass pass:android --key-pass pass:android \
+    --out "$DIR/monument_of_greed.apk" "$DIR/build/aligned.apk"
 fi
-
-"$APKSIGNER" sign --ks "$KEYSTORE" --ks-pass pass:android --key-pass pass:android \
-  --out "$DIR/monument_of_greed.apk" "$DIR/build/aligned.apk"
 
 cp "$DIR/monument_of_greed.apk" "$ROOT_DIR/monument_of_greed.apk"
 
