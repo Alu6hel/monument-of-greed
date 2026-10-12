@@ -24,7 +24,7 @@
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
         </svg>
-        <span class="top-back-label">Back</span>
+        <span class="top-back-label" data-i18n="back">Back</span>
       </button>
 
       <button id="btn-drawer-open" class="icon-btn" aria-label="Open Menu Drawer">
@@ -37,7 +37,7 @@
 
       <div class="brand-title-wrap" id="brand-header-link">
         <img src="logos/mog-kintsugi-medallion.png" alt="Monument of Greed Emblem" class="top-brand-logo-img">
-        <span class="brand-title">Monument of Greed</span>
+        <span class="brand-title" data-i18n="brandTitle">Monument of Greed</span>
         <button id="btn-currency-selector" class="currency-selector-pill" aria-label="Select Country and Currency" title="Select Country & Currency">
           <span id="active-currency-flag" class="curr-flag">🇺🇸</span>
           <span id="active-currency-code" class="curr-code">USD</span>
@@ -47,6 +47,10 @@
       </div>
 
       <div class="top-bar-actions">
+        <button id="btn-lang-selector" class="lang-pill-btn" title="Display Language" aria-label="Select Display Language" data-i18n-title="displayLanguage">
+          <span id="active-lang-flag" class="top-lang-flag">🇺🇸</span>
+          <span id="active-lang-code" class="top-lang-code">EN</span>
+        </button>
         <button id="btn-sound-toggle" class="icon-btn" title="Toggle Tactile Audio" aria-label="Toggle Tactile Audio">
           <span id="sound-icon-symbol">🔊</span>
         </button>
@@ -87,53 +91,64 @@
       </div>
 
       <div class="drawer-content">
-        <div class="drawer-section-title">NAVIGATION</div>
+        <div class="drawer-section-title" data-i18n="drawerNav">NAVIGATION</div>
         <ul class="drawer-menu-list">
           <li>
             <a href="#home" class="drawer-nav-link active" data-tab="tab-home">
               <span class="drawer-nav-icon">🏠</span>
-              <span>Home Dashboard</span>
+              <span data-i18n="drawerHome">Home Dashboard</span>
             </a>
           </li>
           <li>
             <a href="#scanner" class="drawer-nav-link" data-tab="tab-scanner">
               <span class="drawer-nav-icon">📷</span>
-              <span>Optical Surface Scanner</span>
+              <span data-i18n="drawerScanner">Optical Surface Scanner</span>
             </a>
           </li>
           <li>
             <a href="#grid" class="drawer-nav-link" data-tab="tab-grid">
               <span class="drawer-nav-icon">📐</span>
-              <span>Interactive 100-Grid Audit</span>
+              <span data-i18n="drawerGrid">Interactive 100-Grid Audit</span>
             </a>
           </li>
           <li>
             <a href="#database" class="drawer-nav-link" data-tab="tab-database">
               <span class="drawer-nav-icon">📚</span>
-              <span>Global Redemption Database</span>
+              <span data-i18n="drawerDatabase">Global Redemption Database</span>
             </a>
           </li>
           <li>
             <a href="#locator" class="drawer-nav-link" data-tab="tab-locator">
               <span class="drawer-nav-icon">📍</span>
-              <span>Central Bank Locator</span>
+              <span data-i18n="drawerLocator">Central Bank Locator</span>
             </a>
           </li>
           <li>
             <a href="#dossier" class="drawer-nav-link" data-tab="tab-dossier">
               <span class="drawer-nav-icon">📑</span>
-              <span>Claim Dossier Generator</span>
+              <span data-i18n="drawerDossier">Claim Dossier Generator</span>
             </a>
           </li>
           <li>
             <a href="#vault" class="drawer-nav-link" data-tab="tab-vault">
               <span class="drawer-nav-icon">💼</span>
-              <span>My Salvage Vault</span>
+              <span data-i18n="drawerVault">My Salvage Vault</span>
             </a>
           </li>
         </ul>
 
-        <div class="drawer-section-title">SELECT LIVE THEME</div>
+        <div class="drawer-section-title" data-i18n="displayLanguage">DISPLAY LANGUAGE</div>
+        <div class="drawer-lang-selector-row">
+          <button id="drawer-btn-lang" class="drawer-lang-btn" type="button" title="Select Display Language">
+            <span style="display:flex;align-items:center;gap:8px;">
+              <span id="drawer-lang-flag">🇺🇸</span>
+              <span id="drawer-lang-name">English (US)</span>
+            </span>
+            <span class="curr-arrow">▾</span>
+          </button>
+        </div>
+
+        <div class="drawer-section-title" data-i18n="drawerTheme">SELECT LIVE THEME</div>
         <div class="drawer-theme-picker">
           <button class="theme-select-btn active" data-theme="theme-clay-peach">
             <span class="theme-dot dot-clay"></span>
@@ -157,7 +172,7 @@
           </button>
         </div>
 
-        <div class="drawer-section-title">GLOBAL LEGAL STANDARDS</div>
+        <div class="drawer-section-title" data-i18n="drawerStandards">GLOBAL LEGAL STANDARDS</div>
         <div class="drawer-legal-box">
           <div class="drawer-legal-item">
             <strong>US 31 CFR Part 100:</strong> >50% surface area = 100% full face value redemption.
@@ -257,7 +272,7 @@
                     <circle cx="12" cy="13" r="4"></circle>
                   </svg>
                 </button>
-                <span class="trigger-label">Live Scan</span>
+                <span class="trigger-label" data-i18n="heroLiveScan">Live Scan</span>
               </div>
 
               <!-- Trigger 2: Upload Bill Photo (Warm Orange/Peach Circle with Badge) -->
@@ -270,7 +285,7 @@
                     <polyline points="21 15 16 10 5 21"></polyline>
                   </svg>
                 </button>
-                <span class="trigger-label">Upload Photo</span>
+                <span class="trigger-label" data-i18n="heroUploadPhoto">Upload Photo</span>
               </div>
 
               <!-- Trigger 3: Interactive Grid Audit (Tangerine/Mint Circle) -->
@@ -284,7 +299,7 @@
                     <line x1="15" y1="3" x2="15" y2="21"></line>
                   </svg>
                 </button>
-                <span class="trigger-label">Grid Audit</span>
+                <span class="trigger-label" data-i18n="heroGridAudit">Grid Audit</span>
               </div>
 
             </div>
@@ -299,12 +314,12 @@
             <div class="curr-card-brand">
               <span class="curr-card-flag" id="workflow-currency-flag">🇺🇸</span>
               <div class="curr-card-titles">
-                <span class="curr-card-eyebrow">ACTIVE CURRENCY WORKFLOW</span>
+                <span class="curr-card-eyebrow" data-i18n="activeCurrencyWorkflow">ACTIVE CURRENCY WORKFLOW</span>
                 <h3 class="curr-card-name" id="workflow-currency-name">United States Dollar ($ USD)</h3>
               </div>
             </div>
             <button id="btn-workflow-switch-curr" class="btn-sm btn-outline curr-switch-btn" type="button" title="Switch Country / Currency">
-              <span>Change ▾</span>
+              <span data-i18n="change">Change</span> ▾
             </button>
           </div>
 
@@ -313,47 +328,44 @@
             <div class="tactile-tray-dish" id="tactile-tray-dish" title="Tap or swirl to bounce currency tokens crazily!" role="button" tabindex="0" aria-label="Interactive 100% Par Value Vault">
               <div class="dish-glow-rim"></div>
               <div class="dish-physics-tokens" id="dish-physics-tokens">
-                <span class="phys-token" data-idx="0" style="color:#fbbf24;">$</span>
+                <span class="phys-token hero-token" id="dish-token-hero" data-idx="0" style="color:#fbbf24;">$</span>
                 <span class="phys-token" data-idx="1" style="color:#38bdf8;">€</span>
                 <span class="phys-token" data-idx="2" style="color:#f59e0b;">£</span>
-                <span class="phys-token" data-idx="3" style="color:#34d399;">CA$</span>
-                <span class="phys-token" data-idx="4" style="color:#f87171;">Mex$</span>
-                <span class="phys-token" data-idx="5" style="color:#fb923c;">₹</span>
-                <span class="phys-token" data-idx="6" style="color:#eab308;">A$</span>
-                <span class="phys-token" data-idx="7" style="color:#a78bfa;">¥</span>
-                <span class="phys-token" data-idx="8" style="color:#4ade80;">J$</span>
+                <span class="phys-token" data-idx="3" style="color:#c084fc;">¥</span>
+                <span class="phys-token" data-idx="4" style="color:#fb923c;">₹</span>
+                <span class="phys-token" data-idx="5" style="color:#34d399;">₣</span>
               </div>
               <div class="tray-dish-inner-label">
                 <span class="tray-status-dot"></span>
-                <span id="workflow-status-guarantee">100% PAR VALUE PROTECTED</span>
+                <span id="workflow-status-guarantee" data-i18n="parValueProtected">100% PAR VALUE PROTECTED</span>
               </div>
               <div class="dish-tap-wave" id="dish-tap-wave"></div>
             </div>
             <div class="tactile-tray-content">
               <div class="simple-consumer-rule">
-                <strong>Consumer Rule:</strong> <span id="workflow-simple-rule">If more than half (50%) of your banknote survives, central banks are legally required to exchange it for 100% full cash value.</span>
+                <strong data-i18n="consumerRulePrefix">Consumer Rule:</strong> <span id="workflow-simple-rule">If more than half (50%) of your banknote survives, central banks are legally required to exchange it for 100% full cash value.</span>
                 <button class="info-circle-btn" data-info-id="statute-general" title="Official Central Bank Statutory Thresholds" aria-label="Statute Information" type="button">ⓘ</button>
               </div>
               <div class="curr-quick-actions-row">
                 <button class="btn-curr-action accent" id="btn-workflow-counter-shield" type="button" title="Present Teller Defense Mode">
                   <span class="curr-action-icon">🛡️</span>
-                  <span>Counter Shield</span>
+                  <span data-i18n="actionCounterShield">Counter Shield</span>
                 </button>
                 <button class="btn-curr-action" id="btn-workflow-jigsaw" type="button" title="Ripped Note Jigsaw Assembler">
                   <span class="curr-action-icon">🧩</span>
-                  <span>Jigsaw</span>
+                  <span data-i18n="actionJigsaw">Jigsaw</span>
                 </button>
                 <button class="btn-curr-action" id="btn-workflow-teller-script" type="button" title="View Bank Teller Script">
                   <span class="curr-action-icon">💬</span>
-                  <span>Teller Script</span>
+                  <span data-i18n="actionTellerScript">Teller Script</span>
                 </button>
                 <button class="btn-curr-action" id="btn-workflow-mailer" type="button" title="Print Free Submission Mailer">
                   <span class="curr-action-icon">📮</span>
-                  <span>Mailer</span>
+                  <span data-i18n="actionMailer">Mailer</span>
                 </button>
                 <button class="btn-curr-action primary" id="btn-workflow-scan-now" type="button" title="Scan Banknote with Camera">
                   <span class="curr-action-icon">📷</span>
-                  <span>Scan Bill</span>
+                  <span data-i18n="actionScanBill">Scan Bill</span>
                 </button>
               </div>
             </div>
@@ -362,24 +374,24 @@
           <!-- Expandable Real Statutory Code (Mainstream simplicity upfront, authentic legality on demand) -->
           <details class="statutory-details-accordion" id="workflow-statutory-accordion">
             <summary class="accordion-summary">
-              <span>Official Central Bank Law & Authority</span>
+              <span data-i18n="lawAuthorityTitle">Official Central Bank Law & Authority</span>
               <span class="accordion-chevron">▾</span>
             </summary>
             <div class="accordion-body">
               <div class="statute-item">
-                <span class="statute-label">Central Authority:</span>
+                <span class="statute-label" data-i18n="centralAuthorityLabel">Central Authority:</span>
                 <span class="statute-val" id="workflow-authority-name">Bureau of Engraving and Printing (BEP) / Federal Reserve</span>
               </div>
               <div class="statute-item">
-                <span class="statute-label">Statutory Code:</span>
+                <span class="statute-label" data-i18n="statutoryCodeLabel">Statutory Code:</span>
                 <span class="statute-val" id="workflow-statute-code">31 CFR Part 100 (Exchange of Mutilated Paper Currency)</span>
               </div>
               <div class="statute-item">
-                <span class="statute-label">Statutory Criterion:</span>
+                <span class="statute-label" data-i18n="statutoryCriterionLabel">Statutory Criterion:</span>
                 <span class="statute-val" id="workflow-statute-rule">> 50.0% surface area required for 100% face-value reimbursement. If ≤ 50% remains, requires sworn affidavit proving missing portion was completely destroyed.</span>
               </div>
               <div class="statute-item">
-                <span class="statute-label">Official Mailing Desk:</span>
+                <span class="statute-label" data-i18n="officialMailingDeskLabel">Official Mailing Desk:</span>
                 <span class="statute-val" id="workflow-submission-address">Bureau of Engraving and Printing, Mutilated Currency Branch, Washington, DC 20228</span>
               </div>
             </div>
@@ -389,8 +401,8 @@
         <!-- Modern Consumer Quick-Action Tool Tiles (Inspired by Clean Product Grid) -->
         <div class="consumer-tools-section">
           <div class="section-label-row">
-            <span class="section-label">FORENSIC SALVAGE TOOLS</span>
-            <span class="section-sub-label">BANK-GRADE UTILITIES</span>
+            <span class="section-label" data-i18n="forensicToolsLabel">FORENSIC SALVAGE TOOLS</span>
+            <span class="section-sub-label" data-i18n="bankGradeUtilities">BANK-GRADE UTILITIES</span>
           </div>
           <div class="consumer-tools-grid">
             <!-- Tool 1: Counter Shield -->
@@ -399,8 +411,8 @@
                 <span class="tool-icon">🛡️</span>
               </div>
               <div class="tool-tile-info">
-                <h4 class="tool-tile-title">Teller Counter Shield</h4>
-                <p class="tool-tile-desc">Full-screen defense mode with offline central bank statute QR code</p>
+                <h4 class="tool-tile-title" data-i18n="tool1Title">Teller Counter Shield</h4>
+                <p class="tool-tile-desc" data-i18n="tool1Desc">Full-screen defense mode with offline central bank statute QR code</p>
               </div>
               <span class="tool-chevron">›</span>
             </div>
@@ -411,8 +423,8 @@
                 <span class="tool-icon">🧩</span>
               </div>
               <div class="tool-tile-info">
-                <h4 class="tool-tile-title">Ripped Note Jigsaw</h4>
-                <p class="tool-tile-desc">Align 2 or 3 torn pieces with serial verification and union area</p>
+                <h4 class="tool-tile-title" data-i18n="tool2Title">Ripped Note Jigsaw</h4>
+                <p class="tool-tile-desc" data-i18n="tool2Desc">Align 2 or 3 torn pieces with serial verification and union area</p>
               </div>
               <span class="tool-chevron">›</span>
             </div>
@@ -423,8 +435,8 @@
                 <span class="tool-icon">🌊</span>
               </div>
               <div class="tool-tile-info">
-                <h4 class="tool-tile-title">Disaster Recovery Batch</h4>
-                <p class="tool-tile-desc">Inventory stacks of cash damaged by fire, flood, or safe trauma</p>
+                <h4 class="tool-tile-title" data-i18n="tool3Title">Disaster Recovery Batch</h4>
+                <p class="tool-tile-desc" data-i18n="tool3Desc">Inventory stacks of cash damaged by fire, flood, or safe trauma</p>
               </div>
               <span class="tool-chevron">›</span>
             </div>
@@ -435,8 +447,8 @@
                 <span class="tool-icon">🔬</span>
               </div>
               <div class="tool-tile-info">
-                <h4 class="tool-tile-title">Watermark & UV Lab</h4>
-                <p class="tool-tile-desc">Substrate backlight illumination & 365nm spectral security filter</p>
+                <h4 class="tool-tile-title" data-i18n="tool4Title">Watermark & UV Lab</h4>
+                <p class="tool-tile-desc" data-i18n="tool4Desc">Substrate backlight illumination & 365nm spectral security filter</p>
               </div>
               <span class="tool-chevron">›</span>
             </div>
@@ -584,7 +596,7 @@
 
           <div class="feed-cards-grid" id="home-feed-cards">
             <!-- Dynamically populated or rendered static cards -->
-            <div class="guide-feed-card" data-cat="north-america">
+            <div class="guide-feed-card" data-cat="north-america" data-currency="USD">
               <div class="feed-card-header">
                 <span class="currency-tag">USD • 31 CFR PART 100</span>
                 <span class="badge-status-green">100% REPLACEMENT</span>
@@ -597,7 +609,7 @@
               </div>
             </div>
 
-            <div class="guide-feed-card" data-cat="europe">
+            <div class="guide-feed-card" data-cat="europe" data-currency="EUR">
               <div class="feed-card-header">
                 <span class="currency-tag">EUR • ECB DECISION 2013/10</span>
                 <span class="badge-status-green">OFFICIAL EUROSYSTEM</span>
@@ -610,7 +622,7 @@
               </div>
             </div>
 
-            <div class="guide-feed-card" data-cat="europe">
+            <div class="guide-feed-card" data-cat="europe" data-currency="GBP">
               <div class="feed-card-header">
                 <span class="currency-tag">GBP • BANK OF ENGLAND</span>
                 <span class="badge-status-green">POLYMER & PAPER</span>
@@ -623,7 +635,7 @@
               </div>
             </div>
 
-            <div class="guide-feed-card" data-cat="caribbean">
+            <div class="guide-feed-card" data-cat="caribbean" data-currency="JMD">
               <div class="feed-card-header">
                 <span class="currency-tag">JMD • BANK OF JAMAICA ACT SEC 28</span>
                 <span class="badge-status-green">POLYMER SERIES</span>
@@ -636,7 +648,33 @@
               </div>
             </div>
 
-            <div class="guide-feed-card" data-cat="asia-pacific">
+            <div class="guide-feed-card" data-cat="asia-pacific" data-currency="CAD">
+              <div class="feed-card-header">
+                <span class="currency-tag">CAD • BANK OF CANADA SEC 25</span>
+                <span class="badge-status-green">FRONTIER POLYMER</span>
+              </div>
+              <h4 class="feed-card-title">Bank of Canada Mutilated Bank Note Service</h4>
+              <p class="feed-card-desc">Full reimbursement for polymer notes presenting >50% with verifiable maple leaf holographic security features.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="CAD">BoC Talk Track</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="BOC_CLAIM">BoC Claim Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="asia-pacific" data-currency="AUD">
+              <div class="feed-card-header">
+                <span class="currency-tag">AUD • RESERVE BANK ACT 1959</span>
+                <span class="badge-status-green">PRO-RATA GRID</span>
+              </div>
+              <h4 class="feed-card-title">RBA Damaged Banknotes Redemption</h4>
+              <p class="feed-card-desc">≥80% remaining pays 100% face value; 20% to 79% pays linear pro-rata proportional value across Australian banks.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="AUD">RBA Protocol</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="RBA_CLAIM">RBA Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="asia-pacific" data-currency="JPY">
               <div class="feed-card-header">
                 <span class="currency-tag">JPY • BANK OF JAPAN</span>
                 <span class="badge-status-amber">TWO-TIER RATIO</span>
@@ -645,7 +683,46 @@
               <p class="feed-card-desc">≥ 2/3 (66.7%) remaining = 100% face value. Between 2/5 (40.0%) and 2/3 = 50% face value. Under 2/5 = zero value.</p>
               <div class="feed-card-actions">
                 <button class="btn-sm btn-accent btn-open-guide" data-currency="JPY">BOJ Japan Guide</button>
-                <button class="btn-sm btn-outline btn-open-locator" data-country="Japan">Tokyo Windows</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="BOJ_JAPAN">BOJ Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="europe" data-currency="CHF">
+              <div class="feed-card-header">
+                <span class="currency-tag">CHF • SNB STATUTE CPIA</span>
+                <span class="badge-status-green">100% PAR VALUE</span>
+              </div>
+              <h4 class="feed-card-title">Swiss National Bank Damaged Note Exchange</h4>
+              <p class="feed-card-desc">SNB Cash Office Berne replaces damaged 9th-series notes at 100% face value when presenting >50% intact surface area.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="CHF">SNB Guide</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="SNB_CLAIM">SNB Claim Form</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="north-america" data-currency="MXN">
+              <div class="feed-card-header">
+                <span class="currency-tag">MXN • BANXICO REGLA 10/2006</span>
+                <span class="badge-status-green">CANJE EN VENTANILLA</span>
+              </div>
+              <h4 class="feed-card-title">Banco de México Canje de Billetes</h4>
+              <p class="feed-card-desc">Fracciones continuas con más del 50% de superficie conservan el 100% de valor en cualquier sucursal bancaria del país.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="MXN">Banxico Guía</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="BANXICO_DICTAMEN">Banxico Dictamen</button>
+              </div>
+            </div>
+
+            <div class="guide-feed-card" data-cat="asia-pacific" data-currency="INR">
+              <div class="feed-card-header">
+                <span class="currency-tag">INR • RBI NOTE REFUND RULES</span>
+                <span class="badge-status-green">ISSUE DEPARTMENT</span>
+              </div>
+              <h4 class="feed-card-title">Reserve Bank of India Damaged Note Rules</h4>
+              <p class="feed-card-desc">≥80% intact area pays full value; 40% to 79% pays half value across all public and commercial currency chests.</p>
+              <div class="feed-card-actions">
+                <button class="btn-sm btn-accent btn-open-guide" data-currency="INR">RBI Guide</button>
+                <button class="btn-sm btn-outline btn-open-form" data-form="RBI_REFUND">RBI Refund Form</button>
               </div>
             </div>
 
@@ -751,6 +828,16 @@
             
             <!-- Real Canvas Processing Layer -->
             <canvas id="scanner-canvas" class="processing-canvas"></canvas>
+
+            <!-- Rive-Style Laser Beam & Kintsugi Gold Healing Overlays -->
+            <div class="laser-scan-beam" id="viewfinder-laser-beam">
+              <div class="laser-scan-trail"></div>
+            </div>
+            <div class="kintsugi-gold-seam" id="viewfinder-kintsugi-seam">
+              <svg class="kintsugi-svg" viewBox="0 0 400 200" preserveAspectRatio="none" style="width:100%;height:100%;">
+                <path class="kintsugi-gold-line" d="M 230 15 Q 245 55 228 95 T 242 185" />
+              </svg>
+            </div>
 
             <!-- 4-Corner Perspective Warp Overlay -->
             <div id="perspective-overlay" class="perspective-overlay" style="display:none;">
@@ -984,10 +1071,10 @@
         
         <div class="view-header-strip">
           <div style="display:flex;align-items:center;">
-            <h2 class="view-title" style="margin-bottom:0;">Manual 100-Grid Surface Audit</h2>
+            <h2 class="view-title" style="margin-bottom:0;" data-i18n="gridTitle">Manual 100-Grid Surface Audit</h2>
             <button class="info-circle-btn" data-info-id="grid-formula" title="100-Cell Forensic Calibration Standard" aria-label="Grid Information" type="button">ⓘ</button>
           </div>
-          <p class="view-subtitle">Precision 1% tactile grid for charred, water-logged, or heavily fragmented currency</p>
+          <p class="view-subtitle" data-i18n="gridSubtitle">Precision 1% tactile grid for charred, water-logged, or heavily fragmented currency</p>
         </div>
 
         <div class="grid-audit-workspace">
@@ -998,7 +1085,7 @@
             </div>
             <div class="grid-tools-row">
               <button id="btn-grid-all" class="btn-sm btn-secondary">Fill 100%</button>
-              <button id="btn-grid-clear" class="btn-sm btn-secondary">Clear All</button>
+              <button id="btn-grid-clear" class="btn-sm btn-secondary" data-i18n="clear">Clear All</button>
               <button id="btn-grid-51" class="btn-sm btn-accent">Set 51% (Threshold)</button>
               <button id="btn-grid-invert" class="btn-sm btn-secondary">Invert Selection</button>
             </div>
@@ -1054,7 +1141,7 @@
         
         <div class="view-header-strip">
           <div style="display:flex;align-items:center;">
-            <h2 class="view-title" style="margin-bottom:0;">Global Redemption Database</h2>
+            <h2 class="view-title" style="margin-bottom:0;" data-i18n="databaseTitle">Global Redemption Database</h2>
             <button class="info-circle-btn" data-info-id="statute-general" title="Central Bank Statutory Regulations & Legal Codes" aria-label="Database Information" type="button">ⓘ</button>
           </div>
           <p class="view-subtitle">Official statutory banking codes, redemption thresholds, and claim procedures worldwide</p>
@@ -1067,16 +1154,25 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="db-search-input" placeholder="Search currency, country, or regulation (e.g. USD, BEP, 31 CFR, ECB)..." class="styled-input">
+            <input type="text" id="db-search-input" data-i18n-placeholder="databaseSearchPlaceholder" placeholder="Search by country, currency, statutory regulation, or authority..." class="styled-input">
           </div>
           
           <div class="db-region-pills">
-            <button class="filter-pill active" data-dbregion="all">All Currencies</button>
-            <button class="filter-pill" data-dbregion="North America">North America</button>
-            <button class="filter-pill" data-dbregion="Europe">Europe</button>
+            <button class="filter-pill active" data-dbregion="all" data-i18n="dbFilterAll">All Currencies</button>
+            <button class="filter-pill" data-dbregion="North America" data-i18n="dbFilterAmericas">North America</button>
+            <button class="filter-pill" data-dbregion="Europe" data-i18n="dbFilterEurope">Europe</button>
             <button class="filter-pill" data-dbregion="Caribbean">Caribbean</button>
-            <button class="filter-pill" data-dbregion="Asia & Pacific">Asia & Pacific</button>
+            <button class="filter-pill" data-dbregion="Asia & Pacific" data-i18n="dbFilterAsia">Asia & Pacific</button>
           </div>
+        </div>
+
+        <!-- Active Currency Scope Banner -->
+        <div class="currency-filter-scope-banner" id="database-scope-banner">
+          <div class="scope-banner-text">
+            <span class="scope-banner-flag" id="database-scope-flag">🇺🇸</span>
+            <span>Displaying statutory redemption codex for <strong><span id="database-scope-name">USD (United States Dollar)</span></strong></span>
+          </div>
+          <button id="btn-toggle-global-db" class="scope-toggle-btn" type="button">🌐 View Other Currencies</button>
         </div>
 
         <!-- Currency List Accordion / Grid -->
@@ -1093,7 +1189,7 @@
         
         <div class="view-header-strip">
           <div style="display:flex;align-items:center;">
-            <h2 class="view-title" style="margin-bottom:0;">Central Bank & Teller Locator</h2>
+            <h2 class="view-title" style="margin-bottom:0;" data-i18n="locatorTitle">Central Bank & Depository Locator</h2>
             <button class="info-circle-btn" data-info-id="chain-custody" title="Registered Mail Chain of Custody & Packaging" aria-label="Locator Information" type="button">ⓘ</button>
           </div>
           <p class="view-subtitle">Verified redemption windows, Federal Reserve cash offices, and commercial depository branches</p>
@@ -1106,8 +1202,17 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="locator-search-input" placeholder="Filter by city, state, or bank (e.g. Washington, Frankfurt, London, Kingston)..." class="styled-input">
+            <input type="text" id="locator-search-input" data-i18n-placeholder="locatorSearchPlaceholder" placeholder="Search bank branch, city, postal code, or facility..." class="styled-input">
             <button id="btn-locator-search-clear" class="search-clear-btn" type="button" title="Clear Search" style="display:none;">✕</button>
+          </div>
+
+          <!-- Active Currency Isolation Banner -->
+          <div class="currency-filter-scope-banner" id="locator-scope-banner">
+            <div class="scope-banner-text">
+              <span class="scope-banner-flag" id="locator-scope-flag">🇺🇸</span>
+              <span>Showing verified redemption windows for <strong><span id="locator-scope-name">USD (United States Dollar)</span></strong></span>
+            </div>
+            <button id="btn-toggle-global-locator" class="scope-toggle-btn" type="button">🌐 View All Currencies</button>
           </div>
 
           <!-- Quick Geographic & Central Bank Filter Chips -->
@@ -1122,10 +1227,10 @@
           </div>
 
           <div class="locator-type-tabs">
-            <button class="type-tab active" data-type="all">All Locations</button>
-            <button class="type-tab" data-type="central">Central Banks</button>
-            <button class="type-tab" data-type="commercial">Commercial Hubs</button>
-            <button class="type-tab" data-type="mail">Postal Submission Depts</button>
+            <button class="type-tab active" data-type="all" data-i18n="locAllTypes">All Locations</button>
+            <button class="type-tab" data-type="central" data-i18n="locCentralBank">Central Banks</button>
+            <button class="type-tab" data-type="commercial" data-i18n="locCommercial">Commercial Hubs</button>
+            <button class="type-tab" data-type="mail" data-i18n="locPostalDepot">Postal Submission Depts</button>
           </div>
         </div>
 
@@ -1217,7 +1322,13 @@
 
               <div class="dossier-btn-group">
                 <button id="btn-download-pdf" class="btn btn-accent" title="Generate Courtroom-Grade 3-Page Filing PDF">
-                  <span>⚖️ Courtroom PDF Dossier</span>
+                  <span data-i18n="btnExportPdf">⚖️ Courtroom PDF Dossier</span>
+                </button>
+                <button id="btn-copy-claim-text" class="btn btn-secondary" title="Copy Plain Text Claim Package to Clipboard">
+                  <span data-i18n="btnCopyClaim">📋 Copy Claim Text</span>
+                </button>
+                <button id="btn-locate-redemption-bank" class="btn btn-secondary" title="Find Local Bank Window for this Currency">
+                  <span data-i18n="btnLocateBank">🏦 Locate Bank Windows</span>
                 </button>
                 <button id="btn-update-preview" class="btn btn-secondary" title="Refresh Live Dossier Preview">
                   <span>🔄 Refresh Preview</span>
@@ -1232,13 +1343,13 @@
                   <span>📸 Forensic Photo Card</span>
                 </button>
                 <button id="btn-dossier-export-csv" class="btn btn-secondary" title="Export IRS Form 4684 Casualty Loss Schedule">
-                  <span>📊 Form 4684 CSV</span>
+                  <span data-i18n="btnExportCsv">📊 Form 4684 CSV</span>
                 </button>
                 <button id="btn-print-dossier" class="btn btn-secondary" title="Print Hardcopy Filing Spool">
                   <span>🖨️ Print Spooler</span>
                 </button>
                 <button id="btn-open-affidavit-modal" class="btn btn-outline" title="Sworn Destruction Declaration (≤50% Claims)">
-                  <span>📜 Generate Destruction Affidavit (≤50% Claims)</span>
+                  <span data-i18n="btnOpenAffidavit">📜 Generate Destruction Affidavit (≤50% Claims)</span>
                 </button>
               </div>
             </form>
@@ -1246,6 +1357,10 @@
 
           <!-- Live Printable Dossier Preview -->
           <div class="dossier-preview-card">
+            <div style="font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:6px;margin-bottom:8px;padding:6px 12px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.15);border-radius:6px;">
+              <span>💡</span>
+              <span><strong>Interactive In-Place Document:</strong> Tap or click any field (name, contact, date, serials, statement) to edit directly.</span>
+            </div>
             <div class="dossier-sheet" id="printable-dossier">
               <div class="dossier-sheet-header">
                 <div class="dossier-header-logo">
@@ -1261,27 +1376,27 @@
               <div class="sheet-divider"></div>
 
               <div class="sheet-section">
-                <div class="sheet-sec-title">1. CLAIMANT IDENTIFICATION</div>
+                <div class="sheet-sec-title" data-i18n="secClaimantId">1. CLAIMANT IDENTIFICATION</div>
                 <div class="sheet-grid-2">
-                  <div><strong>Full Name:</strong> <span id="sheet-name">Legal Currency Bearer</span></div>
-                  <div><strong>Contact:</strong> <span id="sheet-contact">+1 (555) 234-5678</span></div>
-                  <div><strong>Date Assessed:</strong> <span id="sheet-date">September 25, 2026</span></div>
-                  <div><strong>Claim Type:</strong> Direct Bank Window / Central Submission</div>
+                  <div><strong>Full Name:</strong> <span id="sheet-name" class="editable-sheet-field" contenteditable="true" title="Click to edit claimant name" spellcheck="false">Legal Currency Bearer</span></div>
+                  <div><strong>Contact:</strong> <span id="sheet-contact" class="editable-sheet-field" contenteditable="true" title="Click to edit contact details" spellcheck="false">+1 (555) 234-5678</span></div>
+                  <div><strong>Date Assessed:</strong> <span id="sheet-date" class="editable-sheet-field" contenteditable="true" title="Click to edit assessment date" spellcheck="false">October 12, 2026</span></div>
+                  <div><strong>Claim Type:</strong> <span id="sheet-claim-type" class="editable-sheet-field" contenteditable="true" title="Click to edit claim type" spellcheck="false">Direct Bank Window / Central Submission</span></div>
                 </div>
               </div>
 
               <div class="sheet-section">
-                <div class="sheet-sec-title">2. BANKNOTE PARTICULARS & OPTICAL AUDIT</div>
+                <div class="sheet-sec-title" data-i18n="secBanknoteAudit">2. BANKNOTE PARTICULARS & OPTICAL AUDIT</div>
                 <div class="sheet-grid-2">
-                  <div><strong>Currency & Note:</strong> <span id="sheet-currency">USD $20 Federal Reserve Note</span></div>
-                  <div><strong>Remaining Surface Area:</strong> <span id="sheet-area" class="highlight-green">58.4% (Threshold Met)</span></div>
-                  <div><strong>Left Serial:</strong> <span id="sheet-serial-l">MF 89234812 B</span></div>
-                  <div><strong>Right Serial:</strong> <span id="sheet-serial-r">MF 89234812 B</span></div>
+                  <div><strong>Currency & Note:</strong> <span id="sheet-currency" class="editable-sheet-field" contenteditable="true" title="Click to edit currency and note particulars" spellcheck="false">USD $20 Federal Reserve Note</span></div>
+                  <div><strong>Remaining Surface Area:</strong> <span id="sheet-area" class="highlight-green editable-sheet-field" contenteditable="true" title="Click to edit surface area" spellcheck="false">58.4% (Threshold Met)</span></div>
+                  <div><strong>Left Serial:</strong> <span id="sheet-serial-l" class="editable-sheet-field" contenteditable="true" title="Click to edit left serial" spellcheck="false">MF 89234812 B</span></div>
+                  <div><strong>Right Serial:</strong> <span id="sheet-serial-r" class="editable-sheet-field" contenteditable="true" title="Click to edit right serial" spellcheck="false">MF 89234812 B</span></div>
                 </div>
               </div>
 
               <div class="sheet-section">
-                <div class="sheet-sec-title">3. EVIDENTIARY OPTICAL FRAGMENT MASK</div>
+                <div class="sheet-sec-title" data-i18n="secEvidentiaryMask">3. EVIDENTIARY OPTICAL FRAGMENT MASK</div>
                 <div class="sheet-image-box">
                   <canvas id="dossier-snapshot-canvas" width="400" height="170" class="sheet-canvas"></canvas>
                   <div class="sheet-caption">Certified Optical Surface Boundary Detection Overlay (>50% Standard Verified)</div>
@@ -1289,24 +1404,24 @@
               </div>
 
               <div class="sheet-section">
-                <div class="sheet-sec-title">4. CIRCUMSTANCE OF DAMAGE</div>
-                <div class="sheet-narrative" id="sheet-narrative-text">
+                <div class="sheet-sec-title" data-i18n="secCircumstance">4. CIRCUMSTANCE OF DAMAGE</div>
+                <div class="sheet-narrative editable-sheet-field" id="sheet-narrative-text" contenteditable="true" title="Click to edit circumstance statement directly" spellcheck="false">
                   The presented banknote was damaged accidentally under ordinary domestic circumstances. More than 50% of the genuine original note remains physically intact with legible serial identifiers. No portion of this banknote has been previously redeemed or tendered for duplicate value.
                 </div>
               </div>
 
               <div class="sheet-section">
-                <div class="sheet-sec-title">5. SWORN DECLARATION & SIGNATURE</div>
-                <p class="sheet-legal-text">
-                  I solemnly declare under penalty of perjury under the laws of the applicable jurisdiction that the currency presented herein is genuine legal tender, that the missing portions were destroyed accidentally and not intentionally mutilated, and that I have not received payment or credit for any portion thereof.
+                <div class="sheet-sec-title" data-i18n="secDeclaration">5. SWORN DECLARATION & SIGNATURE</div>
+                <p class="sheet-legal-text" data-i18n="declarationAffirmation">
+                  I solemnly declare under penalty of perjury under the laws of the applicable jurisdiction that the currency presented herein is genuine legal tender, that the missing portions were destroyed accidentally and not intentionally mutilated, and that I have not received duplicate payment or credit for any portion thereof.
                 </p>
                 <div class="sheet-signature-box">
                   <div class="sig-line">
-                    <span class="sig-placeholder">X ________________________________________</span>
-                    <span class="sig-lbl">Signature of Claimant / Bearer</span>
+                    <span class="sig-placeholder">X <span id="sheet-sig-name" class="editable-sheet-field" contenteditable="true" title="Click to edit signer name" spellcheck="false">Legal Currency Bearer</span></span>
+                    <span class="sig-lbl" data-i18n="signatureLabel">Signature of Claimant / Bearer</span>
                   </div>
                   <div class="sig-line">
-                    <span class="sig-placeholder">Date: ________________________</span>
+                    <span class="sig-placeholder">Date: <span id="sheet-sig-date" class="editable-sheet-field" contenteditable="true" title="Click to edit execution date" spellcheck="false">October 12, 2026</span></span>
                     <span class="sig-lbl">Execution Date</span>
                   </div>
                 </div>
@@ -1383,7 +1498,7 @@
           <div class="header-icon-badge">💼</div>
           <div class="header-text-group">
             <div style="display:flex;align-items:center;">
-              <h2 class="view-title" style="margin-bottom:0;">My Salvage Vault</h2>
+              <h2 class="view-title" style="margin-bottom:0;" data-i18n="vaultTitle">My Salvage Vault</h2>
               <button class="info-circle-btn" data-info-id="vault-ledger" title="Salvage Vault & Postal Tracking Lifecycle" aria-label="Vault Information" type="button">ⓘ</button>
             </div>
             <p class="view-subtitle">Permanent local ledger tracking claims from audit to reimbursement</p>
@@ -1395,18 +1510,18 @@
           <div class="vault-hero-bg-glow"></div>
           <div class="vault-hero-content">
             <div class="vault-metric-block main">
-              <span class="vault-metric-label">LIFETIME RECOVERED VALUE</span>
+              <span class="vault-metric-label" data-i18n="vaultTotalValue">LIFETIME RECOVERED VALUE</span>
               <div class="vault-metric-num gold" id="vault-lifetime-recovered">$0.00</div>
               <span class="vault-metric-sub">Paid out by central bank treasuries</span>
             </div>
             <div class="vault-metrics-row">
               <div class="vault-metric-block">
-                <span class="vault-metric-label">IN-FLIGHT CLAIMS</span>
+                <span class="vault-metric-label" data-i18n="vaultActiveClaims">IN-FLIGHT CLAIMS</span>
                 <div class="vault-metric-num" id="vault-inflight-amount">$0.00</div>
                 <span class="vault-metric-sub" id="vault-inflight-count">0 packages mailed</span>
               </div>
               <div class="vault-metric-block">
-                <span class="vault-metric-label">AUDITED / READY</span>
+                <span class="vault-metric-label" data-i18n="vaultRedeemedNotes">AUDITED / READY</span>
                 <div class="vault-metric-num" id="vault-audited-amount">$0.00</div>
                 <span class="vault-metric-sub" id="vault-audited-count">0 notes waiting</span>
               </div>
@@ -1468,31 +1583,31 @@
     <nav class="bottom-nav">
       <button class="nav-tab-btn active" data-tab="tab-home">
         <span class="nav-icon">🏠</span>
-        <span class="nav-label">Home</span>
+        <span class="nav-label" data-i18n="tabHome">Home</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-scanner">
         <span class="nav-icon">📷</span>
-        <span class="nav-label">Scanner</span>
+        <span class="nav-label" data-i18n="tabScanner">Scanner</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-grid">
         <span class="nav-icon">📐</span>
-        <span class="nav-label">Grid</span>
+        <span class="nav-label" data-i18n="tabGrid">Grid</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-database">
         <span class="nav-icon">📚</span>
-        <span class="nav-label">Guides</span>
+        <span class="nav-label" data-i18n="tabGuides">Guides</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-locator">
         <span class="nav-icon">📍</span>
-        <span class="nav-label">Banks</span>
+        <span class="nav-label" data-i18n="tabBanks">Banks</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-dossier">
         <span class="nav-icon">📑</span>
-        <span class="nav-label">Dossier</span>
+        <span class="nav-label" data-i18n="tabDossier">Dossier</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-vault">
         <span class="nav-icon">💼</span>
-        <span class="nav-label">Vault</span>
+        <span class="nav-label" data-i18n="tabVault">Vault</span>
       </button>
     </nav>
 
@@ -1582,8 +1697,8 @@
           <input type="text" id="affidavit-location" class="styled-input" placeholder="e.g. Austin, Texas, USA" value="Austin, Texas, USA">
         </div>
         <div class="form-group">
-          <label for="affidavit-generated-text">Legal Affidavit Declaration Preview:</label>
-          <textarea id="affidavit-generated-text" class="styled-textarea" rows="7" readonly></textarea>
+          <label for="affidavit-generated-text">Legal Affidavit Declaration (Editable):</label>
+          <textarea id="affidavit-generated-text" class="styled-textarea" rows="7" placeholder="Enter or customize your sworn statement of total destruction..." title="Click to edit your sworn declaration"></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -1714,6 +1829,67 @@
       </div>
       <div class="modal-footer">
         <button id="btn-close-gift-modal" class="btn btn-primary" type="button">Got It, Thanks!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display Language Selection Modal (Exact match to media_1791826297147.png) -->
+  <div id="modal-language-picker" class="modal-overlay">
+    <div class="language-picker-modal-card">
+      <div class="language-picker-header">
+        <span class="language-picker-title" data-i18n="displayLanguage">DISPLAY LANGUAGE</span>
+        <button id="btn-close-language-modal" class="icon-btn modal-close-btn" aria-label="Close Language Selector">&times;</button>
+      </div>
+      <div class="lang-options-list" id="lang-options-list">
+        <button class="lang-option-btn selected" data-lang="en" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇺🇸</span>
+            <span class="lang-name">English (US)</span>
+          </div>
+          <span class="lang-check">✓</span>
+        </button>
+        <button class="lang-option-btn" data-lang="hi" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇮🇳</span>
+            <span class="lang-name">हिन्दी</span>
+          </div>
+          <span class="lang-check"></span>
+        </button>
+        <button class="lang-option-btn" data-lang="es" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇪🇸</span>
+            <span class="lang-name">Español</span>
+          </div>
+          <span class="lang-check"></span>
+        </button>
+        <button class="lang-option-btn" data-lang="de" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇩🇪</span>
+            <span class="lang-name">Deutsch</span>
+          </div>
+          <span class="lang-check"></span>
+        </button>
+        <button class="lang-option-btn" data-lang="fr" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇫🇷</span>
+            <span class="lang-name">Français</span>
+          </div>
+          <span class="lang-check"></span>
+        </button>
+        <button class="lang-option-btn" data-lang="ja" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇯🇵</span>
+            <span class="lang-name">日本語</span>
+          </div>
+          <span class="lang-check"></span>
+        </button>
+        <button class="lang-option-btn" data-lang="zh" type="button">
+          <div class="lang-option-left">
+            <span class="lang-flag">🇨🇳</span>
+            <span class="lang-name">简体中文</span>
+          </div>
+          <span class="lang-check"></span>
+        </button>
       </div>
     </div>
   </div>
@@ -2333,6 +2509,7 @@
     </div>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

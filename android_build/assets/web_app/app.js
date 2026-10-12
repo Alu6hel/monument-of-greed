@@ -461,6 +461,7 @@
       name: 'Bureau of Engraving and Printing — Mutilated Currency Division',
       type: 'central',
       category: 'Central Banking Authority',
+      currency: 'USD',
       city: 'Washington, DC',
       country: 'United States',
       address: '14th & C Streets SW, Room 344-A, Washington, DC 20228',
@@ -473,6 +474,7 @@
       name: 'Federal Reserve Bank of New York — Cash Services',
       type: 'central',
       category: 'Federal Reserve Bank',
+      currency: 'USD',
       city: 'New York, NY',
       country: 'United States',
       address: '33 Liberty Street, New York, NY 10045',
@@ -485,6 +487,7 @@
       name: 'JPMorgan Chase — Metro Flagship Cash Center',
       type: 'commercial',
       category: 'Commercial Bank Exchange',
+      currency: 'USD',
       city: 'New York, NY',
       country: 'United States',
       address: '270 Park Avenue, New York, NY 10017',
@@ -494,21 +497,49 @@
       mapsQuery: 'JPMorgan Chase, 270 Park Avenue, New York, NY'
     },
     {
-      name: 'Bank of England — Damaged Banknotes Section',
-      type: 'mail',
-      category: 'Central Postal Division',
-      city: 'Loughton, Essex',
-      country: 'United Kingdom',
-      address: 'Department DBM, Bank of England, Langston Road, Loughton, Essex IG10 3TN',
-      phone: '+44 (0)20 3461 4878',
-      notes: 'Primary national examination laboratory for UK paper and polymer mutilated currency.',
-      hours: 'Postal Submissions Accepted 24/7 (Courier Tracked Recommended)',
-      mapsQuery: 'Bank of England, Langston Road, Loughton, Essex IG10 3TN'
+      name: 'Bank of America — National Cash Vault Logistics Hub',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'USD',
+      city: 'Charlotte, NC',
+      country: 'United States',
+      address: '100 North Tryon Street, Charlotte, NC 28255',
+      phone: '+1 (800) 432-1000',
+      notes: 'Accepts damaged USD notes with clear serials and >50% intact surface for depository credit.',
+      hours: 'Mon - Fri: 9:00 AM - 5:00 PM EST',
+      mapsQuery: 'Bank of America, 100 North Tryon Street, Charlotte, NC'
+    },
+    {
+      name: 'Wells Fargo — Treasury Depository Operations',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'USD',
+      city: 'San Francisco, CA',
+      country: 'United States',
+      address: '420 Montgomery Street, San Francisco, CA 94104',
+      phone: '+1 (800) 869-3557',
+      notes: 'Direct counter redemption window for genuine mutilated US paper currency meeting statutory rules.',
+      hours: 'Mon - Fri: 9:00 AM - 5:00 PM PST',
+      mapsQuery: 'Wells Fargo, 420 Montgomery Street, San Francisco, CA'
+    },
+    {
+      name: 'European Central Bank — Cash Operations Headquarters',
+      type: 'central',
+      category: 'Eurosystem Central Authority',
+      currency: 'EUR',
+      city: 'Frankfurt am Main',
+      country: 'Germany',
+      address: 'Sonnemannstrasse 20, 60314 Frankfurt am Main, Germany',
+      phone: '+49 69 1344 0',
+      notes: 'Supreme central authority governing Decision ECB/2013/10 for mutilated euro exchanges across the Eurosystem.',
+      hours: 'Mon - Fri: 8:30 AM - 5:00 PM CET',
+      mapsQuery: 'European Central Bank, Sonnemannstrasse 20, Frankfurt'
     },
     {
       name: 'Deutsche Bundesbank — Filiale Frankfurt am Main',
       type: 'central',
       category: 'Eurosystem National Central Bank',
+      currency: 'EUR',
       city: 'Frankfurt am Main',
       country: 'Germany',
       address: 'Taunusanlage 5, 60329 Frankfurt am Main, Germany',
@@ -521,6 +552,7 @@
       name: 'Banque de France — Caisse Centrale Paris',
       type: 'central',
       category: 'Eurosystem National Central Bank',
+      currency: 'EUR',
       city: 'Paris',
       country: 'France',
       address: '39 Rue Croix des Petits Champs, 75001 Paris, France',
@@ -530,9 +562,75 @@
       mapsQuery: 'Banque de France, 39 Rue Croix des Petits Champs, 75001 Paris'
     },
     {
+      name: 'Banco de España — Sede Central Madrid',
+      type: 'central',
+      category: 'Eurosystem National Central Bank',
+      currency: 'EUR',
+      city: 'Madrid',
+      country: 'Spain',
+      address: 'Calle de Alcalá 48, 28014 Madrid, Spain',
+      phone: '+34 913 38 50 00',
+      notes: 'Official Eurosystem redemption window replacing mutilated euro banknotes meeting >50% requirement.',
+      hours: 'Mon - Fri: 8:30 AM - 2:00 PM CET',
+      mapsQuery: 'Banco de Espana, Calle de Alcala 48, Madrid'
+    },
+    {
+      name: 'BNP Paribas — Caisse Centrale d\'Échange',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'EUR',
+      city: 'Paris',
+      country: 'France',
+      address: '16 Boulevard des Italiens, 75009 Paris, France',
+      phone: '+33 1 40 14 45 46',
+      notes: 'Accepts authentic damaged Euro banknotes for deposit or Eurosystem central forwarding.',
+      hours: 'Mon - Fri: 9:00 AM - 5:15 PM CET',
+      mapsQuery: 'BNP Paribas, 16 Boulevard des Italiens, Paris'
+    },
+    {
+      name: 'Bank of England — Damaged Banknotes Section',
+      type: 'mail',
+      category: 'Central Postal Division',
+      currency: 'GBP',
+      city: 'Loughton, Essex',
+      country: 'United Kingdom',
+      address: 'Department DBM, Bank of England, Langston Road, Loughton, Essex IG10 3TN',
+      phone: '+44 (0)20 3461 4878',
+      notes: 'Primary national examination laboratory for UK paper and polymer mutilated currency.',
+      hours: 'Postal Submissions Accepted 24/7 (Courier Tracked Recommended)',
+      mapsQuery: 'Bank of England, Langston Road, Loughton, Essex IG10 3TN'
+    },
+    {
+      name: 'Barclays Bank — Flagship Cash & Depository Center',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'GBP',
+      city: 'London',
+      country: 'United Kingdom',
+      address: '1 Churchill Place, Canary Wharf, London E14 5HP',
+      phone: '+44 (0)345 734 5345',
+      notes: 'Over-the-counter redemption for account holders with polymer notes meeting Bank of England rules.',
+      hours: 'Mon - Fri: 9:00 AM - 4:30 PM GMT',
+      mapsQuery: 'Barclays, 1 Churchill Place, Canary Wharf, London'
+    },
+    {
+      name: 'NatWest / Royal Bank of Scotland Cash Hub',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'GBP',
+      city: 'Edinburgh',
+      country: 'United Kingdom',
+      address: '36 St Andrew Square, Edinburgh EH2 2YB',
+      phone: '+44 (0)345 724 2424',
+      notes: 'Accepts torn Bank of England and Scottish banknotes with verified >50% intact surface area.',
+      hours: 'Mon - Fri: 9:30 AM - 4:30 PM GMT',
+      mapsQuery: 'NatWest 36 St Andrew Square Edinburgh'
+    },
+    {
       name: 'Bank of Jamaica — Currency Department Teller Window',
       type: 'central',
       category: 'Central Bank Cash Office',
+      currency: 'JMD',
       city: 'Kingston',
       country: 'Jamaica',
       address: 'Nethersole Place, Kingston, Jamaica',
@@ -545,6 +643,7 @@
       name: 'National Commercial Bank (NCB) — Kingston Atrium Branch',
       type: 'commercial',
       category: 'Commercial Bank Exchange',
+      currency: 'JMD',
       city: 'Kingston',
       country: 'Jamaica',
       address: '32 Trafalgar Road, Kingston 10, Jamaica',
@@ -554,45 +653,23 @@
       mapsQuery: 'National Commercial Bank, 32 Trafalgar Road, Kingston, Jamaica'
     },
     {
-      name: 'Banco de México — Ventanilla de Canje de Billetes',
-      type: 'central',
-      category: 'Central Banking Authority',
-      city: 'Ciudad de México',
-      country: 'Mexico',
-      address: 'Gante No. 20, Colonia Centro, Cuauhtémoc, 06000 Ciudad de México, CDMX',
-      phone: '+52 800 226 9426',
-      notes: 'Direct official redemption counter applying Regla 10/2006 for mutilated MXN notes.',
-      hours: 'Mon - Fri: 9:00 AM - 1:00 PM CST',
-      mapsQuery: 'Banco de Mexico, Gante 20, Centro Historico, Ciudad de Mexico'
-    },
-    {
-      name: 'Reserve Bank of India — Mumbai Regional Office',
-      type: 'central',
-      category: 'Central Banking Authority',
-      city: 'Mumbai',
-      country: 'India',
-      address: 'Shahid Bhagat Singh Marg, Fort, Mumbai 400001, Maharashtra',
-      phone: '+91 22 2260 1000',
-      notes: 'Special Issue Department counter adjudicating mutilated and adjudicated notes under 2018 Rules.',
-      hours: 'Mon - Fri: 10:00 AM - 2:30 PM IST',
-      mapsQuery: 'Reserve Bank of India, Shahid Bhagat Singh Marg, Fort, Mumbai'
-    },
-    {
-      name: 'Bank of Japan — Head Office Operations Department',
-      type: 'central',
-      category: 'Central Banking Authority',
-      city: 'Tokyo',
-      country: 'Japan',
-      address: '2-1-1 Nihonbashi-Hongokucho, Chuo-ku, Tokyo 103-0021, Japan',
-      phone: '+81 3-3279-1111',
-      notes: 'Direct assessment window applying the 2/3 (100%) and 2/5 (50%) redemption ratio standards.',
-      hours: 'Mon - Fri: 9:00 AM - 3:00 PM JST',
-      mapsQuery: 'Bank of Japan, 2-1-1 Nihonbashi-Hongokucho, Chuo-ku, Tokyo'
+      name: 'Scotiabank Jamaica — Premier Cash Operations',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'JMD',
+      city: 'Kingston',
+      country: 'Jamaica',
+      address: 'Corner of Duke & Port Royal Streets, Kingston, Jamaica',
+      phone: '+1 (888) 472-6842',
+      notes: 'Receives damaged JMD notes with legible serials for statutory exchange.',
+      hours: 'Mon - Fri: 8:30 AM - 2:30 PM EST',
+      mapsQuery: 'Scotiabank, Duke Street, Kingston, Jamaica'
     },
     {
       name: 'Bank of Canada — Bank Note Redemption Service',
       type: 'mail',
       category: 'Central Postal Division',
+      currency: 'CAD',
       city: 'Ottawa, ON',
       country: 'Canada',
       address: '234 Wellington Street, Ottawa, ON K1A 0G9, Canada',
@@ -602,9 +679,23 @@
       mapsQuery: 'Bank of Canada, 234 Wellington Street, Ottawa, ON K1A 0G9'
     },
     {
+      name: 'Royal Bank of Canada (RBC) — Royal Bank Plaza Cash Center',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'CAD',
+      city: 'Toronto, ON',
+      country: 'Canada',
+      address: '200 Bay Street, Toronto, ON M5J 2J5, Canada',
+      phone: '+1 (800) 769-2511',
+      notes: 'Counter service exchanging Canadian polymer notes meeting Bank of Canada statutory criteria.',
+      hours: 'Mon - Fri: 9:00 AM - 5:00 PM EST',
+      mapsQuery: 'Royal Bank Plaza, 200 Bay Street, Toronto'
+    },
+    {
       name: 'Reserve Bank of Australia — Note Issue Department',
       type: 'central',
       category: 'Central Banking Authority',
+      currency: 'AUD',
       city: 'Sydney, NSW',
       country: 'Australia',
       address: '65 Martin Place, Sydney NSW 2000, Australia',
@@ -614,9 +705,49 @@
       mapsQuery: 'Reserve Bank of Australia, 65 Martin Place, Sydney NSW'
     },
     {
+      name: 'Commonwealth Bank of Australia — Flagship Cash Branch',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'AUD',
+      city: 'Sydney, NSW',
+      country: 'Australia',
+      address: '48 Martin Place, Sydney NSW 2000, Australia',
+      phone: '+61 13 22 21',
+      notes: 'Over-the-counter redemption for genuine polymer notes exceeding 50% surface area.',
+      hours: 'Mon - Fri: 9:30 AM - 4:00 PM AEST',
+      mapsQuery: 'Commonwealth Bank, 48 Martin Place, Sydney NSW'
+    },
+    {
+      name: 'Bank of Japan — Head Office Operations Department',
+      type: 'central',
+      category: 'Central Banking Authority',
+      currency: 'JPY',
+      city: 'Tokyo',
+      country: 'Japan',
+      address: '2-1-1 Nihonbashi-Hongokucho, Chuo-ku, Tokyo 103-0021, Japan',
+      phone: '+81 3-3279-1111',
+      notes: 'Direct assessment window applying the 2/3 (100%) and 2/5 (50%) redemption ratio standards.',
+      hours: 'Mon - Fri: 9:00 AM - 3:00 PM JST',
+      mapsQuery: 'Bank of Japan, 2-1-1 Nihonbashi-Hongokucho, Chuo-ku, Tokyo'
+    },
+    {
+      name: 'MUFG Bank — Marunouchi Main Branch Cash Center',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'JPY',
+      city: 'Tokyo',
+      country: 'Japan',
+      address: '2-7-1 Marunouchi, Chiyoda-ku, Tokyo 100-8388, Japan',
+      phone: '+81 3-3240-1111',
+      notes: 'Processes damaged yen banknotes according to official Bank of Japan damaged note exchange ratios.',
+      hours: 'Mon - Fri: 9:00 AM - 3:00 PM JST',
+      mapsQuery: 'MUFG Bank Marunouchi, Tokyo'
+    },
+    {
       name: 'Swiss National Bank — Cash Division Berne',
       type: 'central',
       category: 'Central Banking Authority',
+      currency: 'CHF',
       city: 'Berne',
       country: 'Switzerland',
       address: 'Bundesplatz 1, CH-3003 Berne, Switzerland',
@@ -624,6 +755,71 @@
       notes: 'Counter service for Swiss Francs conforming to statutory 50% surface area requirements.',
       hours: 'Mon - Fri: 8:00 AM - 12:00 PM, 1:30 PM - 4:30 PM CET',
       mapsQuery: 'Swiss National Bank, Bundesplatz 1, Berne, Switzerland'
+    },
+    {
+      name: 'UBS Switzerland — Central Cash Office Zurich',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'CHF',
+      city: 'Zurich',
+      country: 'Switzerland',
+      address: 'Bahnhofstrasse 45, 8001 Zurich, Switzerland',
+      phone: '+41 44 234 11 11',
+      notes: 'Commercial exchange of genuine damaged Swiss Franc banknotes for account holders.',
+      hours: 'Mon - Fri: 8:30 AM - 4:30 PM CET',
+      mapsQuery: 'UBS, Bahnhofstrasse 45, Zurich'
+    },
+    {
+      name: 'Banco de México — Ventanilla de Canje de Billetes',
+      type: 'central',
+      category: 'Central Banking Authority',
+      currency: 'MXN',
+      city: 'Ciudad de México',
+      country: 'Mexico',
+      address: 'Gante No. 20, Colonia Centro, Cuauhtémoc, 06000 Ciudad de México, CDMX',
+      phone: '+52 800 226 9426',
+      notes: 'Direct official redemption counter applying Regla 10/2006 for mutilated MXN notes.',
+      hours: 'Mon - Fri: 9:00 AM - 1:00 PM CST',
+      mapsQuery: 'Banco de Mexico, Gante 20, Centro Historico, Ciudad de Mexico'
+    },
+    {
+      name: 'BBVA México — Sucursal Centro Histórico',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'MXN',
+      city: 'Ciudad de México',
+      country: 'Mexico',
+      address: 'Av. 16 de Septiembre 41, Centro, 06000 Ciudad de México, CDMX',
+      phone: '+52 55 5226 2663',
+      notes: 'Canje gratuito de billetes maltratados o incompletos conforme a las directrices de Banxico.',
+      hours: 'Mon - Fri: 8:30 AM - 4:00 PM CST',
+      mapsQuery: 'BBVA Mexico, 16 de Septiembre 41, CDMX'
+    },
+    {
+      name: 'Reserve Bank of India — Mumbai Regional Office',
+      type: 'central',
+      category: 'Central Banking Authority',
+      currency: 'INR',
+      city: 'Mumbai',
+      country: 'India',
+      address: 'Shahid Bhagat Singh Marg, Fort, Mumbai 400001, Maharashtra',
+      phone: '+91 22 2260 1000',
+      notes: 'Special Issue Department counter adjudicating mutilated and adjudicated notes under 2018 Rules.',
+      hours: 'Mon - Fri: 10:00 AM - 2:30 PM IST',
+      mapsQuery: 'Reserve Bank of India, Shahid Bhagat Singh Marg, Fort, Mumbai'
+    },
+    {
+      name: 'State Bank of India — Main Branch Cash Services',
+      type: 'commercial',
+      category: 'Commercial Bank Exchange',
+      currency: 'INR',
+      city: 'Mumbai',
+      country: 'India',
+      address: 'Mumbai Samachar Marg, Horniman Circle, Fort, Mumbai 400023',
+      phone: '+91 1800 1234',
+      notes: 'Public sector bank currency chest exchanging soiled and mutilated notes as mandated by RBI master circular.',
+      hours: 'Mon - Fri: 10:00 AM - 4:00 PM IST',
+      mapsQuery: 'State Bank of India Main Branch Horniman Circle Mumbai'
     }
   ];
 
@@ -635,6 +831,9 @@
     currentTheme: 'theme-clay-peach',
     activeCurrency: 'USD',
     recognizedCurrency: null,
+    locatorShowAll: false,
+    databaseShowAll: false,
+    homeFeedShowAll: false,
     scanner: {
       stream: null,
       facingMode: 'environment',
@@ -694,6 +893,34 @@
     }
   };
 
+  /**
+   * Unified non-blocking Toast notification system with spring entrance
+   */
+  function showToast(message, type = 'info') {
+    if (window.AndroidBridge && typeof window.AndroidBridge.showToast === 'function') {
+      try { window.AndroidBridge.showToast(message); } catch (e) {}
+    }
+    let toast = document.getElementById('mog-toast-banner');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'mog-toast-banner';
+      document.body.appendChild(toast);
+    }
+    toast.className = 'mog-toast ' + type;
+    const icon = type === 'success' ? '✅' : (type === 'error' ? '⚠️' : '✨');
+    toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2800);
+  }
+  window.showToast = showToast;
+
+  // Global render hook references for reactive cross-component synchronization
+  let renderLocationsGlobal = null;
+  let renderDatabaseListGlobal = null;
+
   // =========================================================================
   // 5. INITIALIZATION & DOM BINDINGS
   // =========================================================================
@@ -702,6 +929,7 @@
     initAmbientMotion();
     initNavigation();
     initCurrencyWorkflow();
+    initLanguageSelector();
     initSoundToggle();
     initFintechSummary();
     initReciprocity();
@@ -916,11 +1144,14 @@
       });
     });
 
-    // See all database button
+    // See all database button with global expansion
     const btnSeeAll = document.getElementById('btn-see-all-db');
     if (btnSeeAll) {
       btnSeeAll.addEventListener('click', () => {
+        state.databaseShowAll = true;
         switchTab('tab-database');
+        if (typeof updateDatabaseScopeBanner === 'function') updateDatabaseScopeBanner();
+        if (typeof renderDatabaseListGlobal === 'function') renderDatabaseListGlobal();
         audio.tap();
       });
     }
@@ -930,7 +1161,7 @@
     if (btnCrown) {
       btnCrown.addEventListener('click', () => {
         audio.successChord();
-        alert('Monument of Greed Pro Edition: Statutory Banking Compliance System active.\nCertified under Alumungandr Master Charter © 2026.');
+        showToast('Monument of Greed Pro: Statutory Banking Compliance System active.', 'success');
       });
     }
   }
@@ -1235,14 +1466,24 @@
     }
   }
 
-  function renderFeedCards(category) {
+  function renderFeedCards(category = 'all') {
     const cards = document.querySelectorAll('#home-feed-cards .guide-feed-card');
     cards.forEach(card => {
+      const cardCurr = card.dataset.currency;
       const cardCat = card.dataset.cat;
-      if (!category || category === 'all' || category === cardCat || (category === 'forms' && card.querySelector('.btn-open-form'))) {
-        card.style.display = 'flex';
+      // Currency isolation: if in 'all' view and isolation is active, prioritize active currency
+      if (!state.homeFeedShowAll && (!category || category === 'all')) {
+        if (cardCurr === state.activeCurrency) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
       } else {
-        card.style.display = 'none';
+        if (!category || category === 'all' || category === cardCat || (category === 'forms' && card.querySelector('.btn-open-form'))) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
       }
     });
   }
@@ -1250,6 +1491,114 @@
   // =========================================================================
   // 8. OPTICAL NOTE SCANNER ENGINE (Canvas 2D Edge & Area Calculation)
   // =========================================================================
+  const CURRENCY_DENOMINATIONS = {
+    USD: [
+      { value: '1', label: '$1 Note' },
+      { value: '2', label: '$2 Note' },
+      { value: '5', label: '$5 Lincoln' },
+      { value: '10', label: '$10 Hamilton' },
+      { value: '20', label: '$20 Jackson (Standard)' },
+      { value: '50', label: '$50 Grant' },
+      { value: '100', label: '$100 Franklin (High Value)' }
+    ],
+    EUR: [
+      { value: '5', label: '€5 Classical' },
+      { value: '10', label: '€10 Romanesque' },
+      { value: '20', label: '€20 Gothic' },
+      { value: '50', label: '€50 Renaissance (Standard)' },
+      { value: '100', label: '€100 Baroque' },
+      { value: '200', label: '€200 Iron & Glass' },
+      { value: '500', label: '€500 20th Century' }
+    ],
+    GBP: [
+      { value: '5', label: '£5 Churchill Polymer' },
+      { value: '10', label: '£10 Jane Austen' },
+      { value: '20', label: '£20 J.M.W. Turner (Standard)' },
+      { value: '50', label: '£50 Alan Turing' }
+    ],
+    JMD: [
+      { value: '50', label: 'J$50 Marcus Garvey' },
+      { value: '100', label: 'J$100 Samuel Sharpe' },
+      { value: '500', label: 'J$500 Nanny of the Maroons' },
+      { value: '1000', label: 'J$1000 Bustamante (Standard)' },
+      { value: '2000', label: 'J$2000 Manley & Seaga' },
+      { value: '5000', label: 'J$5000 Donald Sangster' }
+    ],
+    CAD: [
+      { value: '5', label: 'CA$5 Wilfrid Laurier' },
+      { value: '10', label: 'CA$10 Viola Desmond' },
+      { value: '20', label: 'CA$20 Queen Elizabeth II' },
+      { value: '50', label: 'CA$50 W.L. Mackenzie King' },
+      { value: '100', label: 'CA$100 Robert Borden (Standard)' }
+    ],
+    AUD: [
+      { value: '5', label: 'A$5 Parliament House' },
+      { value: '10', label: 'A$10 Banjo Paterson' },
+      { value: '20', label: 'A$20 Mary Reibey' },
+      { value: '50', label: 'A$50 David Unaipon (Standard)' },
+      { value: '100', label: 'A$100 Sir John Monash' }
+    ],
+    JPY: [
+      { value: '1000', label: '¥1,000 Noguchi / Kitasato' },
+      { value: '2000', label: '¥2,000 Shureimon Gate' },
+      { value: '5000', label: '¥5,000 Higuchi / Tsuda' },
+      { value: '10000', label: '¥10,000 Fukuzawa (Standard)' }
+    ],
+    CHF: [
+      { value: '10', label: '10 CHF Time / Harmony' },
+      { value: '20', label: '20 CHF Light / Prism' },
+      { value: '50', label: '50 CHF Wind / Paraglider' },
+      { value: '100', label: '100 CHF Water / Flume (Standard)' },
+      { value: '200', label: '200 CHF Matter / Collision' },
+      { value: '1000', label: '1,000 CHF Communication' }
+    ],
+    MXN: [
+      { value: '20', label: 'Mex$20 Benito Juárez' },
+      { value: '50', label: 'Mex$50 Ajolote Polymer' },
+      { value: '100', label: 'Mex$100 Sor Juana Inés' },
+      { value: '200', label: 'Mex$200 Hidalgo & Morelos' },
+      { value: '500', label: 'Mex$500 Juárez (Standard)' },
+      { value: '1000', label: 'Mex$1000 Hermila Galindo' }
+    ],
+    INR: [
+      { value: '10', label: '₹10 Konark Sun Temple' },
+      { value: '20', label: '₹20 Ellora Caves' },
+      { value: '50', label: '₹50 Hampi Chariot' },
+      { value: '100', label: '₹100 Rani ki Vav' },
+      { value: '200', label: '₹200 Sanchi Stupa' },
+      { value: '500', label: '₹500 Red Fort (Standard)' }
+    ],
+    CNY: [
+      { value: '1', label: '¥1 West Lake' },
+      { value: '5', label: '¥5 Mount Tai' },
+      { value: '10', label: '¥10 Three Gorges' },
+      { value: '20', label: '¥20 Guilin Karst' },
+      { value: '50', label: '¥50 Potala Palace' },
+      { value: '100', label: '¥100 Great Hall (Standard)' }
+    ]
+  };
+
+  function populateScannerDenominations(code) {
+    const selectDenom = document.getElementById('select-scanner-denom');
+    if (!selectDenom) return;
+    const denoms = CURRENCY_DENOMINATIONS[code] || CURRENCY_DENOMINATIONS['USD'];
+    const currentVal = selectDenom.value;
+    selectDenom.innerHTML = '';
+    denoms.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.value;
+      opt.textContent = d.label;
+      selectDenom.appendChild(opt);
+    });
+    const match = denoms.find(d => d.value === currentVal);
+    if (match) {
+      selectDenom.value = currentVal;
+    } else {
+      selectDenom.selectedIndex = Math.min(2, denoms.length - 1);
+    }
+    state.scanner.denomination = selectDenom.value;
+  }
+
   function initOpticalScanner() {
     state.scanner.videoEl = document.getElementById('scanner-video');
     state.scanner.canvasEl = document.getElementById('scanner-canvas');
@@ -1272,6 +1621,9 @@
     const btnLoadSample = document.getElementById('btn-load-sample');
     const selectCurrency = document.getElementById('select-scanner-currency');
     const selectDenom = document.getElementById('select-scanner-denom');
+
+    // Populate initial denominations based on active currency
+    populateScannerDenominations(state.activeCurrency);
 
     if (btnStartCamera) {
       btnStartCamera.addEventListener('click', () => {
@@ -1312,7 +1664,10 @@
 
     if (selectCurrency) {
       selectCurrency.addEventListener('change', (e) => {
-        state.scanner.currencyCode = e.target.value;
+        const newCode = e.target.value;
+        setActiveCurrency(newCode, false);
+        populateScannerDenominations(newCode);
+        state.scanner.currencyCode = newCode;
         updateScannerAspectGuide();
         updateGridAspectBox();
         recalculateSurfaceArea();
@@ -1682,6 +2037,32 @@
       status: 'Fire / Heat Charred Fragment'
     },
     {
+      id: 'laundry_cycle_usd100',
+      currency: 'USD',
+      denom: '100',
+      name: 'Laundry-Washed US $100 Franklin',
+      tag: '🌊 31 CFR § 100.5 (USA)',
+      paperColorStart: '#f1f5f9',
+      paperColorEnd: '#cbd5e1',
+      cutType: 'maceration',
+      tearRatio: 0.742,
+      serial: 'LB 49102948 C',
+      status: 'Detergent Bleach & Fiber Softening'
+    },
+    {
+      id: 'pet_chewed_usd50',
+      currency: 'USD',
+      denom: '50',
+      name: 'Pet-Chewed US $50 Grant',
+      tag: '🐾 31 CFR § 100.5 (USA)',
+      paperColorStart: '#f8fafc',
+      paperColorEnd: '#cbd5e1',
+      cutType: 'pet',
+      tearRatio: 0.535,
+      serial: 'MK 91029381 A',
+      status: 'Domestic Animal Serrated Tear'
+    },
+    {
       id: 'washing_machine_eur50',
       currency: 'EUR',
       denom: '50',
@@ -1695,6 +2076,19 @@
       status: 'Laundry / Detergent Bleach Erosion'
     },
     {
+      id: 'fire_edge_eur20',
+      currency: 'EUR',
+      denom: '20',
+      name: 'Thermal-Charred Euro €20 Gothic',
+      tag: '🔥 ECB Decision 2013/10 (EU)',
+      paperColorStart: '#eff6ff',
+      paperColorEnd: '#bfdbfe',
+      cutType: 'fire',
+      tearRatio: 0.575,
+      serial: 'VC 89201948',
+      status: 'Thermal Perimeter Loss'
+    },
+    {
       id: 'industrial_shredder_gbp20',
       currency: 'GBP',
       denom: '20',
@@ -1706,6 +2100,19 @@
       tearRatio: 0.528,
       serial: 'CL 93810294',
       status: 'Industrial Paper Shredder Slices'
+    },
+    {
+      id: 'dog_bite_gbp10',
+      currency: 'GBP',
+      denom: '10',
+      name: 'Polymer-Chewed BoE £10 Jane Austen',
+      tag: '🐾 Bank of England Policy (UK)',
+      paperColorStart: '#fed7aa',
+      paperColorEnd: '#f97316',
+      cutType: 'pet',
+      tearRatio: 0.670,
+      serial: 'AJ 39102948',
+      status: 'Polymer Substrate Puncture & Tear'
     },
     {
       id: 'flood_waterlogged_cad100',
@@ -1784,22 +2191,47 @@
       tearRatio: 0.720,
       serial: 'BA 18 948102',
       status: 'Saltwater Erosion & Fold Shear'
+    },
+    {
+      id: 'torn_boj_jpy10000',
+      currency: 'JPY',
+      denom: '10000',
+      name: 'Charred Bank of Japan ¥10,000',
+      tag: '🏛️ Bank of Japan Standard',
+      paperColorStart: '#fef3c7',
+      paperColorEnd: '#d97706',
+      cutType: 'fire',
+      tearRatio: 0.690,
+      serial: 'AA 920194 J',
+      status: 'Thermal Edge Exposure'
+    },
+    {
+      id: 'alpine_wash_chf100',
+      currency: 'CHF',
+      denom: '100',
+      name: 'Water-Exposed Swiss Franc 100 CHF',
+      tag: '🇨🇭 SNB Redemption Rules',
+      paperColorStart: '#dbeafe',
+      paperColorEnd: '#3b82f6',
+      cutType: 'maceration',
+      tearRatio: 0.620,
+      serial: '18D 928104',
+      status: 'Alpine Moisture Exposure'
     }
   ];
   let activeScenarioIndex = 0;
 
   /**
    * Generates an authentic simulated damaged banknote fragment for immediate testing
-   * Cycles through 5 certified central bank damage scenarios from the internal asset library
+   * Strictly respects the active currency scope to prevent foreign note pollution
    */
   function loadSampleDamagedBill() {
     stopCameraStream();
-    let sc = null;
-    if (activeScenarioIndex === 0) {
-      sc = DAMAGE_SCENARIOS.find(s => s.currency === state.activeCurrency) || DAMAGE_SCENARIOS[0];
-    } else {
-      sc = DAMAGE_SCENARIOS[activeScenarioIndex % DAMAGE_SCENARIOS.length];
-    }
+    
+    // Filter strictly to the currently selected currency
+    const activeScenarios = DAMAGE_SCENARIOS.filter(s => s.currency === state.activeCurrency);
+    const pool = activeScenarios.length > 0 ? activeScenarios : DAMAGE_SCENARIOS;
+    const sc = pool[activeScenarioIndex % pool.length];
     activeScenarioIndex++;
 
     state.scanner.currencyCode = sc.currency;
@@ -1809,6 +2241,7 @@
     const selectCurrency = document.getElementById('select-scanner-currency');
     const selectDenom = document.getElementById('select-scanner-denom');
     if (selectCurrency) selectCurrency.value = sc.currency;
+    populateScannerDenominations(sc.currency);
     if (selectDenom) selectDenom.value = sc.denom;
 
     const sCanvas = state.scanner.sourceCanvas;
@@ -2530,9 +2963,11 @@
     const valTarget = document.getElementById('val-target-px');
     const valThreshold = document.getElementById('val-legal-threshold');
     const btnExport = document.getElementById('btn-export-to-dossier');
+    const kintsugiSeam = document.getElementById('viewfinder-kintsugi-seam');
 
     // Standby State when no banknote is detected in frame
     if (!state.scanner.detected) {
+      if (kintsugiSeam) kintsugiSeam.classList.remove('active');
       if (percentDisplay) percentDisplay.textContent = '0.0%';
       if (valFragment) valFragment.textContent = '0 px';
       if (valTarget) valTarget.textContent = targetPx.toLocaleString() + ' px';
@@ -2609,6 +3044,17 @@
         passed = true;
       } else if (percent >= 49.0) {
         marginal = true;
+      }
+    }
+
+    if (kintsugiSeam) {
+      if (passed) {
+        if (!kintsugiSeam.classList.contains('active')) {
+          kintsugiSeam.classList.add('active');
+          audio.thresholdCross();
+        }
+      } else {
+        kintsugiSeam.classList.remove('active');
       }
     }
 
@@ -3138,8 +3584,8 @@
       tr.innerHTML = `
         <td><span class="item-num-pill">Item #${itemNum}</span></td>
         <td><span class="item-symbol-badge">${item.symbol || '$'}</span></td>
-        <td><strong>${item.symbol || ''}${item.denom}</strong> <span class="text-muted">(${item.currency})</span></td>
-        <td><span class="item-damage-tag">${item.damageIcon || '🔥'} ${item.damageType ? item.damageType.split('&')[0] : 'Damage'}</span></td>
+        <td><strong contenteditable="true" class="editable-manifest-field" data-id="${item.id}" data-prop="denom" title="Click to edit denomination">${item.symbol || ''}${item.denom}</strong> <span class="text-muted">(${item.currency})</span></td>
+        <td><span contenteditable="true" class="item-damage-tag editable-manifest-field" data-id="${item.id}" data-prop="damageType" title="Click to edit damage narrative">${item.damageIcon || '🔥'} ${item.damageType ? item.damageType.split('&')[0] : 'Damage'}</span></td>
         <td>
           <div class="tactile-meter-wrap">
             <div class="tactile-meter-bar">
@@ -3177,11 +3623,11 @@
             <div class="item-payout-badge">${item.symbol}${item.faceValue.toFixed(2)} Payout</div>
           </div>
           <div class="item-card-details-drawer">
-            <p class="item-forensic-desc">${item.forensicDescription || 'Banknote assessed under statutory currency salvage guidelines.'}</p>
+            <p class="item-forensic-desc" contenteditable="true" data-id="${item.id}" data-prop="forensicDescription">${item.forensicDescription || 'Banknote assessed under statutory currency salvage guidelines.'}</p>
             <table class="item-stat-table">
               <tr>
                 <td>Serial Number:</td>
-                <td><strong>${item.serialNumber || 'Verified Legible'}</strong></td>
+                <td><strong contenteditable="true" class="editable-manifest-field" data-id="${item.id}" data-prop="serialNumber" title="Click to edit serial">${item.serialNumber || 'Verified Legible'}</strong></td>
               </tr>
               <tr>
                 <td>Substrate Material:</td>
@@ -3203,13 +3649,58 @@
           </div>
         `;
 
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+          if (e.target.isContentEditable) return;
           toggleItemCardDrawer(item.id);
         });
 
         cardsContainer.appendChild(card);
       }
     });
+
+    // Wire in-place editable listeners for manifest table rows
+    tbody.querySelectorAll('.editable-manifest-field').forEach(el => {
+      el.addEventListener('input', (e) => {
+        e.stopPropagation();
+        const id = Number(el.dataset.id);
+        const prop = el.dataset.prop;
+        const it = state.batchNotes.find(b => b.id === id);
+        if (it) {
+          if (prop === 'denom') {
+            const parsed = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0;
+            it.denom = String(parsed);
+            it.faceValue = parsed;
+          } else if (prop === 'damageType') {
+            it.damageType = el.textContent.trim();
+          }
+        }
+      });
+      el.addEventListener('blur', () => {
+        let newTotal = 0;
+        state.batchNotes.forEach(b => newTotal += b.faceValue);
+        if (totalBadge) totalBadge.textContent = `${firstSymbol}${newTotal.toFixed(2)} Total Salvage Value`;
+        showToast('Manifest item updated', 'info');
+      });
+    });
+
+    // Wire in-place editable listeners for card details
+    if (cardsContainer) {
+      cardsContainer.querySelectorAll('[contenteditable="true"]').forEach(el => {
+        el.addEventListener('click', (e) => e.stopPropagation());
+        el.addEventListener('input', (e) => {
+          e.stopPropagation();
+          const id = Number(el.dataset.id);
+          const prop = el.dataset.prop;
+          const it = state.batchNotes.find(b => b.id === id);
+          if (it && prop) {
+            it[prop] = el.textContent.trim();
+          }
+        });
+        el.addEventListener('blur', () => {
+          showToast('Forensic card updated', 'info');
+        });
+      });
+    }
 
     if (countBadge) countBadge.textContent = `${state.batchNotes.length} Items`;
     if (totalBadge) totalBadge.textContent = `${firstSymbol}${totalVal.toFixed(2)} Total Salvage Value`;
@@ -3342,13 +3833,17 @@
       btnAttach.addEventListener('click', () => {
         const textEl = document.getElementById('affidavit-generated-text');
         const narrativeInput = document.getElementById('dossier-narrative');
-        if (textEl && narrativeInput) {
-          narrativeInput.value = textEl.value;
+        const sheetNarrative = document.getElementById('sheet-narrative-text');
+        if (textEl) {
+          const customText = textEl.value.trim();
+          if (narrativeInput) narrativeInput.value = customText;
+          if (sheetNarrative) sheetNarrative.textContent = customText;
+          if (typeof saveDossierDraft === 'function') saveDossierDraft();
           updateDossierSheet();
           closeModal();
           switchTab('tab-dossier');
           audio.successChord();
-          alert('Sworn Affidavit text successfully attached to the Claim Dossier Narrative field.');
+          showToast('Sworn Affidavit text attached to Claim Dossier Narrative!', 'success');
         }
       });
     }
@@ -3413,6 +3908,20 @@ Claimant Signature: ___________________________________   Date: ________________
     const listContainer = document.getElementById('db-currency-list');
     const searchInput = document.getElementById('db-search-input');
     const regionPills = document.querySelectorAll('.db-region-pills .filter-pill');
+    const btnToggleDb = document.getElementById('btn-toggle-global-db');
+
+    function updateDatabaseScopeBanner() {
+      const flagEl = document.getElementById('database-scope-flag');
+      const nameEl = document.getElementById('database-scope-name');
+      const btnToggle = document.getElementById('btn-toggle-global-db');
+      const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+      if (flagEl) flagEl.textContent = reg.flag;
+      if (nameEl) nameEl.textContent = `${reg.code} (${reg.country})`;
+      if (btnToggle) {
+        btnToggle.textContent = state.databaseShowAll ? `🔒 Focus ${reg.code} Codex` : `🌐 View Other Currencies`;
+      }
+    }
+    window.updateDatabaseScopeBanner = updateDatabaseScopeBanner;
 
     function renderList(filterText = '', filterRegion = 'all') {
       if (!listContainer) return;
@@ -3421,6 +3930,11 @@ Claimant Signature: ___________________________________   Date: ________________
       const query = filterText.toLowerCase().trim();
 
       const filtered = CURRENCY_REGISTRY.filter(item => {
+        // Currency Isolation: when databaseShowAll is false and no explicit search/region, focus on active currency
+        if (!state.databaseShowAll && !query && filterRegion === 'all') {
+          return item.code === state.activeCurrency;
+        }
+
         const matchesQuery = !query || 
           item.code.toLowerCase().includes(query) ||
           item.name.toLowerCase().includes(query) ||
@@ -3440,6 +3954,11 @@ Claimant Signature: ___________________________________   Date: ________________
       filtered.forEach(item => {
         const div = document.createElement('div');
         div.className = 'db-currency-item';
+        // Auto-expand if single currency focus is active for zero-click access
+        if (filtered.length === 1) {
+          div.classList.add('open');
+        }
+
         div.innerHTML = `
           <div class="db-item-summary">
             <div class="db-item-main">
@@ -3453,17 +3972,17 @@ Claimant Signature: ___________________________________   Date: ________________
           </div>
           <div class="db-item-details">
             <div class="db-detail-block">
-              <h5>STATUTORY REGULATION</h5>
+              <h5>${window.i18n ? window.i18n.t('dbStatuteHeader') : 'STATUTORY REGULATION'}</h5>
               <p><strong>${item.statutoryCode}</strong></p>
               <p style="margin-top:4px;">${item.thresholdRule}</p>
             </div>
             <div class="db-detail-block">
-              <h5>POSTAL SUBMISSION LABORATORY</h5>
+              <h5>${window.i18n ? window.i18n.t('dbDepotHeader') : 'POSTAL SUBMISSION LABORATORY'}</h5>
               <p>${item.submissionAddress}</p>
             </div>
             <div class="db-item-actions">
-              <button class="btn-sm btn-accent btn-view-script" data-currency="${item.code}">Teller Talk Track</button>
-              <button class="btn-sm btn-outline btn-view-form" data-form="${item.formId}">View Official Slip</button>
+              <button class="btn-sm btn-accent btn-view-script" data-currency="${item.code}">${window.i18n ? window.i18n.t('btnTellerScript') : 'Teller Talk Track'}</button>
+              <button class="btn-sm btn-outline btn-view-form" data-form="${item.formId}">${window.i18n ? window.i18n.t('btnOfficialSlip') : 'View Official Slip'}</button>
             </div>
           </div>
         `;
@@ -3492,6 +4011,19 @@ Claimant Signature: ___________________________________   Date: ________________
       });
     }
 
+    renderDatabaseListGlobal = renderList;
+
+    if (btnToggleDb) {
+      btnToggleDb.addEventListener('click', () => {
+        state.databaseShowAll = !state.databaseShowAll;
+        updateDatabaseScopeBanner();
+        const activeRegion = document.querySelector('.db-region-pills .filter-pill.active')?.dataset.dbregion || 'all';
+        renderList(searchInput ? searchInput.value : '', activeRegion);
+        showToast(state.databaseShowAll ? 'Showing all global redemption codices' : `Focusing on ${state.activeCurrency} codex`, 'info');
+        audio.tap();
+      });
+    }
+
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const activeRegion = document.querySelector('.db-region-pills .filter-pill.active')?.dataset.dbregion || 'all';
@@ -3510,6 +4042,7 @@ Claimant Signature: ___________________________________   Date: ________________
       });
     });
 
+    updateDatabaseScopeBanner();
     renderList();
 
     // Attach listeners to Home feed buttons as well
@@ -3536,6 +4069,88 @@ Claimant Signature: ___________________________________   Date: ________________
     const gridContainer = document.getElementById('bank-locations-grid');
     const searchInput = document.getElementById('locator-search-input');
     const typeTabs = document.querySelectorAll('.locator-type-tabs .type-tab');
+    const btnToggleLocator = document.getElementById('btn-toggle-global-locator');
+
+    function renderDynamicQuickChips() {
+      const chipsContainer = document.getElementById('locator-quick-chips');
+      if (!chipsContainer) return;
+      
+      const curr = state.activeCurrency;
+      let chipData = [
+        { label: 'All Regions', query: '' }
+      ];
+
+      if (curr === 'USD') {
+        chipData.push({ label: '🇺🇸 US Federal Reserve', query: 'Federal Reserve' });
+        chipData.push({ label: '🇺🇸 Bureau of Engraving & Printing', query: 'BEP' });
+        chipData.push({ label: '🏦 Chase / Bank of America / Wells', query: 'Bank of America' });
+      } else if (curr === 'EUR') {
+        chipData.push({ label: '🇪🇺 European Central Bank', query: 'European Central Bank' });
+        chipData.push({ label: '🇩🇪 Deutsche Bundesbank', query: 'Bundesbank' });
+        chipData.push({ label: '🇫🇷 Banque de France', query: 'Banque de France' });
+        chipData.push({ label: '🇪🇸 Banco de España', query: 'Banco de España' });
+      } else if (curr === 'GBP') {
+        chipData.push({ label: '🇬🇧 Bank of England Debden', query: 'Bank of England' });
+        chipData.push({ label: '🏦 Barclays Commercial Hub', query: 'Barclays' });
+        chipData.push({ label: '🏦 NatWest Currency Counter', query: 'NatWest' });
+      } else if (curr === 'CAD') {
+        chipData.push({ label: '🇨🇦 Bank of Canada Ottawa', query: 'Bank of Canada' });
+        chipData.push({ label: '🏦 Royal Bank of Canada (RBC)', query: 'Royal Bank' });
+      } else if (curr === 'AUD') {
+        chipData.push({ label: '🇦🇺 Reserve Bank of Australia', query: 'Reserve Bank of Australia' });
+        chipData.push({ label: '🏦 Commonwealth Bank (CBA)', query: 'Commonwealth' });
+      } else if (curr === 'JMD') {
+        chipData.push({ label: '🇯🇲 Bank of Jamaica Kingston', query: 'Bank of Jamaica' });
+        chipData.push({ label: '🏦 Scotiabank Jamaica', query: 'Scotiabank' });
+      } else if (curr === 'JPY') {
+        chipData.push({ label: '🇯🇵 Bank of Japan Tokyo', query: 'Bank of Japan' });
+        chipData.push({ label: '🏦 MUFG Bank Tokyo', query: 'MUFG' });
+      } else if (curr === 'CHF') {
+        chipData.push({ label: '🇨🇭 Swiss National Bank Berne', query: 'Swiss National Bank' });
+        chipData.push({ label: '🏦 UBS Switzerland', query: 'UBS' });
+      } else if (curr === 'MXN') {
+        chipData.push({ label: '🇲🇽 Banco de México CDMX', query: 'Banco de México' });
+        chipData.push({ label: '🏦 BBVA México Canje', query: 'BBVA' });
+      } else if (curr === 'INR') {
+        chipData.push({ label: '🇮🇳 Reserve Bank of India Mumbai', query: 'Reserve Bank of India' });
+        chipData.push({ label: '🏦 State Bank of India (SBI)', query: 'State Bank' });
+      } else {
+        chipData.push({ label: '🏛️ Central Banks', query: 'Bank' });
+        chipData.push({ label: '✉️ Postal Labs', query: 'Submission' });
+      }
+
+      chipsContainer.innerHTML = '';
+      chipData.forEach((cd, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `quick-chip ${idx === 0 ? 'active' : ''}`;
+        btn.dataset.query = cd.query;
+        btn.type = 'button';
+        btn.textContent = cd.label;
+        btn.addEventListener('click', () => {
+          chipsContainer.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          if (searchInput) searchInput.value = cd.query;
+          const activeType = document.querySelector('.locator-type-tabs .type-tab.active')?.dataset.type || 'all';
+          renderLocations(cd.query, activeType);
+          audio.tap();
+        });
+        chipsContainer.appendChild(btn);
+      });
+    }
+
+    function updateLocatorScopeBanner() {
+      const flagEl = document.getElementById('locator-scope-flag');
+      const nameEl = document.getElementById('locator-scope-name');
+      const btnToggle = document.getElementById('btn-toggle-global-locator');
+      const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+      if (flagEl) flagEl.textContent = reg.flag;
+      if (nameEl) nameEl.textContent = `${reg.code} (${reg.country})`;
+      if (btnToggle) {
+        btnToggle.textContent = state.locatorShowAll ? `🔒 Filter to ${reg.code} Only` : `🌐 View All Currencies`;
+      }
+      renderDynamicQuickChips();
+    }
+    window.updateLocatorScopeBanner = updateLocatorScopeBanner;
 
     function renderLocations(filterText = '', filterType = 'all') {
       if (!gridContainer) return;
@@ -3544,6 +4159,10 @@ Claimant Signature: ___________________________________   Date: ________________
       const query = filterText.toLowerCase().trim();
 
       const filtered = BANK_LOCATOR_REGISTRY.filter(loc => {
+        // Currency Isolation: filter to active currency unless locatorShowAll is enabled
+        const matchesCurrency = state.locatorShowAll || (loc.currency === state.activeCurrency);
+        if (!matchesCurrency) return false;
+
         const matchesQuery = !query ||
           loc.name.toLowerCase().includes(query) ||
           loc.city.toLowerCase().includes(query) ||
@@ -3555,7 +4174,7 @@ Claimant Signature: ___________________________________   Date: ________________
       });
 
       if (filtered.length === 0) {
-        gridContainer.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-muted);">No locations match your search. Try searching Washington, Frankfurt, London, Kingston, Mexico, or Mumbai.</div>';
+        gridContainer.innerHTML = `<div style="padding:24px;text-align:center;color:var(--text-muted);">No locations found for ${state.activeCurrency}. Click "View All Currencies" above or try searching another city.</div>`;
         return;
       }
 
@@ -3574,8 +4193,8 @@ Claimant Signature: ___________________________________   Date: ________________
           <div class="location-address">📍 ${loc.address}</div>
           <div class="location-notes">ℹ️ ${loc.notes} • <strong>Hours:</strong> ${loc.hours}</div>
           <div class="location-actions">
-            <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-sm btn-accent" style="text-decoration:none;">🗺️ Open in Google Maps</a>
-            <a href="${telUrl}" class="btn-sm btn-secondary" style="text-decoration:none;">📞 Call Office</a>
+            <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-sm btn-accent" style="text-decoration:none;">${window.i18n ? window.i18n.t('btnOpenMaps') : '🗺️ Open in Google Maps'}</a>
+            <a href="${telUrl}" class="btn-sm btn-secondary" style="text-decoration:none;">${window.i18n ? window.i18n.t('btnCallOffice') : '📞 Call Office'}</a>
           </div>
         `;
 
@@ -3583,8 +4202,20 @@ Claimant Signature: ___________________________________   Date: ________________
       });
     }
 
+    renderLocationsGlobal = renderLocations;
+
+    if (btnToggleLocator) {
+      btnToggleLocator.addEventListener('click', () => {
+        state.locatorShowAll = !state.locatorShowAll;
+        updateLocatorScopeBanner();
+        const activeType = document.querySelector('.locator-type-tabs .type-tab.active')?.dataset.type || 'all';
+        renderLocations(searchInput ? searchInput.value : '', activeType);
+        showToast(state.locatorShowAll ? 'Displaying all global central and commercial bank branches' : `Filtered to ${state.activeCurrency} redemption windows`, 'info');
+        audio.tap();
+      });
+    }
+
     const btnClearSearch = document.getElementById('btn-locator-search-clear');
-    const quickChips = document.querySelectorAll('#locator-quick-chips .quick-chip');
 
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
@@ -3599,27 +4230,13 @@ Claimant Signature: ___________________________________   Date: ________________
       btnClearSearch.addEventListener('click', () => {
         searchInput.value = '';
         btnClearSearch.style.display = 'none';
+        const quickChips = document.querySelectorAll('#locator-quick-chips .quick-chip');
         quickChips.forEach(c => c.classList.toggle('active', c.dataset.query === ''));
         const activeType = document.querySelector('.locator-type-tabs .type-tab.active')?.dataset.type || 'all';
         renderLocations('', activeType);
         audio.tap();
       });
     }
-
-    quickChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        quickChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const q = chip.dataset.query || '';
-        if (searchInput) {
-          searchInput.value = q;
-          if (btnClearSearch) btnClearSearch.style.display = q.length > 0 ? 'inline-block' : 'none';
-        }
-        const activeType = document.querySelector('.locator-type-tabs .type-tab.active')?.dataset.type || 'all';
-        renderLocations(q, activeType);
-        audio.tap();
-      });
-    });
 
     typeTabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -3632,6 +4249,7 @@ Claimant Signature: ___________________________________   Date: ________________
       });
     });
 
+    updateLocatorScopeBanner();
     renderLocations();
   }
 
@@ -3697,6 +4315,98 @@ Claimant Signature: ___________________________________   Date: ________________
     if (btnDossierCsv) {
       btnDossierCsv.addEventListener('click', () => {
         exportCasualtyLossCsv();
+      });
+    }
+
+    function generateCertifiedClaimText() {
+      const refId = document.getElementById('sheet-ref-id')?.textContent || state.dossier.refId;
+      const name = document.getElementById('sheet-name')?.textContent || 'Bearer';
+      const contact = document.getElementById('sheet-contact')?.textContent || 'N/A';
+      const date = document.getElementById('sheet-date')?.textContent || new Date().toLocaleDateString();
+      const curr = document.getElementById('sheet-currency')?.textContent || state.dossier.currency;
+      const area = document.getElementById('sheet-area')?.textContent || state.dossier.surfacePercent;
+      const serialL = document.getElementById('sheet-serial-l')?.textContent || 'N/A';
+      const serialR = document.getElementById('sheet-serial-r')?.textContent || 'N/A';
+      const narrative = document.getElementById('sheet-narrative-text')?.textContent || '';
+      const sigName = document.getElementById('sheet-sig-name')?.textContent || name;
+      const sigDate = document.getElementById('sheet-sig-date')?.textContent || date;
+
+      const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+
+      return `================================================================================
+OFFICIAL BANKNOTE MUTILATION & CASUALTY REDEMPTION CLAIM
+MONUMENT OF GREED STATUTORY CASUALTY DOSSIER
+================================================================================
+DOSSIER REFERENCE : ${refId}
+FILING DATE       : ${date}
+JURISDICTION      : ${reg.country} (${reg.code})
+STATUTORY CODE    : ${reg.statutoryCode}
+CENTRAL AUTHORITY : ${reg.authority}
+SUBMISSION DEPOT  : ${reg.submissionAddress}
+
+--------------------------------------------------------------------------------
+1. CLAIMANT IDENTIFICATION
+--------------------------------------------------------------------------------
+FULL NAME         : ${name}
+CONTACT PHONE/EM  : ${contact}
+CLAIM FILING TYPE : Direct Bank Window / Central Bank Redemption Counter
+
+--------------------------------------------------------------------------------
+2. BANKNOTE PARTICULARS & OPTICAL AUDIT
+--------------------------------------------------------------------------------
+CURRENCY & NOTE   : ${curr}
+MEASURED AREA     : ${area}
+LEFT SERIAL       : ${serialL}
+RIGHT SERIAL      : ${serialR}
+LEGAL STATUS      : Statutory Threshold Met (Full Face Value Replacement Entitlement)
+
+--------------------------------------------------------------------------------
+3. STATEMENT OF FACTS & CIRCUMSTANCES OF CASUALTY
+--------------------------------------------------------------------------------
+${narrative}
+
+--------------------------------------------------------------------------------
+4. SWORN DECLARATION & SIGNATURE UNDER PENALTY OF PERJURY
+--------------------------------------------------------------------------------
+I solemnly declare under penalty of perjury under the laws of ${reg.country}
+that the currency presented herein is genuine legal tender, that the missing
+portions were destroyed accidentally and not intentionally mutilated, and that
+I have not received duplicate payment or credit for any portion thereof.
+
+SIGNATURE OF BEARER : ${sigName}
+EXECUTION DATE      : ${sigDate}
+================================================================================`;
+    }
+    window.generateCertifiedClaimText = generateCertifiedClaimText;
+
+    const btnCopyClaim = document.getElementById('btn-copy-claim-text');
+    if (btnCopyClaim) {
+      btnCopyClaim.addEventListener('click', () => {
+        const claimText = generateCertifiedClaimText();
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          navigator.clipboard.writeText(claimText).then(() => {
+            showToast('📋 Claim package copied to clipboard!', 'success');
+            audio.successChord();
+          }).catch(() => {
+            showToast('📋 Claim package copied to clipboard!', 'info');
+          });
+        } else {
+          showToast('📋 Claim package copied to clipboard!', 'info');
+        }
+      });
+    }
+
+    const btnLocateBank = document.getElementById('btn-locate-redemption-bank');
+    if (btnLocateBank) {
+      btnLocateBank.addEventListener('click', () => {
+        state.locatorShowAll = false;
+        switchTab('tab-locator');
+        if (typeof updateLocatorScopeBanner === 'function') updateLocatorScopeBanner();
+        if (typeof renderLocationsGlobal === 'function') renderLocationsGlobal();
+        const grid = document.getElementById('bank-locations-grid');
+        if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+        showToast(`Showing redemption windows for ${state.activeCurrency}`, 'info');
+        audio.tap();
       });
     }
 
@@ -3769,6 +4479,7 @@ Claimant Signature: ___________________________________   Date: ________________
         if (causeNarratives[causeSelect.value]) {
           narrativeArea.value = causeNarratives[causeSelect.value];
           updateDossierSheet();
+          saveDossierDraft();
         }
       });
     }
@@ -3776,9 +4487,149 @@ Claimant Signature: ___________________________________   Date: ________________
     // Real-time input synchronization for all dossier fields
     ['dossier-claimant-name', 'dossier-phone', 'dossier-currency', 'dossier-surface-area', 'dossier-serial-left', 'dossier-serial-right', 'dossier-narrative'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.addEventListener('input', updateDossierSheet);
+      if (el) el.addEventListener('input', () => {
+        updateDossierSheet();
+        saveDossierDraft();
+      });
     });
 
+    // In-Place Sheet Editing with Bidirectional Sync and Autosave
+    function saveDossierDraft() {
+      const nameVal = document.getElementById('sheet-name')?.textContent || '';
+      const serialLVal = document.getElementById('sheet-serial-l')?.textContent || '';
+      const serialRVal = document.getElementById('sheet-serial-r')?.textContent || '';
+      const draft = {
+        name: nameVal,
+        claimantName: nameVal,
+        contact: document.getElementById('sheet-contact')?.textContent || '',
+        date: document.getElementById('sheet-date')?.textContent || '',
+        claimType: document.getElementById('sheet-claim-type')?.textContent || '',
+        currency: document.getElementById('sheet-currency')?.textContent || '',
+        area: document.getElementById('sheet-area')?.textContent || '',
+        serialL: serialLVal,
+        serialLeft: serialLVal,
+        serialR: serialRVal,
+        serialRight: serialRVal,
+        narrative: document.getElementById('sheet-narrative-text')?.textContent || '',
+        sigName: document.getElementById('sheet-sig-name')?.textContent || '',
+        sigDate: document.getElementById('sheet-sig-date')?.textContent || '',
+        refId: document.getElementById('sheet-ref-id')?.textContent || ''
+      };
+      localStorage.setItem('monument_dossier_draft', JSON.stringify(draft));
+    }
+    window.saveDossierDraft = saveDossierDraft;
+
+    function restoreDossierDraft() {
+      try {
+        const saved = localStorage.getItem('monument_dossier_draft');
+        if (!saved) return;
+        const draft = JSON.parse(saved);
+        if (draft.name) {
+          const s = document.getElementById('sheet-name');
+          const i = document.getElementById('dossier-claimant-name');
+          const sig = document.getElementById('sheet-sig-name');
+          if (s) s.textContent = draft.name;
+          if (i) i.value = draft.name;
+          if (sig) sig.textContent = draft.name;
+        }
+        if (draft.contact) {
+          const s = document.getElementById('sheet-contact');
+          const i = document.getElementById('dossier-phone');
+          if (s) s.textContent = draft.contact;
+          if (i) i.value = draft.contact;
+        }
+        if (draft.date) {
+          const s = document.getElementById('sheet-date');
+          if (s) s.textContent = draft.date;
+        }
+        if (draft.claimType) {
+          const s = document.getElementById('sheet-claim-type');
+          if (s) s.textContent = draft.claimType;
+        }
+        if (draft.currency) {
+          const s = document.getElementById('sheet-currency');
+          const i = document.getElementById('dossier-currency');
+          if (s) s.textContent = draft.currency;
+          if (i) i.value = draft.currency;
+        }
+        if (draft.area) {
+          const s = document.getElementById('sheet-area');
+          const i = document.getElementById('dossier-surface-area');
+          if (s) s.textContent = draft.area;
+          if (i) i.value = draft.area;
+        }
+        if (draft.serialL) {
+          const s = document.getElementById('sheet-serial-l');
+          const i = document.getElementById('dossier-serial-left');
+          if (s) s.textContent = draft.serialL;
+          if (i) i.value = draft.serialL;
+        }
+        if (draft.serialR) {
+          const s = document.getElementById('sheet-serial-r');
+          const i = document.getElementById('dossier-serial-right');
+          if (s) s.textContent = draft.serialR;
+          if (i) i.value = draft.serialR;
+        }
+        if (draft.narrative) {
+          const s = document.getElementById('sheet-narrative-text');
+          const i = document.getElementById('dossier-narrative');
+          if (s) s.textContent = draft.narrative;
+          if (i) i.value = draft.narrative;
+        }
+        if (draft.sigName) {
+          const s = document.getElementById('sheet-sig-name');
+          if (s) s.textContent = draft.sigName;
+        }
+        if (draft.sigDate) {
+          const s = document.getElementById('sheet-sig-date');
+          if (s) s.textContent = draft.sigDate;
+        }
+      } catch (e) {}
+    }
+
+    const editableSheetFields = document.querySelectorAll('#printable-dossier .editable-sheet-field');
+    editableSheetFields.forEach(f => {
+      f.addEventListener('input', () => {
+        const text = f.textContent.trim();
+        if (f.id === 'sheet-name') {
+          const inp = document.getElementById('dossier-claimant-name');
+          if (inp) inp.value = text;
+          const sig = document.getElementById('sheet-sig-name');
+          if (sig && document.activeElement !== sig) sig.textContent = text;
+        } else if (f.id === 'sheet-contact') {
+          const inp = document.getElementById('dossier-phone');
+          if (inp) inp.value = text;
+        } else if (f.id === 'sheet-currency') {
+          const inp = document.getElementById('dossier-currency');
+          if (inp) inp.value = text;
+        } else if (f.id === 'sheet-area') {
+          const inp = document.getElementById('dossier-surface-area');
+          if (inp) inp.value = text;
+        } else if (f.id === 'sheet-serial-l') {
+          const inp = document.getElementById('dossier-serial-left');
+          if (inp) {
+            inp.value = text;
+            checkSerialBadge(inp, badgeSerialL);
+          }
+        } else if (f.id === 'sheet-serial-r') {
+          const inp = document.getElementById('dossier-serial-right');
+          if (inp) {
+            inp.value = text;
+            checkSerialBadge(inp, badgeSerialR);
+          }
+        } else if (f.id === 'sheet-narrative-text') {
+          const inp = document.getElementById('dossier-narrative');
+          if (inp) inp.value = text;
+        }
+        saveDossierDraft();
+      });
+      f.addEventListener('blur', () => {
+        saveDossierDraft();
+        showToast('Document draft autosaved', 'info');
+      });
+    });
+
+    restoreDossierDraft();
     updateDossierSheet();
   }
 
@@ -3798,14 +4649,16 @@ Claimant Signature: ___________________________________   Date: ________________
     const sheetSerialL = document.getElementById('sheet-serial-l');
     const sheetSerialR = document.getElementById('sheet-serial-r');
     const sheetNarrative = document.getElementById('sheet-narrative-text');
+    const sheetSigName = document.getElementById('sheet-sig-name');
 
-    if (sheetName) sheetName.textContent = claimantName;
-    if (sheetContact) sheetContact.textContent = phone;
-    if (sheetCurrency) sheetCurrency.textContent = currency;
-    if (sheetArea) sheetArea.textContent = surfaceArea;
-    if (sheetSerialL) sheetSerialL.textContent = serialLeft;
-    if (sheetSerialR) sheetSerialR.textContent = serialRight;
-    if (sheetNarrative) sheetNarrative.textContent = narrative;
+    if (sheetName && document.activeElement !== sheetName) sheetName.textContent = claimantName;
+    if (sheetContact && document.activeElement !== sheetContact) sheetContact.textContent = phone;
+    if (sheetCurrency && document.activeElement !== sheetCurrency) sheetCurrency.textContent = currency;
+    if (sheetArea && document.activeElement !== sheetArea) sheetArea.textContent = surfaceArea;
+    if (sheetSerialL && document.activeElement !== sheetSerialL) sheetSerialL.textContent = serialLeft;
+    if (sheetSerialR && document.activeElement !== sheetSerialR) sheetSerialR.textContent = serialRight;
+    if (sheetNarrative && document.activeElement !== sheetNarrative) sheetNarrative.textContent = narrative;
+    if (sheetSigName && document.activeElement !== sheetSigName) sheetSigName.textContent = claimantName;
   }
 
   function generatePrintableHtml() {
@@ -6181,6 +7034,138 @@ ${xrefOffset}
     }
   }
 
+  function initLanguageSelector() {
+    const btnTopLang = document.getElementById('btn-lang-selector');
+    const btnDrawerLang = document.getElementById('drawer-btn-lang');
+    const modal = document.getElementById('modal-language-picker');
+    const btnClose = document.getElementById('btn-close-language-modal');
+    const langBtns = document.querySelectorAll('.lang-option-btn');
+
+    function syncLanguageUI(lang) {
+      if (!window.i18n) return;
+      const lObj = window.i18n.LANGUAGES.find(l => l.code === lang) || window.i18n.LANGUAGES[0];
+      const topFlag = document.getElementById('active-lang-flag');
+      const topCode = document.getElementById('active-lang-code');
+      const drawerFlag = document.getElementById('drawer-lang-flag');
+      const drawerName = document.getElementById('drawer-lang-name');
+
+      if (topFlag) topFlag.textContent = lObj.flag;
+      if (topCode) topCode.textContent = lObj.code.toUpperCase();
+      if (drawerFlag) drawerFlag.textContent = lObj.flag;
+      if (drawerName) drawerName.textContent = lObj.name;
+
+      langBtns.forEach(btn => {
+        const isSel = btn.dataset.lang === lang;
+        btn.classList.toggle('selected', isSel);
+        const chk = btn.querySelector('.lang-check');
+        if (chk) chk.textContent = isSel ? '✓' : '';
+      });
+    }
+
+    function openLangModal() {
+      if (modal) {
+        modal.classList.add('active');
+        const current = window.i18n ? window.i18n.getLanguage() : 'en';
+        syncLanguageUI(current);
+        audio.tap();
+      }
+    }
+
+    function closeLangModal() {
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
+
+    if (btnTopLang) btnTopLang.addEventListener('click', openLangModal);
+    if (btnDrawerLang) {
+      btnDrawerLang.addEventListener('click', () => {
+        const drawer = document.getElementById('app-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        if (drawer) drawer.classList.remove('open');
+        if (overlay) overlay.classList.remove('open');
+        openLangModal();
+      });
+    }
+    if (btnClose) btnClose.addEventListener('click', () => {
+      closeLangModal();
+      audio.tap();
+    });
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeLangModal();
+      });
+    }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        if (window.i18n && lang) {
+          window.i18n.setLanguage(lang);
+          syncLanguageUI(lang);
+          audio.tap();
+          setTimeout(closeLangModal, 160);
+        }
+      });
+    });
+
+    // Reactive listener for language changes
+    window.addEventListener('mog:languagechange', (e) => {
+      const lang = e.detail?.lang || 'en';
+      syncLanguageUI(lang);
+
+      // Re-apply currency workflow text in localized language
+      if (state.activeCurrency) {
+        const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+        const wfRule = document.getElementById('workflow-simple-rule');
+        if (wfRule) {
+          wfRule.textContent = window.i18n.t('consumerRuleText', { name: reg.name, authority: reg.authority });
+        }
+        const statusGuar = document.getElementById('workflow-status-guarantee');
+        if (statusGuar) statusGuar.textContent = window.i18n.t('parValueProtected');
+      }
+
+      // Re-render database list if function exists
+      if (typeof renderDatabaseListGlobal === 'function') {
+        const activeRegion = document.querySelector('.db-region-pills .filter-pill.active')?.dataset.dbregion || 'all';
+        const searchInput = document.getElementById('db-search-input');
+        renderDatabaseListGlobal(searchInput ? searchInput.value : '', activeRegion);
+      }
+
+      // Re-render locator if function exists
+      if (typeof renderLocationsGlobal === 'function') {
+        const activeType = document.querySelector('.locator-type-tabs .type-tab.active')?.dataset.type || 'all';
+        const searchInput = document.getElementById('locator-search-input');
+        renderLocationsGlobal(searchInput ? searchInput.value : '', activeType);
+      }
+
+      // Update default dossier text if not customized by user
+      const savedDraft = localStorage.getItem('monument_dossier_draft');
+      if (!savedDraft) {
+        const inpName = document.getElementById('dossier-claimant-name');
+        const sheetName = document.getElementById('sheet-name');
+        const inpNarrative = document.getElementById('dossier-narrative');
+        const sheetNarrative = document.getElementById('sheet-narrative-text');
+        if (inpName) inpName.value = window.i18n.t('defaultClaimant');
+        if (sheetName) sheetName.textContent = window.i18n.t('defaultClaimant');
+        if (inpNarrative) inpNarrative.value = window.i18n.t('defaultNarrative');
+        if (sheetNarrative) sheetNarrative.textContent = window.i18n.t('defaultNarrative');
+      }
+
+      // Update sworn destruction affidavit declaration
+      const affDecl = document.getElementById('affidavit-legal-declaration');
+      if (affDecl) affDecl.textContent = window.i18n.t('declarationAffirmation');
+    });
+
+    // Initial sync
+    if (window.i18n) {
+      const initialLang = window.i18n.getLanguage();
+      syncLanguageUI(initialLang);
+      window.i18n.applyTranslations();
+    }
+  }
+
   function setActiveCurrency(code, playFeedback = true) {
     const reg = CURRENCY_REGISTRY.find(c => c.code === code) || CURRENCY_REGISTRY[0];
     state.activeCurrency = reg.code;
@@ -6212,14 +7197,20 @@ ${xrefOffset}
 
     if (wfFlag) wfFlag.textContent = reg.flag;
     if (wfName) wfName.textContent = `${reg.country} — ${reg.name} (${reg.symbol} ${reg.code})`;
-    if (wfRule) wfRule.textContent = `If more than half (50%) of your ${reg.name} note survives, ${reg.authority} is legally required to replace it for 100% full cash value.`;
+    if (wfRule) {
+      if (window.i18n) {
+        wfRule.textContent = window.i18n.t('consumerRuleText', { name: reg.name, authority: reg.authority });
+      } else {
+        wfRule.textContent = `If more than half (50%) of your ${reg.name} note survives, ${reg.authority} is legally required to replace it for 100% full cash value.`;
+      }
+    }
     if (wfAuth) wfAuth.textContent = reg.authority;
     if (wfStatute) wfStatute.textContent = reg.statutoryCode;
     if (wfStatuteRule) wfStatuteRule.textContent = reg.thresholdRule;
     if (wfAddr) wfAddr.textContent = reg.submissionAddress;
 
-    const dishToken1 = document.getElementById('dish-token-1');
-    if (dishToken1) dishToken1.textContent = reg.symbol;
+    const heroDishToken = document.getElementById('dish-token-hero') || document.getElementById('dish-token-1');
+    if (heroDishToken) heroDishToken.textContent = reg.symbol;
 
     const def = CURRENCY_SALVAGE_DEFAULTS[reg.code] || CURRENCY_SALVAGE_DEFAULTS['USD'];
     const totalEl = document.getElementById('rolling-salvage-total');
@@ -6245,14 +7236,21 @@ ${xrefOffset}
 
     const selectScannerCurr = document.getElementById('select-scanner-currency');
     if (selectScannerCurr) selectScannerCurr.value = reg.code;
+    if (typeof populateScannerDenominations === 'function') populateScannerDenominations(reg.code);
     updateScannerAspectGuide();
     updateGridAspectBox();
 
+    // Synchronize banners and views
+    if (typeof updateLocatorScopeBanner === 'function') updateLocatorScopeBanner();
+    if (typeof updateDatabaseScopeBanner === 'function') updateDatabaseScopeBanner();
+    if (typeof renderLocationsGlobal === 'function') renderLocationsGlobal();
+    if (typeof renderDatabaseListGlobal === 'function') renderDatabaseListGlobal();
     renderFeedCards('all');
 
     if (playFeedback) {
       audio.successChime();
       audio.vibrate([15, 30, 20]);
+      showToast(`Active currency set to ${reg.flag} ${reg.code} (${reg.country})`, 'success');
     }
   }
 
@@ -6944,24 +7942,27 @@ physical surface intact qualify for 100% legal face-value reimbursement.
     const tapWave = document.getElementById('dish-tap-wave');
     if (!tokenContainer || tokenEls.length === 0) return;
 
-    const CENTER_X = 48;
-    const CENTER_Y = 48;
-    const R_LIMIT = 35; // boundary radius in px inside the 96px circular dish
+    const CENTER_X = 52;
+    const CENTER_Y = 52;
+    const R_LIMIT = 36; // boundary radius in px inside the 104px circular dish
 
-    // Initialize 2D physics state for each currency symbol
+    // Initialize 2D physics state for each currency symbol bubble
     const tokens = Array.from(tokenEls).map((el, i) => {
+      const isHero = el.classList.contains('hero-token') || i === 0;
       const angle = (i / tokenEls.length) * Math.PI * 2;
-      const dist = 14 + (i % 3) * 8;
+      const dist = isHero ? 0 : (16 + (i % 2) * 10);
       return {
         el,
+        isHero,
         x: CENTER_X + Math.cos(angle) * dist,
-        y: CENTER_Y + Math.sin(angle) * dist,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5,
-        rot: (Math.random() - 0.5) * 30,
-        vrot: (Math.random() - 0.5) * 3,
+        y: CENTER_Y + Math.sin(angle) * dist - 4,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        rot: (Math.random() - 0.5) * 20,
+        vrot: (Math.random() - 0.5) * 2,
         scale: 1.0,
-        radius: 8.5
+        radius: isHero ? 13.5 : 11.5,
+        phase: i * 1.15
       };
     });
 
@@ -6988,7 +7989,7 @@ physical surface intact qualify for 100% legal face-value reimbursement.
       dish.classList.add('pressed');
       setTimeout(() => dish.classList.remove('pressed'), 160);
 
-      // Launch all currency symbols with crazy, highly energetic random radial velocities!
+      // Launch all currency symbols with energetic radial velocities!
       tokens.forEach(t => {
         const dx = t.x - (originX || CENTER_X);
         const dy = t.y - (originY || CENTER_Y);
@@ -6996,15 +7997,15 @@ physical surface intact qualify for 100% legal face-value reimbursement.
         if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
           angle = Math.random() * Math.PI * 2;
         } else {
-          angle += (Math.random() - 0.5) * 1.4;
+          angle += (Math.random() - 0.5) * 0.9;
         }
 
-        const speed = 18 + Math.random() * 26; // High energy burst!
+        const speed = 4.2 + Math.random() * 4.2; // Smooth dynamic spring burst
         t.vx = Math.cos(angle) * speed;
         t.vy = Math.sin(angle) * speed;
-        t.vrot = (Math.random() - 0.5) * 65; // Rapid spin
-        t.scale = 1.35;
-        setTimeout(() => { t.scale = 1.0; }, 260);
+        t.vrot = (Math.random() - 0.5) * 35; // Smooth spin
+        t.scale = 1.2;
+        setTimeout(() => { t.scale = 1.0; }, 240);
       });
 
       // Spawn golden sparkles
@@ -7062,11 +8063,11 @@ physical surface intact qualify for 100% legal face-value reimbursement.
       // Swirl adjacent tokens
       tokens.forEach(t => {
         const dist = Math.hypot(t.x - pointerX, t.y - pointerY);
-        if (dist < 22) {
+        if (dist < 26) {
           const pushAngle = Math.atan2(t.y - pointerY, t.x - pointerX);
-          t.vx += Math.cos(pushAngle) * 2.8;
-          t.vy += Math.sin(pushAngle) * 2.8;
-          t.vrot += (Math.random() - 0.5) * 8;
+          t.vx += Math.cos(pushAngle) * 3.2;
+          t.vy += Math.sin(pushAngle) * 3.2;
+          t.vrot += (Math.random() - 0.5) * 10;
         }
       });
     });
@@ -7082,39 +8083,63 @@ physical surface intact qualify for 100% legal face-value reimbursement.
       }
     });
 
-    // Continuous 60fps 2D physics animation loop
+    // Continuous 60fps 2D physics animation loop with liquid buoyancy
+    let lastTime = performance.now();
     function updatePhysics() {
+      const now = performance.now();
+      const dt = Math.min((now - lastTime) / 16.67, 2.0);
+      lastTime = now;
+      const tSec = now * 0.0018;
+
       tokens.forEach((t, i) => {
-        t.x += t.vx;
-        t.y += t.vy;
-        t.rot += t.vrot;
+        // Speed cap to prevent quantum tunneling over boundaries
+        const vMag = Math.hypot(t.vx, t.vy);
+        if (vMag > 5.2) {
+          t.vx = (t.vx / vMag) * 5.2;
+          t.vy = (t.vy / vMag) * 5.2;
+        }
+
+        // Organic gentle floating buoyancy
+        t.vx += Math.sin(tSec + t.phase) * 0.04 * dt;
+        t.vy += Math.cos(tSec * 1.1 + t.phase) * 0.04 * dt;
+
+        t.x += t.vx * dt;
+        t.y += t.vy * dt;
+        t.rot += t.vrot * dt;
 
         // Damping / friction
-        t.vx *= 0.945;
-        t.vy *= 0.945;
-        t.vrot *= 0.93;
-
-        // Gentle idle floating if almost stationary
-        if (Math.hypot(t.vx, t.vy) < 0.22) {
-          t.vx += (Math.random() - 0.5) * 0.12;
-          t.vy += (Math.random() - 0.5) * 0.12;
-        }
+        t.vx *= Math.pow(0.965, dt);
+        t.vy *= Math.pow(0.965, dt);
+        t.vrot *= Math.pow(0.95, dt);
 
         // Circular boundary elastic reflection
         const dx = t.x - CENTER_X;
         const dy = t.y - CENTER_Y;
         const dist = Math.hypot(dx, dy);
-        if (dist > R_LIMIT) {
+        const maxR = R_LIMIT - (t.radius - 11.5);
+        if (dist > maxR && dist > 0.001) {
           const nx = dx / dist;
           const ny = dy / dist;
           const dot = t.vx * nx + t.vy * ny;
           if (dot > 0) {
-            t.vx -= 1.88 * dot * nx;
-            t.vy -= 1.88 * dot * ny;
-            t.vrot = (Math.random() - 0.5) * 25;
+            t.vx -= 1.8 * dot * nx;
+            t.vy -= 1.8 * dot * ny;
+            t.vrot = (Math.random() - 0.5) * 15;
           }
-          t.x = CENTER_X + nx * R_LIMIT;
-          t.y = CENTER_Y + ny * R_LIMIT;
+          t.x = CENTER_X + nx * maxR;
+          t.y = CENTER_Y + ny * maxR;
+        }
+
+        // Avoid sinking behind bottom label (y <= 69)
+        if (t.y > 69) {
+          t.y = 69;
+          if (t.vy > 0) t.vy = -Math.abs(t.vy) * 0.75;
+        }
+
+        // Avoid clipping top rim (y >= 22)
+        if (t.y < 22) {
+          t.y = 22;
+          if (t.vy < 0) t.vy = Math.abs(t.vy) * 0.75;
         }
 
         // Token-to-token elastic collision
@@ -7123,7 +8148,7 @@ physical surface intact qualify for 100% legal face-value reimbursement.
           const sepX = other.x - t.x;
           const sepY = other.y - t.y;
           const sepDist = Math.hypot(sepX, sepY);
-          const minDist = t.radius + other.radius;
+          const minDist = t.radius + other.radius + 1.5;
           if (sepDist < minDist && sepDist > 0.01) {
             const snx = sepX / sepDist;
             const sny = sepY / sepDist;
@@ -7136,12 +8161,23 @@ physical surface intact qualify for 100% legal face-value reimbursement.
             const kx = t.vx - other.vx;
             const ky = t.vy - other.vy;
             const p = (snx * kx + sny * ky);
-            t.vx -= p * snx * 0.85;
-            t.vy -= p * sny * 0.85;
-            other.vx += p * snx * 0.85;
-            other.vy += p * sny * 0.85;
+            if (p < 0) {
+              t.vx -= p * snx * 0.8;
+              t.vy -= p * sny * 0.8;
+              other.vx += p * snx * 0.8;
+              other.vy += p * sny * 0.8;
+            }
           }
         }
+
+        // Final strict containment clamp
+        const postDist = Math.hypot(t.x - CENTER_X, t.y - CENTER_Y);
+        if (postDist > maxR && postDist > 0.001) {
+          t.x = CENTER_X + ((t.x - CENTER_X) / postDist) * maxR;
+          t.y = CENTER_Y + ((t.y - CENTER_Y) / postDist) * maxR;
+        }
+        if (t.y < 22) t.y = 22;
+        if (t.y > 69) t.y = 69;
 
         t.el.style.transform = `translate3d(${t.x.toFixed(1)}px, ${t.y.toFixed(1)}px, 0) translate(-50%, -50%) rotate(${t.rot.toFixed(1)}deg) scale(${t.scale})`;
       });
@@ -8755,6 +9791,7 @@ physical surface intact qualify for 100% legal face-value reimbursement.
   window.exportForensicEvidencePhotoCard = exportForensicEvidencePhotoCard;
   window.audio = audio;
   window.Haptics = Haptics;
+  window.setActiveCurrency = setActiveCurrency;
 
   // Android Hardware Back Button Dispatcher (Prevents abrupt app exits)
   window.handleAndroidBack = function() {
