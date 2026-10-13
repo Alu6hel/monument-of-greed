@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
@@ -34,6 +35,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -44,6 +46,8 @@ import java.util.Date;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MOG_PRO";
+    private static final int BACKGROUND_COLOR = 0xFF0A0D14;
+    private FrameLayout rootContainer;
     private WebView webView;
     private ValueCallback<Uri[]> filePathCallback;
     private static final int FILE_CHOOSER_REQUEST_CODE = 2001;
@@ -69,23 +73,48 @@ public class MainActivity extends Activity {
         });
 
         // 2. Immersive UI setup compatible with freeform and multi-window
+        getWindow().setBackgroundDrawable(new ColorDrawable(BACKGROUND_COLOR));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(BACKGROUND_COLOR);
+            getWindow().setNavigationBarColor(BACKGROUND_COLOR);
+        }
+
         getWindow().getDecorView().setSystemUiVisibility(
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         );
 
+        rootContainer = new FrameLayout(this);
+        rootContainer.setBackgroundColor(BACKGROUND_COLOR);
+        setContentView(rootContainer);
+
+        initAndAttachWebView();
+        checkAndRequestPermissions();
+    }
+
+    private void initAndAttachWebView() {
+        if (webView != null) {
+            try {
+                if (rootContainer != null) {
+                    rootContainer.removeView(webView);
+                }
+                webView.loadUrl("about:blank");
+                webView.stopLoading();
+                webView.clearHistory();
+                webView.destroy();
+            } catch (Exception ignored) {}
+            webView = null;
+        }
+
         webView = new WebView(this);
-        setContentView(webView);
+        webView.setBackgroundColor(BACKGROUND_COLOR);
+        rootContainer.addView(webView, new FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ));
 
         configureWebView();
-        checkAndRequestPermissions();
-
-        if (savedInstanceState != null) {
-            webView.restoreState(savedInstanceState);
-        } else {
-            // Load local web application assets
-            webView.loadUrl("file:///android_asset/web_app/index.html");
-        }
+        webView.loadUrl("file:///android_asset/web_app/index.html");
     }
 
     private void configureWebView() {
@@ -126,31 +155,27 @@ public class MainActivity extends Activity {
 
             private boolean handleUrl(String url) {
                 if (url == null) return false;
-                if (url.startsWith("tel:") || url.startsWith("mailto:") || url.contains("google.com/maps") || url.startsWith("https://maps.google.com")) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        startActivity(intent);
-                        return true;
-                    } catch (Exception e) {
-                        Log.e(TAG, "Cannot launch external handler for: " + url, e);
-                        return false;
-                    }
+                if (url.startsWith("file:///android_asset/web_app/")) {
+                    return false;
                 }
-                return false;
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                } catch (Exception e) {
+                    Log.e(TAG, "Cannot launch external handler for: " + url, e);
+                    return true;
+                }
             }
 
-            // CRITICAL: Prevent "app suddenly stopped" if Chromium renderer crashes or is killed by OS
+            // CRITICAL: Prevent "app suddenly stopped" or white screen if Chromium renderer crashes or is killed by OS
             @Override
             public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
                 Log.e(TAG, "CRITICAL: WebView render process gone! Did crash: "
                     + (detail != null && detail.didCrash()));
-                try {
-                    if (view != null) {
-                        view.destroy();
-                    }
-                } catch (Exception ignored) {}
-                // Gracefully restart activity without throwing a fatal crash dialog
-                recreate();
+                runOnUiThread(() -> {
+                    initAndAttachWebView();
+                });
                 return true; // Tells Android the host app handled the condition
             }
 
@@ -158,6 +183,7 @@ public class MainActivity extends Activity {
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 if (request != null && request.isForMainFrame()) {
                     Log.w(TAG, "WebView main frame error: " + (error != null ? error.getDescription() : "unknown"));
+                    view.post(() -> view.loadUrl("file:///android_asset/web_app/index.html"));
                 }
             }
         });
@@ -650,7 +676,6 @@ public class MainActivity extends Activity {
         super.onPause();
         if (webView != null) {
             webView.onPause();
-            webView.pauseTimers();
         }
     }
 
@@ -659,34 +684,31 @@ public class MainActivity extends Activity {
         super.onResume();
         if (webView != null) {
             webView.onResume();
-            webView.resumeTimers();
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (webView != null) {
-            webView.saveState(outState);
-        }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if (webView != null) {
-            webView.restoreState(savedInstanceState);
-        }
     }
 
     @Override
     protected void onDestroy() {
         if (webView != null) {
-            webView.loadUrl("about:blank");
-            webView.stopLoading();
-            webView.clearHistory();
-            webView.removeAllViews();
-            webView.destroy();
+            try {
+                if (rootContainer != null) {
+                    rootContainer.removeView(webView);
+                }
+                webView.loadUrl("about:blank");
+                webView.stopLoading();
+                webView.clearHistory();
+                webView.destroy();
+            } catch (Exception ignored) {}
             webView = null;
         }
         super.onDestroy();

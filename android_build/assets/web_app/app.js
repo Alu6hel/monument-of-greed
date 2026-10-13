@@ -8124,7 +8124,12 @@ physical surface intact qualify for 100% legal face-value reimbursement.
 
     // Continuous 60fps 2D physics animation loop with liquid buoyancy
     let lastTime = performance.now();
+    let physicsAnimId = null;
     function updatePhysics() {
+      if (document.hidden) {
+        physicsAnimId = null;
+        return;
+      }
       const now = performance.now();
       const dt = Math.min((now - lastTime) / 16.67, 2.0);
       lastTime = now;
@@ -8221,10 +8226,17 @@ physical surface intact qualify for 100% legal face-value reimbursement.
         t.el.style.transform = `translate3d(${t.x.toFixed(1)}px, ${t.y.toFixed(1)}px, 0) translate(-50%, -50%) rotate(${t.rot.toFixed(1)}deg) scale(${t.scale})`;
       });
 
-      requestAnimationFrame(updatePhysics);
+      physicsAnimId = requestAnimationFrame(updatePhysics);
     }
 
-    requestAnimationFrame(updatePhysics);
+    physicsAnimId = requestAnimationFrame(updatePhysics);
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && !physicsAnimId) {
+        lastTime = performance.now();
+        physicsAnimId = requestAnimationFrame(updatePhysics);
+      }
+    });
   }
 
   // =========================================================================
@@ -9918,6 +9930,24 @@ physical surface intact qualify for 100% legal face-value reimbursement.
     // 9. On Home tab with no active overlays: return false so native double-back safety handles exit
     return false;
   };
+
+  // Global lifecycle safety: stop camera when backgrounded to prevent HAL / driver session exhaustion
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (typeof stopCameraStream === 'function' && state && state.scanner && state.scanner.cameraActive) {
+        console.log('[MOG] App hidden: stopping active camera stream to release hardware');
+        stopCameraStream();
+      }
+    }
+  });
+
+  // Global error safety preventing blank canvas on runtime exception
+  window.addEventListener('error', (e) => {
+    console.warn('[MOG] Handled uncaught web error:', e.message);
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    console.warn('[MOG] Handled uncaught promise rejection:', e.reason);
+  });
 
 })();
 
