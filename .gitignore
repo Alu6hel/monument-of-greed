@@ -10,3 +10,6 @@ android_build/build/
 # System files
 .DS_Store
 Thumbs.db
+
+# CDP test verification screenshots
+screenshot_*.png

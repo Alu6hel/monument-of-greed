@@ -3915,10 +3915,15 @@ Claimant Signature: ___________________________________   Date: ________________
       const nameEl = document.getElementById('database-scope-name');
       const btnToggle = document.getElementById('btn-toggle-global-db');
       const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+      const locCurrency = (typeof window.getLocalizedCurrency === 'function')
+        ? window.getLocalizedCurrency(reg.code)
+        : reg;
       if (flagEl) flagEl.textContent = reg.flag;
-      if (nameEl) nameEl.textContent = `${reg.code} (${reg.country})`;
+      if (nameEl) nameEl.textContent = `${reg.code} (${locCurrency.country || reg.country})`;
       if (btnToggle) {
-        btnToggle.textContent = state.databaseShowAll ? `🔒 Focus ${reg.code} Codex` : `🌐 View Other Currencies`;
+        btnToggle.textContent = state.databaseShowAll
+          ? (window.i18n ? window.i18n.t('btnFocusCodex', { code: reg.code }) : `🔒 Focus ${reg.code} Codex`)
+          : (window.i18n ? window.i18n.t('btnViewOtherCurrencies') : `🌐 View Other Currencies`);
       }
     }
     window.updateDatabaseScopeBanner = updateDatabaseScopeBanner;
@@ -3959,13 +3964,17 @@ Claimant Signature: ___________________________________   Date: ________________
           div.classList.add('open');
         }
 
+        const locCurrency = (typeof window.getLocalizedCurrency === 'function')
+          ? window.getLocalizedCurrency(item.code)
+          : item;
+
         div.innerHTML = `
           <div class="db-item-summary">
             <div class="db-item-main">
               <span class="db-currency-flag">${item.flag}</span>
               <div class="db-item-titles">
-                <h4>${item.code} — ${item.name}</h4>
-                <span>${item.authority}</span>
+                <h4>${item.code} — ${locCurrency.name || item.name}</h4>
+                <span>${locCurrency.authority || item.authority}</span>
               </div>
             </div>
             <div class="db-item-chevron">▼</div>
@@ -3973,8 +3982,8 @@ Claimant Signature: ___________________________________   Date: ________________
           <div class="db-item-details">
             <div class="db-detail-block">
               <h5>${window.i18n ? window.i18n.t('dbStatuteHeader') : 'STATUTORY REGULATION'}</h5>
-              <p><strong>${item.statutoryCode}</strong></p>
-              <p style="margin-top:4px;">${item.thresholdRule}</p>
+              <p><strong>${locCurrency.statutoryCode || item.statutoryCode}</strong></p>
+              <p style="margin-top:4px;">${locCurrency.thresholdRule || item.thresholdRule}</p>
             </div>
             <div class="db-detail-block">
               <h5>${window.i18n ? window.i18n.t('dbDepotHeader') : 'POSTAL SUBMISSION LABORATORY'}</h5>
@@ -4143,10 +4152,15 @@ Claimant Signature: ___________________________________   Date: ________________
       const nameEl = document.getElementById('locator-scope-name');
       const btnToggle = document.getElementById('btn-toggle-global-locator');
       const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+      const locCurrency = (typeof window.getLocalizedCurrency === 'function')
+        ? window.getLocalizedCurrency(reg.code)
+        : reg;
       if (flagEl) flagEl.textContent = reg.flag;
-      if (nameEl) nameEl.textContent = `${reg.code} (${reg.country})`;
+      if (nameEl) nameEl.textContent = `${reg.code} (${locCurrency.country || reg.country})`;
       if (btnToggle) {
-        btnToggle.textContent = state.locatorShowAll ? `🔒 Filter to ${reg.code} Only` : `🌐 View All Currencies`;
+        btnToggle.textContent = state.locatorShowAll
+          ? (window.i18n ? window.i18n.t('btnFocusLocator', { code: reg.code }) : `🔒 Focus ${reg.code} Windows`)
+          : (window.i18n ? window.i18n.t('btnViewAllCurrencies') : `🌐 View All Currencies`);
       }
       renderDynamicQuickChips();
     }
@@ -6303,26 +6317,32 @@ ${xrefOffset}
 
   function showTellerScript(currencyCode) {
     const reg = CURRENCY_REGISTRY.find(c => c.code === currencyCode) || CURRENCY_REGISTRY[0];
+    const curLang = (window.i18n && typeof window.i18n.getLanguage === 'function') ? window.i18n.getLanguage() : 'en';
+    const locCurrency = (typeof window.getLocalizedCurrency === 'function')
+      ? window.getLocalizedCurrency(reg.code, curLang)
+      : reg;
     const modal = document.getElementById('modal-teller-script');
     const title = document.getElementById('modal-script-title');
     const body = document.getElementById('modal-script-content');
 
     if (!modal || !title || !body) return;
 
-    title.textContent = `Bank Teller Talk Track: ${reg.code} (${reg.country})`;
+    const t = (key, fallback) => (window.i18n ? window.i18n.t(key) : fallback);
+
+    title.textContent = `${t('tellerScriptTitle', 'Bank Teller Talk Track')}: ${reg.code} (${locCurrency.country || reg.country})`;
     body.innerHTML = `
       <div style="background:var(--bg-card-subtle);padding:14px;border-radius:12px;margin-bottom:14px;border-left:4px solid var(--border-active);">
-        <p style="font-size:0.95rem;line-height:1.6;font-style:italic;">${reg.talkTrack}</p>
+        <p style="font-size:0.95rem;line-height:1.6;font-style:italic;">${locCurrency.talkTrack || reg.talkTrack}</p>
       </div>
 
-      <h5 style="margin-bottom:6px;font-weight:800;letter-spacing:0.04em;">KEY STATUTORY CITATION:</h5>
-      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;"><strong>${reg.statutoryCode}</strong> — If the teller hesitates, politely ask them to refer to their internal currency operations manual under Mutilated Currency / Fragment Exchange.</p>
+      <h5 style="margin-bottom:6px;font-weight:800;letter-spacing:0.04em;">${t('dbStatuteHeader', 'KEY STATUTORY CITATION')}:</h5>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;"><strong>${locCurrency.statutoryCode || reg.statutoryCode}</strong> — ${t('tellerHesitatesHint', 'If the teller hesitates, politely ask them to refer to their internal currency operations manual under Mutilated Currency / Fragment Exchange.')}</p>
 
-      <h5 style="margin-bottom:6px;font-weight:800;letter-spacing:0.04em;">CHECKLIST TO PRESENT:</h5>
+      <h5 style="margin-bottom:6px;font-weight:800;letter-spacing:0.04em;">${t('tellerChecklistHeader', 'CHECKLIST TO PRESENT:')}</h5>
       <ul style="padding-left:18px;font-size:0.82rem;color:var(--text-main);line-height:1.6;">
-        <li>Damaged banknote secured in a clear protective sleeve (do not apply scotch tape to torn edges).</li>
-        <li>Your government-issued photo ID (for commercial bank account holder verification).</li>
-        <li>Printed <strong>Claim Dossier</strong> generated from Monument of Greed showing verified surface area exceeding 50%.</li>
+        <li>${t('tellerChecklist1', 'Damaged banknote secured in a clear protective sleeve (do not apply scotch tape to torn edges).')}</li>
+        <li>${t('tellerChecklist2', 'Your government-issued photo ID (for commercial bank account holder verification).')}</li>
+        <li>${t('tellerChecklist3', 'Printed <strong>Claim Dossier</strong> generated from Monument of Greed showing verified surface area exceeding 50%.')}</li>
       </ul>
     `;
 
@@ -7118,10 +7138,19 @@ ${xrefOffset}
       // Re-apply currency workflow text in localized language
       if (state.activeCurrency) {
         const reg = CURRENCY_REGISTRY.find(c => c.code === state.activeCurrency) || CURRENCY_REGISTRY[0];
+        const loc = (typeof window.getLocalizedCurrency === 'function') ? window.getLocalizedCurrency(reg.code, lang) : reg;
+        const wfName = document.getElementById('workflow-currency-name');
+        if (wfName) wfName.textContent = `${loc.country || reg.country} — ${loc.name || reg.name} (${reg.symbol} ${reg.code})`;
         const wfRule = document.getElementById('workflow-simple-rule');
         if (wfRule) {
-          wfRule.textContent = window.i18n.t('consumerRuleText', { name: reg.name, authority: reg.authority });
+          wfRule.textContent = window.i18n.t('consumerRuleText', { name: loc.name || reg.name, authority: loc.authority || reg.authority });
         }
+        const wfAuth = document.getElementById('workflow-authority-name');
+        if (wfAuth) wfAuth.textContent = loc.authority || reg.authority;
+        const wfStatute = document.getElementById('workflow-statute-code');
+        if (wfStatute) wfStatute.textContent = loc.statutoryCode || reg.statutoryCode;
+        const wfStatuteRule = document.getElementById('workflow-statute-rule');
+        if (wfStatuteRule) wfStatuteRule.textContent = loc.thresholdRule || reg.thresholdRule;
         const statusGuar = document.getElementById('workflow-status-guarantee');
         if (statusGuar) statusGuar.textContent = window.i18n.t('parValueProtected');
       }
@@ -7138,6 +7167,14 @@ ${xrefOffset}
         const activeType = document.querySelector('.locator-type-tabs .type-tab.active')?.dataset.type || 'all';
         const searchInput = document.getElementById('locator-search-input');
         renderLocationsGlobal(searchInput ? searchInput.value : '', activeType);
+      }
+
+      // Refresh scope banners immediately
+      if (typeof updateDatabaseScopeBanner === 'function') {
+        updateDatabaseScopeBanner();
+      }
+      if (typeof updateLocatorScopeBanner === 'function') {
+        updateLocatorScopeBanner();
       }
 
       // Update default dossier text if not customized by user
@@ -7195,18 +7232,20 @@ ${xrefOffset}
     const wfStatuteRule = document.getElementById('workflow-statute-rule');
     const wfAddr = document.getElementById('workflow-submission-address');
 
+    const curLang = (window.i18n && typeof window.i18n.getLanguage === 'function') ? window.i18n.getLanguage() : 'en';
+    const loc = (typeof window.getLocalizedCurrency === 'function') ? window.getLocalizedCurrency(reg.code, curLang) : reg;
     if (wfFlag) wfFlag.textContent = reg.flag;
-    if (wfName) wfName.textContent = `${reg.country} — ${reg.name} (${reg.symbol} ${reg.code})`;
+    if (wfName) wfName.textContent = `${loc.country || reg.country} — ${loc.name || reg.name} (${reg.symbol} ${reg.code})`;
     if (wfRule) {
       if (window.i18n) {
-        wfRule.textContent = window.i18n.t('consumerRuleText', { name: reg.name, authority: reg.authority });
+        wfRule.textContent = window.i18n.t('consumerRuleText', { name: loc.name || reg.name, authority: loc.authority || reg.authority });
       } else {
         wfRule.textContent = `If more than half (50%) of your ${reg.name} note survives, ${reg.authority} is legally required to replace it for 100% full cash value.`;
       }
     }
-    if (wfAuth) wfAuth.textContent = reg.authority;
-    if (wfStatute) wfStatute.textContent = reg.statutoryCode;
-    if (wfStatuteRule) wfStatuteRule.textContent = reg.thresholdRule;
+    if (wfAuth) wfAuth.textContent = loc.authority || reg.authority;
+    if (wfStatute) wfStatute.textContent = loc.statutoryCode || reg.statutoryCode;
+    if (wfStatuteRule) wfStatuteRule.textContent = loc.thresholdRule || reg.thresholdRule;
     if (wfAddr) wfAddr.textContent = reg.submissionAddress;
 
     const heroDishToken = document.getElementById('dish-token-hero') || document.getElementById('dish-token-1');
